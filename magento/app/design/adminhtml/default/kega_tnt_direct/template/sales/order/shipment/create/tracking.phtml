@@ -1,0 +1,25 @@
+<?php
+// Retreive translation of the kega_tnt_direct carrier name.
+foreach ($this->getCarriers() as $code => $carrierName) {
+	if ($code == 'kega_tnt_direct') {
+		break;
+	}
+}
+?>
+<div style="padding-top: 10px;">
+	<input name="shipment[ship_by_envelope]" type="checkbox" value="1" id="ship_by_envelope" onchange="setShipByEnvelope(this);" />
+	<label class="normal" for="ship_by_envelope"><?php echo $this->helper('sales')->__('Ship by envelope'); ?></label>
+
+	<!-- Track is enabled / disabled by javascript, when selecting ship_by_envelope checkbox -->
+	<input type="hidden" id="tracking_1_carrier_code" name="tracking[1][carrier_code]" value="kega_tnt_direct" disabled="disabled" />
+	<input type="hidden" id="tracking_1_title" name="tracking[1][title]" value="<?php echo $carrierName; ?>" disabled="disabled" />
+	<input type="hidden" id="tracking_1_number" name="tracking[1][number]" value="envelope" disabled="disabled" />
+</div>
+<script type="text/javascript">
+	// When ship_by_envelope checkbox is updated, enable/disable the envelope track.
+    function setShipByEnvelope(checkboxObject) {
+        document.getElementById("tracking_1_carrier_code").disabled = !checkboxObject.checked;;
+        document.getElementById("tracking_1_title").disabled = !checkboxObject.checked;;
+        document.getElementById("tracking_1_number").disabled = !checkboxObject.checked;;
+    }
+</script>

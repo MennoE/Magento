@@ -1,0 +1,47 @@
+<div id="wizard-delivery-details" class="wizard-block wizard-block-summary content-block">
+
+	<? $shipping = $this->getShippingAddress(); ?>
+	<div class="wizard-block-content clearfix">
+		<h2 class="wizard-block-step"><span>3</span> <?php echo $this->__('Delivery') ?></h2>
+		<div id="shipping-summary">
+			<h3><?php echo $this->__('Shipping address') ?></h3>
+			<? if ($kiala = $this->getCheckout()->getKialaPointData()): ?>
+			<address>
+				<? if (!empty($kiala['kpname'])): ?><span class="n"><?=htmlentities($kiala['kpname']);?></span><? endif; ?>
+				<? if (!empty($kiala['street'])): ?><span class="adr"><?=htmlentities($kiala['street']);?></span><? endif; ?>
+				<? if (!empty($kiala['zip'])): ?><span class="zip"><?=htmlentities($kiala['zip']);?></span><? endif; ?>
+				<? if (!empty($kiala['city'])): ?><span class="city"><?=htmlentities($kiala['city']);?></span><? endif; ?>
+				<? if (!empty($kiala['locationhint'])): ?><span class="hint"><?=htmlentities($kiala['locationhint']);?></span><? endif; ?>
+			</address>
+			<? elseif($store = $this->getCheckout()->getStorePickupData()): ?>
+				<? $store = Mage::getModel('store/store')->load($store); ?>
+
+			<address>
+				<span class="n"><?php echo $this->htmlEscape($store->getName()); ?></span>
+				<span class="adr"><?php echo $this->htmlEscape($store->getAddress()); ?></span>
+				<span class="zip"><?php echo $this->htmlEscape($store->getZipcode()); ?></span>
+				<span class="city"><?php echo $this->htmlEscape($store->getCity()); ?></span>
+			</address>
+			<? else: ?>
+			<address>
+				<span class="n"><?php echo $this->htmlEscape(
+					$shipping->getFirstname() . ' ' .
+					$shipping->getMiddlename() . ' ' .
+					$shipping->getLastname()) ?>
+				</span>
+				<span class="adr"><?php echo $this->htmlEscape($shipping->getStreet(1) . ' ' . $shipping->getStreet(2))  . ' ' . $shipping->getStreet(3); ?></span>
+				<span class="zip"><?php echo $this->htmlEscape($shipping->getPostcode()); ?></span>
+				<span class="city"><?php echo $this->htmlEscape($shipping->getCity()); ?></span>
+				<? $country = Mage::getModel('directory/country')->loadByCode($shipping->getCountry()); ?>
+				<span class="country"><?php echo $this->htmlEscape($country->getName()); ?></span>
+			</address>
+			<? endif; ?>
+		</div>
+		<div id="delivery-costs">
+			<h3><?php echo $this->__('Delivery costs') ?></h3>
+			<p><?=$this->getShippingCosts();?></p>
+		</div>
+
+		<p class="edit"><a href="<?php echo $this->getUrl('checkout/wizard/delivery') . '#wizard-delivery-details' ?>" class="as-button secondary-button small"><?php echo $this->__('Edit info');?></a></p>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+<?php
+$items  = $this->getItems();
+$mode = ($this->getCategoryMode() ? 'category' : 'index');
+$questionLimit = (
+    $this->getQuestionLimit() && !Mage::registry('faq_search')
+        ? $this->getQuestionLimit()
+        : false
+);
+?>
+<div class="container mode-<?=$mode;?> clearfix">
+    <? $counter = 1; ?>
+    <? foreach($items as $id => $category): ?>
+    <div id="customerservice-q<?=$counter;?>" class="faqbox <?= $counter % 2 == 1 ? 'begin' : '';?>">
+        <h2><?=$category['category'];?></h2>
+        <ul>
+            <? $qCounter = 1;?>
+            <? foreach($category['questions'] as $qid => $question): ?>
+                <li>
+                    <h3 id="question-<?=$category['permalink'] . '-' . $qid;?>">
+
+                        <a href="<?=Mage::getModel('faq/category')->getUrl($category['permalink']);?>#question-<?=$category['permalink'] . '-' . $qid;?>">
+                            <?=$question['question'];?>
+                        </a>
+                    </h3>
+                    <?php if($mode == 'category'):?>
+                    <div class="answer">
+                        <?=trim($question['answer']);?>
+                    </div>
+                    <?php endif;?>
+                </li>
+                <?php
+                if(is_numeric($questionLimit) && $qCounter >= $questionLimit) {
+                    break;
+                }
+                $qCounter++;
+                ?>
+            <? endforeach; ?>
+        </ul>
+        <p class="faq-continue">
+            <?php if($mode == 'index'):?>
+                <a href="<?=Mage::getModel('faq/category')->getUrl($category['permalink']);?>">Meer vragen</a>
+            <?php else:?>
+                <a href="<?=Mage::getUrl('faq');?>">&lt; Terug</a>
+            <?php endif;?>
+        </p>
+    </div>
+        <? $counter++; ?>
+    <? endforeach; ?>
+</div>

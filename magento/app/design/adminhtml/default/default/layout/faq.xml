@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <kega_faq_adminhtml_category_index>
+        <reference name="content">
+            <block type="faq/adminhtml_category" name="category" />
+        </reference>
+    </kega_faq_adminhtml_category_index>
+    <kega_faq_adminhtml_question_index>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="faq/adminhtml_question" name="question" />
+        </reference>
+    </kega_faq_adminhtml_question_index>
+</layout>

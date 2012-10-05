@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <complexType name="touchHelloEntity">
+                <all>
+                    <element name="text" type="xsd:string" minOccurs="0" />
+                    <element name="date" type="xsd:string" minOccurs="0" />
+                    <element name="your_value" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+
+            <complexType name="touchNewsletterEntity">
+				<all>
+					<element name="email" type="xsd:string" minOccurs="1" />
+					<element name="firstname" type="xsd:string" minOccurs="1" />
+					<element name="lastname" type="xsd:string" minOccurs="1" />
+					<element name="gender" type="xsd:string" minOccurs="1" />
+					<element name="interest_women" type="xsd:string" minOccurs="0" />
+					<element name="interest_men" type="xsd:string" minOccurs="0" />
+					<element name="interest_children" type="xsd:string" minOccurs="0" />
+					<element name="trigger_campaign" type="xsd:string" minOccurs="0" />
+				</all>
+            </complexType>
+
+            <!--
+            Extended: Default Magento's 'shoppingCartProductEntity' misses 'super_attribute'.
+            We need this to be able to add configurable products with the 'shoppingCartProductAdd' webservice.
+            -->
+            <complexType name="shoppingCartProductEntity">
+                <all>
+                    <element name="super_attribute" type="typens:associativeArray" minOccurs="0"/>
+                </all>
+            </complexType>
+
+        </schema>
+    </types>
+    <message name="touchHelloRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="text" type="xsd:string" />
+    </message>
+    <message name="touchHelloResponse">
+        <part name="values" type="typens:touchHelloEntity" />
+    </message>
+
+    <message name="touchNewsletterRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="touchNewsletter" type="typens:touchNewsletterEntity" />
+    </message>
+    <message name="touchNewsletterResponse">
+        <part name="resultCode" type="xsd:string" />
+    </message>
+
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="touchHello">
+            <documentation>Say hello world!</documentation>
+            <input message="typens:touchHelloRequest" />
+            <output message="typens:touchHelloResponse" />
+        </operation>
+
+        <operation name="touchNewsletter">
+            <documentation>Subscribe to newsletter</documentation>
+            <input message="typens:touchNewsletterRequest" />
+            <output message="typens:touchNewsletterResponse" />
+        </operation>
+
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="touchHello">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+
+        <operation name="touchNewsletter">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+    <service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

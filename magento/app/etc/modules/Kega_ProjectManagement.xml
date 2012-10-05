@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Kega_ProjectManagement>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Kega_ProjectManagement>
+    </modules>
+</config>

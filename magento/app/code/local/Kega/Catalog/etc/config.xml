@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_Catalog>
+            <version>0.0.1</version>
+        </Kega_Catalog>
+    </modules>
+    <frontend>
+		<routers>
+			<catalog>
+				<args>
+					<modules>
+						<Kega_Catalog before="Mage_Catalog">Kega_Catalog</Kega_Catalog>
+					</modules>
+				</args>
+			</catalog>
+		</routers>
+    </frontend>
+</config>

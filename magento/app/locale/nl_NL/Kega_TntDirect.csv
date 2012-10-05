@@ -1,0 +1,9 @@
+"Also handle the following shipping carriers as PostNL shipments","Behandel de geselecteerde verzendwijzen ook als PostNL verzending"
+
+"PostNL sticker - draw border","PostNL sticker - rand"
+"PostNL sticker - X pos","PostNL sticker - X positie"
+"Pixels calculated from the left of the page.","Pixels vanaf linker zijde van de pagina."
+"PostNL sticker - Y pos","PostNL sticker - Y positie"
+"Pixels calculated from the bottom of the page.","Pixels vanaf de bodem van de pagina."
+"PostNL sticker - left padding","PostNL sticker - padding aan linker zijde"
+"If you need some space at the left side of the PostNL sticker (For example: To print a custom instore barcode), you can configure some left spacing.","Als er extra ruimte nodig is aan de linker kant van de sticker, (Bv. een interne barcode), dan kan hier extra ruimte worden geconfigureerd."

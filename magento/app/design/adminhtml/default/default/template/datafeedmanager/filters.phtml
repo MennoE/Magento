@@ -1,0 +1,145 @@
+
+
+<div class='entry-edit'>
+    <div class="entry-edit-head"><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Categories'); ?> (<?php echo $this->__('Leave all boxes unchecked to select all categories, check some boxes to create a filter.'); ?>)</h4></div>
+    <div class="fieldset" id='category-selector'>
+        <div class='main-box'>
+            <?php
+            $storeId = $this->getStoreId();
+            $listOfCategories = Mage::getModel('catalog/category')->getCollection()
+                    ->setStoreId($storeId)
+                    ->addAttributeToSelect('name')
+                   // ->addAttributeToSelect('is_active')
+                    ->addAttributeToSort('path', 'ASC');
+
+            $categories = array();
+            foreach ($listOfCategories as $category) {
+                if (substr($category->getPath(), 0, 1) != '/') {
+                    $categories[$category->getId()]['name'] = $category->getName();
+                    $categories[$category->getId()]['path'] = $category->getPath();
+                    $categories[$category->getId()]['depth'] = count(explode('/', $category->getPath()));
+                    $categories[$category->getId()]['id'] = $category->getId();
+                }
+            }
+
+         //  array_shift($categories);
+         
+
+            $a = 0;
+            $current_depth[$a] = 0;
+            $a++;
+            foreach ($categories as $category) {
+                $current_depth[$a] = $category['depth'];
+              //  print_r($category);
+              //  echo "<br>";
+                if ($current_depth[$a] > $current_depth[$a - 1])
+                    echo "<ul class='categories-tree'>";
+                elseif ($current_depth[$a] < $current_depth[$a - 1]) {
+                    $ll = $current_depth[$a - 1] - $current_depth[$a];
+                    for ($l = 0; $l < $ll; $l++) {
+                        echo " </li></ul>";
+                    }
+                   
+                }
+                echo "<li class='node'>
+                                
+				<div class='cat-box'>
+                                        <div class='tree_view'></div>
+                                        <input type='checkbox' id='category_" . $category['path'] . "' identifier='" . $category['path'] . "' class='category'/>" . $category['name'] . " <span class='small'>[ID:" . $category['id'] . "]</span>
+					<input type='text' class='mapping' id='category_mapping" . $category['path'] . "' class='mapping' >
+				</div>";
+                $a++;
+                
+                        
+            }
+            echo "</li></ul>";
+            ?>
+            </div>
+        </div>
+    </div>
+
+    <div class='entry-edit'>
+        <div class="entry-edit-head"><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Product type'); ?></h4></div>
+        <div class="fieldset " id='type-ids-selector'>
+            <div class="main-box">
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_simple' identifier='simple'/> Simple</div></div>		
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_configurable' identifier='configurable'/> Configurable</div>	</div>	
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_bundle' identifier='bundle'/> Bundle</div>	</div>	
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_grouped' identifier='grouped'/> Grouped</div>	</div>
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_virtual' identifier='virtual'/> Virtual</div>	</div>	
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='type_id_downloadable' identifier='downloadable'/> Downloadable</div>	</div>	
+            </div>
+        </div>
+    </div>
+
+    <div class='entry-edit'>
+        <div class="entry-edit-head"><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Visibility'); ?></h4></div>
+        <div class="fieldset " id='visibility-selector'>
+            <div class="main-box">
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='visibility_1' identifier='1'/> <?php echo $this->__('Not Visible Individually'); ?></div></div>		
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='visibility_2' identifier='2'/> <?php echo $this->__('Catalog'); ?></div>	</div>	
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='visibility_3' identifier='3'/> <?php echo $this->__('Search'); ?></div>	</div>	
+                <div class="node"><div class='cat-box'><input  type='checkbox' id='visibility_4' identifier='4'/> <?php echo $this->__('Catalog, Search'); ?></div>	</div>	
+            </div>
+        </div>
+    </div>
+
+    <div class='entry-edit'>
+        <div class="entry-edit-head"><h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Attributes'); ?></h4></div>
+        <div class="fieldset " id='attributes-selector'>
+
+            <?php for ($x = 0; $x <= 10; $x++) : ?>
+                <?php
+                /* R�cup�rer l'id du type d'attributs */
+                $resource = Mage::getSingleton('core/resource');
+                $read = $resource->getConnection('core_read');
+                $tableEet = $resource->getTableName('eav_entity_type');
+                $select = $read->select()->from($tableEet)->where('entity_type_code=\'catalog_product\'');
+                $data = $read->fetchAll($select);
+                $typeId = $data[0]['entity_type_id'];
+
+
+                /*  Liste des  attributs disponible dans la bdd */
+
+                $attributesList = Mage::getResourceModel('eav/entity_attribute_collection')
+                        ->setEntityTypeFilter($typeId)
+                        ->addSetInfo()
+                        ->getData();
+                ?>	
+                <div class="node" id='node_<?php echo $x; ?>'>
+                    <div class='cat-box' >
+                        <input  type='checkbox' id='attribute_<?php echo $x; ?>' identifier='<?php echo $x; ?>'/> 
+                        <select style="width:300px" disabled="disabled" class="name-attribute" id='name_attribute_<?php echo $x; ?>' onchange='setValues($("attributes-selector"))' >
+                            <?php
+                            foreach ($attributesList as $attribute) {
+                                if (!empty($attribute['frontend_label']))
+                                    echo "<option value='" . $attribute['attribute_code'] . "'>" . $attribute['frontend_label'] . "</option>";
+                            }
+                            echo "<option value='qty'>Quantity</option>";
+                            echo "<option value='is_in_stock'>Is_in_stock</option>";
+                            echo "<option value='sku'>Sku</option>";
+                            ?>
+
+                        </select>
+
+
+                        <select disabled="disabled" class="condition-attribute" id='condition_attribute_<?php echo $x; ?>' onchange='setValues($("attributes-selector"))' style="width:100px">
+                            <option value='eq'><?php echo $this->__('=') ?></option>
+                            <option value='gt'><?php echo $this->__('>') ?></option>
+                            <option value='lt'><?php echo $this->__('<') ?></option>
+                            <option value='gteq'><?php echo $this->__('>=') ?></option>
+                            <option value="lteq"><?php echo $this->__('<=') ?></option>
+                            <option value='neq'><?php echo $this->__('!=') ?></option>
+                            <option value='like'><?php echo $this->__('like') ?></option>
+                            <option value='nlike'><?php echo $this->__('not like') ?></option>
+                            <option value='null'><?php echo $this->__('is null') ?></option>
+                            <option value='notnull'><?php echo $this->__('is not null') ?></option>
+                            <option value='in'><?php echo $this->__('in') ?></option>
+                            <option value='nin'><?php echo $this->__('not in') ?></option>
+                        </select>
+                        <input disabled="disabled" type='text' class="value-attribute"  id="value_attribute_<?php echo $x; ?>" style="width:300px" onkeyup='setValues($("attributes-selector"))'/>
+                    </div>
+                </div>
+            <?php endfor; ?>
+        </div>
+    </div>

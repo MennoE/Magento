@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<datafeedmanager_adminhtml_datafeedmanager_index>
+        <reference name="content">
+            <block type="datafeedmanager/adminhtml_datafeedmanager" name="datafeedmanager" />
+        </reference>
+    </datafeedmanager_adminhtml_datafeedmanager_index>
+    <datafeedmanager_adminhtml_datafeedmanager_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>datafeedmanager/datafeedmanager.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>datafeedmanager/datafeedmanager.css</name></action>
+        </reference>
+    </datafeedmanager_adminhtml_datafeedmanager_edit>
+</layout>

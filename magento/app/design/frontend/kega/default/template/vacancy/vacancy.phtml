@@ -1,0 +1,49 @@
+<div id="vacancies-main">
+	<div class="page-title">
+		<h1><?=$this->__('Vacancies');?></h1>
+	</div>
+
+    <?php
+    $firstId = null;
+    if (count($this->getVacancytypesWithVacancies())):
+    ?>
+    <div id="vacancy-list">
+        <?php
+        foreach($this->getVacancytypesWithVacancies() as $vacancytype):
+        if($firstId == null) {
+            $firstId = $vacancytype['id'];
+        }
+        ?>
+        <h2><a href="#" class="head" id="vacancy-head_<?=$vacancytype['id'];?>"><?=$vacancytype['title'];?> (<?=count($vacancytype['vacancies']);?>)</a></h2>
+        <div class="vacancy-content" id="vacancy-content_<?=$vacancytype['id'];?>">
+			<?php $counter = 1; ?>
+			<ul>
+				 <?php foreach($vacancytype['vacancies'] as $vacancy):?>
+                    <?php $url = $this->getVacancyUrl($vacancy, $vacancytype); ?>
+					<li><a href="<?= $url; ?>"><?=$vacancy['title'];?></a></li>
+
+				<?php endforeach;?>
+			</ul>
+        </div>
+        <?php endforeach;?>
+    </div>
+    <?php else: ?>
+        <div id="no-vacancies-msg">
+            <?=$this->__('We have no vacancies at this moment');?>
+        </div>
+	<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+<?php /*
+jQuery(document).ready(function(){
+    Vacancies.toggleAccordion(<?=($this->getActiveType() ? $this->getActiveType() : $firstId)?>);
+});
+*/?>
+<?php if($this->formIsSubmitted()):?>
+jQuery(document).ready(function(){
+    jQuery('#vacancy-actions').hide();
+    jQuery('#vacancy-apply').show();
+});
+<?php endif;?>
+</script>

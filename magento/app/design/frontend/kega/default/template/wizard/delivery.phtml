@@ -1,0 +1,152 @@
+<div id="wizard-delivery-details" class="wizard-block content-block">
+	<div class="wizard-block-content clearfix">
+		<h2 class="wizard-block-step"><span>3</span> <?php echo $this->__('Delivery') ?></h2>
+		<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+		<form action="<?php echo $this->getUrl('checkout/wizard/payment')?>#wizard-payment-details" id="delivery-form" method="post">
+			<fieldset>
+				<? $billing = $this->getBillingAddress(); ?>
+				<? $shipment_choice = Mage::getSingleton('checkout/session')->getShipmentChoice(); ?>
+				<? $shipment_choice = $shipment_choice ? $shipment_choice : 'store-shipment'; ?>
+				<? $autoshipping = Mage::getStoreConfig('autoshipping/settings/method'); ?>
+
+				<h3><?php echo $this->__('Where do you want to have your order been delivered?') ?></h3>
+				<ul>
+                	<li>
+						<p>
+                        	<input type="radio" id="store-shipment" name="shipment" value="store-shipment"<?= $shipment_choice == 'store-shipment' ? 'checked="checked"' : ''; ?> class="expand-content-option" />
+							<label for="store-shipment" class="inline"><?php echo $this->__('Delivery my package to the nearest store') ?>: <?php echo $this->__('Free'); ?></label>
+                        </p>
+                        <div class="visible-content">
+                        	<span class="label green"><?=$this->__('Free')?></span>
+                            <span><?=$this->__('Delivery during regular store supplies within 5 business days')?></span>
+                        </div>
+						<div class="expand-content form-theme2">
+							<? $stores = $this->getNearestStores(); ?>
+							<? if (count($stores)): ?>
+
+							<? $criteria = $this->getCheckout()->getPickupStoreCriteria()
+								? $this->getCheckout()->getPickupStoreCriteria()
+								: $billing->getPostcode();
+							?>
+							<p><label for="pickup-store"><?=$this->__('Stores near %s', $criteria);?></label>
+								<select name="pickup-store" id="pickup-store">
+									<? foreach($stores as $store): ?>
+									<option value="<?=$store->getId();?>"<?=$store->getId() == $this->getCheckout()->getStorePickupData() ? ' selected="selected"' : '';?>><?=$store->getName();?>, <?=$store->getAddress();?></option>
+									<? endforeach; ?>
+								</select>
+							</p>
+							<? else: ?>
+							<p><?=$this->__('No nearest store was found'); ?></p>
+							<? endif; ?>
+
+							<p class="pickup-store-search-wrap newline">
+								<label for="pickup-store-search"><?=$this->__('Search a different pickup store');?></label>
+								<input type="text" name="pickup-store-search" id="pickup-store-search" class="text-input empty-focus" />
+								<button type="submit" class="custom-button3" id="search-pickup-store"><?=$this->__('Search');?></button>
+							</p>
+						</div>
+					</li>
+                    
+					<li>
+						<p>
+							<input type="radio" id="delivery-invoice" name="shipment" value="invoice-shipping"<?= $shipment_choice == 'invoice-shipping' ? ' checked="checked"' : ''; ?> class="expand-content-option" />
+							<label for="delivery-invoice">
+								<?=$this->__('On my invoice address: %s', $this->htmlEscape($billing->getStreet(1) . ' ' . $billing->getStreet(2))) ?>
+							</label>
+						</p>
+						<div class="visible-content">
+							<span class="label">+ &euro; <?= $this->getCurrentDeliveryRates(); ?></span>
+                            <span><?=$this->__('Delivery by PostNL within 1-2 business days');?></span>
+						</div>
+					</li>
+					<li>
+						<? $shipping = $this->getShippingData(); ?>
+						<p>
+							<input type="radio" id="delivery-new" name="shipment" value="new-shipping"<?= $shipment_choice == 'new-shipping' ? 'checked="checked"' : ''; ?> class="expand-content-option" />
+							<label for="delivery-new"><?php echo $this->__('On another delivery address:') ?></label>
+						</p>
+                        <div class="visible-content">
+                        	<span class="label">+ &euro; <?= $this->getCurrentDeliveryRates(); ?></span>
+                            <span><?=$this->__('Delivery by PostNL within 1-2 business days');?></span>
+                        </div>
+						<div class="expand-content">
+							<div class="even form-block">
+								<p>
+									<label for="surname"><?=$this->__('Firstname');?> *</label>
+									   <input type="text" name="shipping[firstname]" size="15" id="surname" class="input-text required-entry" value="<?php echo $this->htmlEscape($shipping->getFirstname()) ?>"/>
+								</p>
+								<p>
+									<label for="lastname"><?=$this->__('Lastname');?> *</label>
+									   <input type="text" name="shipping[lastname]" size="20" id="lastname" class="input-text required-entry" value="<?php echo $this->htmlEscape($shipping->getLastname()) ?>"/>
+								</p>
+							</div>
+							<div class="form-block">
+								<p>
+									<label for="street" class="leading"><?=$this->__('Street');?> *</label>
+									   <input type="text" name="shipping[street][0]" size="20" id="street" class="input-text required-entry" value="<?php echo $this->htmlEscape($shipping->getStreet(0)) ?>"/>
+								</p>
+								<p>
+									<label for="number" class="inline"><?=$this->__('Number');?> *</label>
+									   <input type="text" name="shipping[street][1]" size="5" id="number" class="input-text required-entry" onchange="validateAddress()"  value="<?php echo $this->htmlEscape($shipping->getStreet(1)) ?>"/>
+								</p>
+							</div>
+							<div class="even form-block">
+								<p>
+									<label for="postcode"><?=$this->__('Zipcode');?> *</label>
+									   <input type="text" name="shipping[postcode]" size="10" id="postcode" class="input-text required-entry" onchange="validateAddress()" value="<?php echo $this->htmlEscape($shipping->getPostcode()) ?>"/>
+								</p>
+								<p>
+									<label for="city" class="leading"><?=$this->__('City');?> *</label>
+									   <input type="text" name="shipping[city]" size="20" id="city" class="input-text required-entry" value="<?php echo $this->htmlEscape($shipping->getCity()) ?>"/>
+								</p>
+							</div>
+							<div class="form-block">
+								<p>
+									<label for="city" class="leading"><?=$this->__('Country');?> *</label>
+									<?php echo $this->getCountryHtmlSelect('shipping', '', $shipping->getCountryId()); ?>
+								</p>
+							</div>
+						</div>
+					</li>
+
+					<? if (Mage::app()->getStore()->getConfig('kiala/kiala/active')): ?>
+					<li>
+						<p>
+							<input type="radio" id="kiala-shipment" name="shipment" value="kiala-shipment"<?= $shipment_choice == 'kiala-shipment' ? 'checked="checked"' : ''; ?> class="expand-content-option" />
+							<label for="kiala-shipment"><?php echo $this->__('Delivery my package to the nearest Kiala point') ?> <?php echo $this->getShippingCosts('kiala_kiala'); ?></label>
+						</p>
+						<div id="kiala-info" class="expand-content">
+							<? if ($kiala = $this->getCheckout()->getKialaPointData()): ?>
+							<address>
+								<? if (!empty($kiala['kpname'])): ?><span class="n"><?=htmlentities($kiala['kpname']);?></span><? endif; ?>
+								<? if (!empty($kiala['street'])): ?><span class="adr"><?=htmlentities($kiala['street']);?></span><? endif; ?>
+								<? if (!empty($kiala['zip'])): ?><span class="zip"><?=htmlentities($kiala['zip']);?></span><? endif; ?>
+								<? if (!empty($kiala['city'])): ?><span class="city"><?=htmlentities($kiala['city']);?></span><? endif; ?>
+								<? if (!empty($kiala['locationhint'])): ?><span class="hint"><?=htmlentities($kiala['locationhint']);?></span><? endif; ?>
+							</address>
+							<? endif; ?>
+
+							<?
+								$account = Mage::app()->getStore()->getConfig('kiala/kiala/account');
+								$return = Mage::app()->getStore()->getConfig('kiala/kiala/return_url');
+								$country = Mage::app()->getStore()->getConfig('kiala/kiala/country');
+							?>
+
+							<a id="kiala-shipment-link" href="https://locateandselect.kiala.com/search?dspid=<?=$account;?>&amp;language=nl&amp;countryid=<?=$country;?>&amp;bckUrl=<?=$return;?>&amp;target=_parent"><?=$this->__('Change my Kiala delivery address'); ?></a>
+						</div>
+					</li>
+					<? endif; ?>
+				</ul>
+				<p class="footer">
+					<button type="submit">Door naar betalen</button>
+					<a href="<?php echo $this->getUrl('checkout/wizard/') ?>#wizard-personal-details" class="back-link">&lt; <?=$this->__('Previous step') ?></a>
+				</p>
+			</fieldset>
+		</form>
+		<script type="text/javascript">
+		//<![CDATA[
+			var dataForm = new VarienForm('delivery-form');
+		//]]>
+		</script>
+	</div>
+</div>

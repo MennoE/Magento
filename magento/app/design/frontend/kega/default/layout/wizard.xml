@@ -1,0 +1,216 @@
+<layout version="0.0.1">
+
+    <default>
+        <reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/wizard.js</name></action>
+        </reference>
+	</default>
+
+	<checkout_wizard_general>
+		<label>Checkout Wizard General</label>
+
+		<remove name="sale.reorder.sidebar"/>
+		<reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+            <action method="addBodyClass"><class>mode-checkout</class></action>
+
+			<action method="unsetChild"><name>customer_form_login</name></action>
+			<action method="unsetChild"><name>cart_sidebar</name></action>
+        </reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>breadcrumb-order</crumbName>
+                <crumbInfo><label>breadcrumb-order</label><title>breadcrumb-order</title><link>/checkout/cart</link></crumbInfo>
+            </action>
+        </reference>
+		<reference name="content">
+			<block type="checkout/cart" name="header.checkout.cart">
+                <action method="setCartTemplate"><value>wizard/cart-summary.phtml</value></action>
+                <action method="setEmptyTemplate"><value>wizard/cart-summary.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender">
+					<type>simple</type>
+					<block>checkout/cart_item_renderer</block>
+					<template>wizard/cart/item/summary.phtml</template>
+				</action>
+                <action method="addItemRender">
+					<type>grouped</type>
+					<block>checkout/cart_item_renderer_grouped</block>
+					<template>wizard/cart/item/summary.phtml</template>
+				</action>
+                <action method="addItemRender">
+					<type>configurable</type>
+					<block>checkout/cart_item_renderer_configurable</block>
+					<template>wizard/cart/item/summary.phtml</template>
+				</action>
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+            </block>
+		</reference>
+
+		<reference name="right">
+			<action method="unsetChildren"></action>
+			<block type="page/html_wrapper" name="checkout.sidebar.container" as="checkout.sidebar.container" translate="label">
+				<label>Checkout sidebar container</label>
+				<action method="setElementId"><value>checkout-sidebar</value></action>
+				<block type="cms/block" name="checkout.sidebar.usp" as="checkout.sidebar.usp" after="-">
+					<action method="setBlockId"><block_id>checkout-sidebar</block_id></action>
+				</block>
+			</block>
+		</reference>
+		<reference name="footer">
+			<action method="unsetChild"><name>recently_viewed</name></action>
+		</reference>
+		<reference name="after_body_start">
+			<remove name="mini-sizechart"/>
+		</reference>
+	</checkout_wizard_general>
+
+	<checkout_wizard_index translate="label">
+		<label>Checkout/Wizard Step 2 (personal details page)</label>
+        <update handle="checkout_wizard_general"/>
+		<reference name="root">
+			<action method="addBodyClass"><value>wizard-account</value></action>
+		</reference>
+		<reference name="content">
+			<block type="customer/form_register" name="wizard.register" template="wizard/register.phtml">
+				<block type="wizard/wizard" name="wizard.register.customer.choice" template="customer/form/register/form/customer-choice.phtml" />
+			</block>
+			<block type="wizard/wizard" name="wizard.delivery.empty" template="wizard/delivery-empty.phtml" />
+			<block type="wizard/wizard" name="wizard.payment.empty" template="wizard/payment-empty.phtml" />
+		</reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>step-2</crumbName>
+                <crumbInfo><label>2. Personal details</label><title>2. Personal details</title></crumbInfo>
+            </action>
+        </reference>
+	</checkout_wizard_index>
+
+	<checkout_wizard_billing translate="label">
+		<label>Checkout/Wizard Step 2 (billing page)</label>
+		<update handle="checkout_wizard_general"/>
+		<reference name="root">
+			<action method="addBodyClass"><value>wizard-account</value></action>
+		</reference>
+		<reference name="content">
+			<block type="customer/form_register" name="wizard.register" template="wizard/register.phtml">
+				<block type="customer/form_register" name="wizard.register.form" template="customer/form/register/form.phtml">
+					<action method="setShowAddressFields"><value>true</value></action>
+					<action method="setShowLoginChoice"><value>true</value></action>
+					<block type="wizard/wizard" name="wizard.register.customer.data" template="customer/form/register/form/customer-data.phtml" />
+					<block type="wizard/wizard" name="wizard.register.customer.address.data" template="customer/form/register/form/customer-address-data.phtml" />
+					<block type="wizard/wizard" name="wizard.register.customer.address" template="customer/form/register/form/customer-address.phtml" />
+					<block type="wizard/wizard" name="wizard.register.customer.login" template="customer/form/register/form/customer-login.phtml" />
+				</block>
+			</block>
+			<block type="wizard/wizard" name="wizard.delivery.empty" template="wizard/delivery-empty.phtml" />
+			<block type="wizard/wizard" name="wizard.payment.empty" template="wizard/payment-empty.phtml" />
+		</reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>step-2</crumbName>
+                <crumbInfo><label>2. Personal details</label><title>2. Personal details</title></crumbInfo>
+            </action>
+        </reference>
+	</checkout_wizard_billing>
+
+	<checkout_wizard_delivery translate="label">
+		<label>Checkout/Wizard Step 3 (delivery page)</label>
+        <update handle="checkout_wizard_general"/>
+
+		<reference name="content">
+			<block type="wizard/wizard" name="wizard.register.summary" template="wizard/register-summary.phtml" />
+			<block type="wizard/wizard" name="wizard.delivery.summary" template="wizard/delivery.phtml" />
+			<block type="wizard/wizard" name="wizard.payment.empty" template="wizard/payment-empty.phtml" />
+		</reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>step-3</crumbName>
+                <crumbInfo><label>3. Delivery</label><title>3. Delivery</title></crumbInfo>
+            </action>
+        </reference>
+	</checkout_wizard_delivery>
+
+	<checkout_wizard_payment translate="label">
+		<label>Checkout/Wizard Step 4 (payment page)</label>
+        <update handle="checkout_wizard_general"/>
+
+		<reference name="content">
+			<block type="wizard/wizard" name="wizard.register.summary" template="wizard/register-summary.phtml" />
+			<block type="wizard/wizard" name="wizard.delivery.summary" template="wizard/delivery-summary.phtml" />
+			<block type="wizard/wizard" name="wizard.payment" template="wizard/payment.phtml">
+				<block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+
+				<block type="wizard/wizard" name="wizard.giftcard" as="giftcard" template="wizard/giftcard.phtml"/>
+				<block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
+					<action method="setMethodFormTemplate">
+						<method>purchaseorder</method>
+						<template>payment/form/purchaseorder.phtml</template>
+					</action>
+				</block>
+			</block>
+		</reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>step-4</crumbName>
+                <crumbInfo><label>4. Payment</label><title>4. Payment</title></crumbInfo>
+            </action>
+        </reference>
+	</checkout_wizard_payment>
+
+	<checkout_wizard_thanks translate="label">
+		<label>Checkout/Wizard Step 5 (thanks page)</label>
+		<update handle="checkout_wizard_general"/>
+
+		<reference name="content">
+			<action method="unsetChildren"></action>
+			<block type="wizard/wizard" name="wizard.thanks" template="wizard/thanks.phtml" />
+		</reference>
+	</checkout_wizard_thanks>
+
+	<checkout_wizard_failure>
+		<update handle="checkout_wizard_general"/>
+
+		<reference name="content">
+			<action method="unsetChildren"></action>
+			<block type="wizard/wizard" name="wizard.failure" template="wizard/failure.phtml" />
+		</reference>
+	</checkout_wizard_failure>
+
+	<!-- adjust the cart page when wizard module is available -->
+    <checkout_cart_index>
+		<reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+            <action method="addBodyClass"><class>mode-checkout</class></action>
+            <action method="addBodyClass"><class>various-height</class></action>
+        </reference>
+		<reference name="content">
+			<action method="unsetChild"><name>checkout.cart</name></action>
+
+            <block type="checkout/cart" name="checkout.cart">
+                <action method="setCartTemplate"><value>wizard/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/item/default.phtml</template></action>
+
+				<block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
+				<block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+				</block>
+            </block>
+
+			<block type="wizard/wizard" name="wizard.register.summary.empty" template="wizard/register-empty.phtml" />
+			<block type="wizard/wizard" name="wizard.delivery.empty" template="wizard/delivery-empty.phtml" />
+			<block type="wizard/wizard" name="wizard.payment.empty" template="wizard/payment-empty.phtml" />
+
+            <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+		</reference>
+
+	</checkout_cart_index>
+</layout>

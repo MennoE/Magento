@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+	<api>
+		<resources>
+			<touch translate="title" module="kega_touch">
+				<model>kega_touch/api</model>
+				<title>Touch</title>
+				<acl>touch</acl>
+				<methods>
+					<hello translate="title" module="kega_touch">
+						<title>Hello World</title>
+						<method>hello</method>
+					</hello>
+					<newsletter translate="title" module="kega_touch">
+						<title>Newsletter registration</title>
+						<method>newsletter</method>
+					</newsletter>
+				</methods>
+			</touch>
+		</resources>
+		<v2>
+			<resources_function_prefix>
+				<touch>touch</touch>
+			</resources_function_prefix>
+		</v2>
+		<acl>
+			<resources>
+				<touch translate="title" module="kega_touch">
+					<title>Touch</title>
+					<sort_order>5</sort_order>
+				</touch>
+			</resources>
+		</acl>
+	</api>
+</config>

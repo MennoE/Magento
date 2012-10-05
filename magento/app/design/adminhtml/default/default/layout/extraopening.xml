@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <extraopening_adminhtml_extraopening_index>
+        <reference name="content">
+            <block type="extraopening/adminhtml_extraopening" name="extraopening" />
+        </reference>
+    </extraopening_adminhtml_extraopening_index>
+</layout>

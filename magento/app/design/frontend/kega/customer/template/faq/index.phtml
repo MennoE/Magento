@@ -1,0 +1,17 @@
+<div id="faq">
+    <div class="content-block">
+        <h1><?=$this->__('Faq');?></h1>
+        <p class="desc"><?=Mage::helper('init/catalog')->getCategoryContent(9); ?></p>
+        <form id="faq_search" class="faq_search theme1" action="#faq_search" method="post" >
+        <fieldset>
+            <h2><label for="question" class="newline"><?=$this->__('Search all subjects:')?></label></h2>
+            <p>
+                <input name="criteria" type="text" id="question" title="<?=$this->__('Your searchterm'); ?>" class="empty-focus" value="<?=$this->getSearchQuery()?>">
+                <button type="submit" title="<?=$this->__('Search')?>" value="<?=$this->__('Search')?>" class="search"><span><?=$this->__('Search')?></span></button>
+            </p>
+            <input type="hidden" name="do" value="search" />
+        </fieldset>
+        </form>
+    </div>
+    <?=$this->getChildHtml('faq_list');?>
+</div>

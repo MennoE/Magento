@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <complexType name="retailHelloEntity">
+                <all>
+                    <element name="text" type="xsd:string" minOccurs="0" />
+                    <element name="date" type="xsd:string" minOccurs="0" />
+                    <element name="your_value" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+
+            <complexType name="retailStoreEntity">
+				<all>
+					<element name="entity_id" type="xsd:int" minOccurs="1" />
+					<element name="storenummer" type="xsd:string" minOccurs="1" />
+					<element name="name" type="xsd:string" minOccurs="1" />
+					<element name="lat" type="xsd:string" minOccurs="1" />
+					<element name="lng" type="xsd:string" minOccurs="1" />
+					<element name="address" type="xsd:string" minOccurs="1" />
+					<element name="number" type="xsd:string" minOccurs="1" />
+					<element name="number_ext" type="xsd:string" minOccurs="1" />
+					<element name="city" type="xsd:string" minOccurs="1" />
+					<element name="zipcode" type="xsd:string" minOccurs="1" />
+					<element name="phone" type="xsd:string" minOccurs="1" />
+					<element name="fax" type="xsd:string" minOccurs="1" />
+					<element name="email" type="xsd:string" minOccurs="1" />
+					<element name="manager_name" type="xsd:string" minOccurs="1" />
+					<element name="description" type="xsd:string" minOccurs="1" />
+					<element name="distance" type="xsd:string" minOccurs="0" />
+				</all>
+            </complexType>
+
+            <complexType name="retailStoresArray">
+				<complexContent>
+					<restriction base="soapenc:Array">
+						<attribute ref="soapenc:arrayType" wsdl:arrayType="typens:retailStoreEntity[]" />
+					</restriction>
+				</complexContent>
+			</complexType>
+        </schema>
+    </types>
+    <message name="retailHelloRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="text" type="xsd:string" />
+    </message>
+    <message name="retailHelloResponse">
+        <part name="values" type="typens:retailHelloEntity" />
+    </message>
+
+    <message name="retailStoreInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="retailStoreNumber" type="xsd:string" minOccurs="1" />
+        <part name="store" type="xsd:string" minOccurs="0" />
+    </message>
+    <message name="retailStoreInfoResponse">
+        <part name="retailStore" type="typens:retailStoreEntity" />
+    </message>
+
+    <message name="retailStoreNearestRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="criteria" type="xsd:string" />
+        <part name="range" type="xsd:int" />
+        <part name="limit" type="xsd:int" minOccurs="0" />
+        <part name="store" type="xsd:string" minOccurs="0" />
+    </message>
+    <message name="retailStoreNearestResponse">
+        <part name="retailStores" type="typens:retailStoresArray" />
+    </message>
+
+	<message name="retailStoreOrderSetRetailStoreRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="orderIncrementId" type="xsd:string" />
+        <part name="retailStoreNumber" type="xsd:string" />
+    </message>
+    <message name="retailStoreOrderSetRetailStoreResponse">
+        <part name="result" type="xsd:boolean" />
+    </message>
+
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="retailHello">
+            <documentation>Say hello world!</documentation>
+            <input message="typens:retailHelloRequest" />
+            <output message="typens:retailHelloResponse" />
+        </operation>
+
+        <operation name="retailStoreInfo">
+            <documentation>Retreive info about store</documentation>
+            <input message="typens:retailStoreInfoRequest" />
+            <output message="typens:retailStoreInfoResponse" />
+        </operation>
+
+        <operation name="retailStoreNearest">
+            <documentation>Find nearest store(s)</documentation>
+            <input message="typens:retailStoreNearestRequest" />
+            <output message="typens:retailStoreNearestResponse" />
+        </operation>
+
+        <operation name="retailStoreOrderSetInStore">
+            <documentation>Set retail store number (the order is placed from) on order</documentation>
+            <input message="typens:retailStoreOrderSetRetailStoreRequest" />
+            <output message="typens:retailStoreOrderSetRetailStoreResponse" />
+        </operation>
+
+        <operation name="retailStoreOrderSetPickUpStore">
+            <documentation>Set retail store number (the order is should be sent to) on order</documentation>
+            <input message="typens:retailStoreOrderSetRetailStoreRequest" />
+            <output message="typens:retailStoreOrderSetRetailStoreResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="retailHello">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+
+        <operation name="retailStoreInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+
+        <operation name="retailStoreNearest">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+
+        <operation name="retailStoreOrderSetInStore">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+
+        <operation name="retailStoreOrderSetPickUpStore">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+    <service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

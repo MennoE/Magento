@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <vacancytype_adminhtml_vacancytype_index>
+        <reference name="content">
+            <block type="vacancytype/adminhtml_vacancytype" name="vacancytype" />
+        </reference>
+    </vacancytype_adminhtml_vacancytype_index>
+    <vacancytype_adminhtml_vacancytype_edit>
+		   <update handle="editor"/>
+	</vacancytype_adminhtml_vacancytype_edit>
+</layout>

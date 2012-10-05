@@ -1,0 +1,7 @@
+<? $item = $this->getItemData(); ?>
+<ul class="community-options">
+    <li class="hyves"><a href="http://www.hyves.nl/profilemanage/add/tips/?name=Hyves%20tip&amp;text=<?=$item['title'];?> <?=$item['url'];?>&amp;type=12" class="tooltip-wrap" target="_blank"><?=$this->__('Hyves');?><span class="tooltip"><?=$this->__('Add to Hyves');?></span></a></li>
+    <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=<?=$item['url'];?>&amp;TB_iframe=true&amp;width=626&amp;height=436" class="thickbox tooltip-wrap use-score-theme"><?=$this->__('Facebook');?><span class="tooltip"><?=$this->__('Add to Facebook');?></span></a></li>
+    <li class="delicious"><a href="http://delicious.com/save?jump=no&v=4&url=<?=$item['url'];?>&title=<?=$item['title'];?>&amp;TB_iframe=true&amp;width=626&amp;height=436" class="tooltip-wrap" target="_blank"><?=$this->__('Delicious');?><span class="tooltip"><?=$this->__('Add to Delicious');?></span></a></li>
+    <li class="myspace"><a href="http://www.myspace.com/Modules/PostTo/Pages/?u=<?=$item['url'];?>&amp;t=<?=$item['title'];?>&amp;l=2&amp;TB_iframe=true&amp;width=626&amp;height=436" class="tooltip-wrap" target="_blank"><?=$this->__('MySpace');?><span class="tooltip"><?=$this->__('Add to MySpace');?></span></a></li>
+</ul>

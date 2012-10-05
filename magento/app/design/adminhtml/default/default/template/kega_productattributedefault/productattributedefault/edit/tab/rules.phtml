@@ -1,0 +1,813 @@
+<?php $productAttributesValues = $this->getProductAttributesValues(); ?>
+<?php $dayOptions = $this->getDayOptions(); ?>
+<?php $_htmlId = uniqid(); ?>
+<?php $formValues = $this->getFormValues(); ?>
+
+<div class="entry-edit">
+	<div class="entry-edit-head collapseable">
+		<a href="#" class="action-collapse"><?php echo Mage::helper('kega_productattributedefault')->__('Condities (laat leeg voor alle producten)') ?></a>
+	</div>
+
+	<div class="fieldset rule-tree" id="rule_conditions_fieldset">
+		<?php echo $this->__('Als ALLE van deze voorwaarden WAAR zijn:'); ?>
+		<?php foreach ($formValues['rules'] as $rule): $id = md5(microtime()); ?>
+		<?php $showInput = (!empty($rule['attribute_name']))? true: false; ?>
+		<ul class="rule-param-children clearfix">
+			<li>
+				<span class="attribute-name-placeholder rule-param<?php $showInput? ' hidden': ''; ?>">
+					<a href="#">
+						<?php if($showInput): ?>
+						<?php echo $rule['attribute_name']; ?>
+						<?php else: ?>
+						...
+						<?php endif; ?>
+					</a>
+				</span>
+				<span class="rule-param hidden">
+					<select class="input-text input-select attribute-name validate-select validate-select-operators" name="product_attribute_default[rules][<?php echo $id; ?>][attribute_name]">
+						<optgroup label="<?php echo $this->__('Product Attributes'); ?>">
+							<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+							<?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+							<?php $selected = ($optionValue == $rule['attribute_name'])? ' selected="selected"': ''; ?>
+							<option value="<?php echo $optionValue; ?>"<?php echo $selected; ?>><?php echo $optionInfo['name']; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					</select>
+				</span>
+			</li>
+			<li>
+				<span class="attribute-operator-placeholder rule-param<?php echo $showInput? '': ' hidden'; ?>">
+					<a href="#">
+						<?php if($showInput && $rule['attribute_operator']!==''): ?>
+                        <?php if (!empty($rule['attribute_operator_days'])): ?>
+                        <?php echo str_replace('x', $rule['attribute_operator_days'], $rule['attribute_operator']); ?>
+                        <?php else: ?>
+						<?php echo $rule['attribute_operator']; ?>
+                        <?php endif; ?>
+						<?php else: ?>
+						...
+						<?php endif; ?>
+					</a>
+				</span>
+				<span class="rule-param hidden atrribute-operator-select">
+					<?php $operatorOptions = $this->getOperatorOptions();
+					?>
+                    <?php if (!empty($rule['attribute_operator_days'])): ?>
+                    <input class="input-small input-text input-operator-days" type="text" value="<?php echo empty($rule['attribute_operator_days'])? '': $rule['attribute_operator_days']; ?>" name="product_attribute_default[rules][<?php echo $id; ?>][attribute_operator_days]" />
+					<?php endif; ?>
+                    <select class="input-text input-select validate-select validate-select-values attribute-operator" name="product_attribute_default[rules][<?php echo $id; ?>][attribute_operator]">
+						<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+						<?php foreach ($operatorOptions as $optionValue => $optionLabel): ?>
+						<?php $selected = ($optionValue == $rule['attribute_operator'])? ' selected="selected"': ''; ?>
+						<option value="<?php echo $optionValue; ?>"<?php echo $selected; ?>><?php echo $optionLabel; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</span>
+			</li>
+			<li>
+				<span class="attribute-pattern-placeholder rule-param<?php echo $showInput && $rule['attribute_operator'] != 'is_null' ? '': ' hidden'; ?>">
+					<a href="#">
+						<?php $attributePattern = ($rule['attribute_pattern_value'] === '')? $rule['attribute_pattern_code']: $rule['attribute_pattern_value']; ?>
+						<?php if($showInput && $attributePattern !==''): ?>
+						<?php echo $attributePattern; ?>
+						<?php else: ?>
+						...
+						<?php endif; ?>
+					</a>
+				</span>
+				<span class="rule-param hidden attribute-pattern-input">
+					<input type="text" name="product_attribute_default[rules][<?php echo $id; ?>][attribute_pattern_value]" class="el input-text attribute-pattern-value" value="<?php echo $rule['attribute_pattern_value']; ?>" />
+					<a href="#" class="el rule-param-select"><img class="rule-param-select v-middle" title="<?php echo $this->__('select category'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_chooser_trigger.gif'); ?>"></a>
+					<span class="el rule-param apply-rule hidden">
+						<a href="#"><img class="rule-param-apply v-middle" title="<?php echo $this->__('save rule'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_component_apply.gif'); ?>"></a>
+					</span>
+					<span class="el or"><sup><a href="#note1">1</a>,</sup><sup><a href="#note2">2</a></sup> or</span>
+					<select class="el input-select attribute-name validate-select-operators attribute-pattern-code" name="product_attribute_default[rules][<?php echo $id; ?>][attribute_pattern_code]">
+						<!-- <optgroup label="<?php echo $this->__('Day'); ?>">
+							<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+							<?php foreach ($dayOptions as $optionValue => $optionInfo): ?>
+							<?php $selected = ($optionValue == $rule['attribute_pattern_code'])? ' selected="selected"': ''; ?>
+							<option value="<?php echo $optionValue; ?>"<?php echo $selected; ?>><?php echo $optionInfo; ?></option>
+							<?php endforeach; ?>
+						</optgroup> -->
+						<optgroup label="<?php echo $this->__('Product Attributes'); ?>">
+							<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+							<?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+							<?php $selected = ($optionValue == $rule['attribute_pattern_code'])? ' selected="selected"': ''; ?>
+							<option value="<?php echo $optionValue; ?>"<?php echo $selected; ?>><?php echo $optionInfo['name']; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					</select>
+					<span class="catalog-tree"></span>
+				</span>
+				<span class="rule-param remove-rule">
+					<a href="#"><img class="rule-param-remove v-middle" title="<?php echo $this->__('remove rule'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_component_remove.gif'); ?>"></a>
+				</span>
+			</li>
+		</ul>
+		<?php endforeach; ?>
+		<ul class="rule-param-children-demo clearfix">
+			<li>
+				<span class="rule-param attribute-name-placeholder">
+					<a href="#">
+						<img class="rule-param-add v-middle" id="add-new-rule-btn" title="<?php echo $this->__('Toevoegen'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_component_add.gif'); ?>">
+					</a>
+				</span>
+			</li>
+		</ul>
+		<ul class="rule-param-children-demo hidden" id="add-new-rule-template">
+			<li>
+				<span class="rule-param attribute-name-placeholder">
+					<a href="#">
+						...
+					</a>
+				</span>
+				<span class="rule-param hidden">
+					<select class="input-text input-select attribute-name validate-select validate-select-operators" name="product_attribute_default[rules][#{id}][attribute_name]">
+						<optgroup label="<?php echo $this->__('Product Attributes'); ?>">
+							<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+							<?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+							<option value="<?php echo $optionValue; ?>"><?php echo $optionInfo['name']; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					</select>
+				</span>
+			</li>
+			<li>
+				<span class="rule-param attribute-operator-placeholder hidden">
+					<a href="#">
+						...
+					</a>
+				</span>
+				<span class="rule-param hidden atrribute-operator-select">
+					<?php $operatorOptions = $this->getOperatorOptions();
+					?>
+					<select class="input-text input-select validate-select validate-select-values attribute-operator" name="product_attribute_default[rules][#{id}][attribute_operator]">
+						<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+						<?php foreach ($operatorOptions as $optionValue => $optionLabel): ?>
+						<option value="<?php echo $optionValue; ?>"><?php echo $optionLabel; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</span>
+			</li>
+			<li>
+				<span class="rule-param attribute-pattern-placeholder hidden">
+					<a href="#">
+						...
+					</a>
+				</span>
+				<span class="rule-param hidden attribute-pattern-input">
+					<input type="text" name="product_attribute_default[rules][#{id}][attribute_pattern_value]" class="el input-text attribute-pattern-value" value="" /><sup>2</sup>
+					<a href="#" class="el rule-param-select"><img class="v-middle" title="<?php echo $this->__('select category'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_chooser_trigger.gif'); ?>"></a>
+					<span class="el rule-param apply-rule hidden">
+						<a href="#"><img class="rule-param-apply v-middle" title="<?php echo $this->__('save rule'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_component_apply.gif'); ?>"></a>
+					</span>
+					<span class="el or"><sup><a href="#note1">1</a>,</sup><sup><a href="#note2">2</a></sup> or</span>
+					<select class="el input-select attribute-name validate-select-operators attribute-pattern-code" name="product_attribute_default[rules][#{id}][attribute_pattern_code]">
+						<optgroup label="<?php echo $this->__('Product Attributes'); ?>">
+							<option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+							<?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+							<option value="<?php echo $optionValue; ?>"><?php echo $optionInfo['name']; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					</select>
+					<span class="catalog-tree"></span>
+				</span>
+				<span class="rule-param remove-rule">
+					<a href="#"><img class="rule-param-remove v-middle" title="<?php echo $this->__('remove rule'); ?>" alt="" src="<?php echo $this->getSkinUrl('images/rule_component_remove.gif'); ?>"></a>
+				</span>
+			</li>
+		</ul>
+	</div><!-- end fieldset -->
+</div>
+
+<div class="form-list">
+		<p class="note"><?php echo $this->__('You can click outside the panel (in this area) to close the input/select element'); ?>
+		<br /><br />
+		<sup><a name="note1">1</a></sup> <strong><?php echo $this->__('Pattern Matching'); ?></strong><br />
+		<?php echo nl2br(Mage::helper('kega_productattributedefault')->__('The value is case sensitive; you can use * or ? as an wildcard anywhere in the value - the wildcards work only with <em>contains</em> or <em>contains not</em> operators;
+							<strong>*</strong> matches zero, one or more chars (letters, numbers, _, -, etc.).
+							<strong>?</strong> matches a single char
+							Eg:
+							<strong>1022376-75*</strong> matches 1022376-75, 1022376-75-XL, 1022376-75-S,...; Pattern interpretation: match a value starting with 1022376-75 followed by zero or more chars
+							<strong>*-210</strong> matches -210, abcd-210, --210, 223089-210,...; Pattern interpretation: match a value starting with zero or more chars that ends in -210
+							<strong>*9??6*</strong> matches 9566, XL-9S-6, 10009136-00,... ;  Pattern interpretation: match a value starting with zero or more chars followed by 9, followed by any two chars, followed by 6, followed by zero or more chars
+							<strong>10009??6*</strong> matches 10009006, 10009136-00, 10009136-65,...; Pattern interpretation: match a value starting with 10009 followed by any two chars, followed by 6, followed by zero or more chars'
+							)); ?>
+		<br /><br />
+		<sup><a name="note2">2</a></sup>
+		<?php echo nl2br(Mage::helper('kega_productattributedefault')->__('For select type attributes (eg. color) use the admin label'
+							)); ?>
+		</p>
+</div>
+
+
+
+
+<script type="text/javascript">
+    var productAttributeValues = <?php echo Mage::helper('core')->jsonEncode($productAttributesValues) ?>;
+    var defaultOperatorOptions = <?php echo Mage::helper('core')->jsonEncode($this->getDefaultOperatorOptions()) ?>;
+    var dateOperatorOptions = <?php echo Mage::helper('core')->jsonEncode($this->getDateOperatorOptions()) ?>;
+
+    var datePatternValueOptions = [{"key": "today", "value": "Today"}, {"key": "custom_date", "value": "Enter Date"}];
+
+	/**
+ 	 * @todo Anda B. 08.08.2011
+ 	 * Refactor js code in a more easy to manage code (eg: operator and pattern should be automatically inserted depending on the first selection)
+     *
+     */
+
+	// this is used by the category tree js to update updateElement.value with the selected categIds
+	function ruleCategory(ref) {
+		this.ref = ref;
+		this.updateElement = ref.down('.attribute-pattern-value');
+	}
+
+    function toggleCalendarInput() {
+        console.log('test');
+    }
+
+	function selectCategories(ref){
+		var selectedVals = [-1]; // the tree sql gives erros if we send an empty selectVals so we add as default value an inexistent id
+
+		if (ref.down('.attribute-pattern-value').value.length > 0) {
+			selectedVals = ref.down('.attribute-pattern-value').value.split(', ');
+		}
+
+		new Ajax.Request('<?php echo $this->getUrl('*/promo_widget/chooser/attribute/category_ids/form/rule_conditions_fieldset/', array('_current' => true)); ?>', {
+            method: 'post',
+            parameters: {'selected[]': selectedVals},
+            onComplete: function(transport) {
+                // var must be named rule_conditions_fieldset - this is the param send in url
+                // and is used by tree js to call rule_conditions_fieldset updateElement
+            	rule_conditions_fieldset = new ruleCategory(ref);
+            	ref.down('.catalog-tree').update(transport.responseText);
+            }
+        });
+	}
+
+	function removeRule(ref) {
+		ref.up('ul').remove();
+	}
+
+	function showTxtValuesRule(parentRef) {
+		if(!parentRef.down('.attribute-pattern-input').hasClassName('hidden')) {
+			showAttributePatternPlaceholder(parentRef);
+		}
+
+		if(!parentRef.down('.attribute-name').up().hasClassName('hidden')) {
+			showAttributeNamePlaceholder(parentRef);
+			showAttributeOperatorPlaceholder(parentRef);
+			showAttributePatternPlaceholder(parentRef);
+		}
+
+		if(!parentRef.down('.attribute-operator').up().hasClassName('hidden')) {
+			showAttributeOperatorPlaceholder(parentRef);
+		}
+	}
+
+	function hideInputWhenOperatorIsNull(parentRef) {
+		var selectObject = parentRef.down('.atrribute-operator-select select');
+		var selectedValue = selectObject.options[selectObject.selectedIndex].value;
+
+		if (selectedValue == 'is_null') {
+			// Hide attribute pattern input
+			parentRef.down('.attribute-pattern-placeholder').addClassName('hidden');
+			parentRef.down('.attribute-pattern-input').addClassName('hidden');
+			console.log('is null!');
+		}
+		else {
+			// Show attribute pattern input
+			if (parentRef.down('.attribute-pattern-input').hasClassName('hidden')) {
+				parentRef.down('.attribute-pattern-placeholder').removeClassName('hidden');
+			}
+		}
+	}
+
+	function showAttributeNamePlaceholder(parentRef) {
+		var attributeNameValue = (parentRef.down('.attribute-name').value.length == 0) ? '...' : parentRef.down('.attribute-name').value;
+		parentRef.down('.attribute-name').up().previous('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-name').up().addClassName('hidden');
+		parentRef.down('.attribute-name').up().previous('span.rule-param').down('a').update(attributeNameValue);
+	}
+
+	function showAttributePatternPlaceholder(parentRef) {
+		parentRef.down('.attribute-pattern-value').up().previous('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-pattern-value').up().addClassName('hidden');
+
+		var attributePatternValue = '...';
+		if (parentRef.down('.attribute-pattern-value').value.length != 0) {
+            if (parentRef.down('.attribute-pattern-value').value == 'custom_date') {
+                attributePatternValue = parentRef.down('.input-date').value;
+            } else {
+                attributePatternValue = parentRef.down('.attribute-pattern-value').value;
+            }
+
+		} else if (parentRef.down('.attribute-pattern-code').value.length != 0) {
+			attributePatternValue = parentRef.down('.attribute-pattern-code').value;
+		}
+
+        if (attributePatternValue.length == 0) {
+           attributePatternValue = '...';
+        }
+
+		parentRef.down('.attribute-pattern-value').up().previous('span.rule-param').down('a').update(attributePatternValue);
+	}
+
+	function showAttributeOperatorPlaceholder(parentRef) {
+		parentRef.down('.attribute-operator').up().previous('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-operator').up().addClassName('hidden');
+
+        var attributeOperatorValue = '...';
+        if (parentRef.down('.attribute-operator').value.length == 0) {
+            attributeOperatorValue = '...';
+        } else {
+            if (parentRef.down('.attribute-operator').value == 'x_days_before'
+                || parentRef.down('.attribute-operator').value == 'x_days_after') {
+
+                var newValue = isNaN(parseInt(parentRef.down('.input-days').value))? '0' : parseInt(parentRef.down('.input-days').value);
+                attributeOperatorValue = parentRef.down('.attribute-operator').value.replace('x', newValue);
+            } else {
+                attributeOperatorValue = parentRef.down('.attribute-operator').value;
+            }
+        }
+
+        if (attributeOperatorValue.length == 0) {
+           attributePatternValue = '...';
+        }
+
+        parentRef.down('.attribute-operator').up().previous('span.rule-param').down('a').update(attributeOperatorValue);
+		parentRef.down('.attribute-operator-placeholder').removeClassName('hidden');
+	}
+
+	function showAttributeName(parentRef)
+	{
+		//show select
+		parentRef.down('.attribute-name-placeholder').next('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-name-placeholder').addClassName('hidden');
+
+        // fire event to show the corresponding input type depending on the selected attribute name
+        parentRef.down('.attribute-pattern-value').fire('select:reload',
+                        {selectValue: parentRef.down('.attribute-name').value, ref: parentRef});
+	}
+
+	function showAttributePattern(parentRef)
+	{
+		//show input
+		parentRef.down('.attribute-pattern-placeholder').next('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-pattern-placeholder').addClassName('hidden');
+
+		parentRef.down('.or').removeClassName('hidden');
+		parentRef.down('.input-select').removeClassName('hidden');
+		parentRef.down('.rule-param-select').addClassName('hidden');
+		parentRef.down('.apply-rule').addClassName('hidden');
+
+		if (parentRef.down('.attribute-name').value == 'category_id') {
+			parentRef.down('.or').addClassName('hidden');
+			parentRef.down('.attribute-pattern-code').addClassName('hidden');
+			parentRef.down('.rule-param-select').removeClassName('hidden');
+			parentRef.down('.apply-rule').removeClassName('hidden');
+		}
+
+        if (parentRef.down('select-date')) {
+            parentRef.down('.or').addClassName('hidden');
+			parentRef.down('.attribute-pattern-code').addClassName('hidden');
+        }
+
+        // fire event to show the corresponding input type depending on the selected attribute name
+        parentRef.down('.attribute-pattern-value').fire('select:reload',
+                        {selectValue: parentRef.down('.attribute-name').value, ref: parentRef}
+                        );
+	}
+
+	function showAttributeOperator(parentRef)
+	{
+        var operatorValue = parentRef.down('.attribute-name').value;
+
+        var oldElement = parentRef.down('.attribute-operator');
+		var attributeOperatorName = oldElement.name;
+		var attributeOperatorClassName = oldElement.className;
+
+        var selectData = productAttributeValues[operatorValue];
+
+        // use date operator values
+        if (typeof selectData != "undefined" && selectData.input_type == "date") {
+            if(!parentRef.down('.input-days')) {
+                var inputId = 'id_x_days' + new Date().getTime();
+
+                var attributeOperatorNameDays = attributeOperatorName.replace('attribute_operator', 'attribute_operator_days');
+                var attributeOperatorNameDaysValue = '';
+                if (parentRef.down('.input-operator-days')) {
+                    attributeOperatorNameDaysValue = parentRef.down('.input-operator-days').value;
+                    parentRef.down('.input-operator-days').remove();
+                }
+
+                var tdInnerHTML = '';
+
+                tdInnerHTML += '<input id="' + inputId + '" class="input-small input-text input-days hidden" type="text" value="' + attributeOperatorNameDaysValue + '" name="' + attributeOperatorNameDays + '" />';
+
+                tdInnerHTML += '<select id="' + inputId + '_select" name="' + attributeOperatorName + '" class="' + attributeOperatorClassName + '">';
+                tdInnerHTML += '<option value="">-- choose --</option>';
+                $H(dateOperatorOptions).each(function(option){
+                    if (option.key == oldElement.value) {
+                        tdInnerHTML += '<option value="'+ option.key + '" selected="selected">' + option.value + '</option>';
+                    } else {
+                        tdInnerHTML += '<option value="' + option.key + '">' + option.value + '</option>';
+                    }
+                });
+                tdInnerHTML += '</select>';
+
+
+                // we set a timeout to have the input id in the DOM when we setup the calendar
+                tdInnerHTML += '<script type="text/javascript">'+"\n"
+                tdInnerHTML += 'setTimeout(function(){'+"\n"
+                tdInnerHTML += 'if(!document.getElementById(\'' + inputId + '_select\')) return;'+"\n"
+                tdInnerHTML += "if($('" + inputId +"_select').value =='x_days_before' || $('" + inputId +"_select').value =='x_days_after') {"+"\n"
+                tdInnerHTML += "$('" + inputId +"').removeClassName('hidden');"+"\n"
+                tdInnerHTML += "$('" + inputId +"').disabled = false;"+"\n"
+                tdInnerHTML += "} else {"+"\n"
+                tdInnerHTML += "$('" + inputId +"').addClassName('hidden');"+"\n"
+                tdInnerHTML += "$('" + inputId +"').disabled = true;"+"\n"
+                tdInnerHTML += "}"+"\n"
+                tdInnerHTML += "$('" + inputId +"_select').observe('change', function(){"+"\n"
+                //tdInnerHTML += "console.log($('" + inputId +"').disabled = false, 'the date field');"+"\n"
+                tdInnerHTML += "if(this.value =='x_days_before' || this.value =='x_days_after') {"+"\n"
+                tdInnerHTML += "$('" + inputId +"').removeClassName('hidden');"+"\n"
+                tdInnerHTML += "$('" + inputId +"').disabled = false;"+"\n"
+                tdInnerHTML += "} else {"+"\n"
+                tdInnerHTML += "$('" + inputId +"').addClassName('hidden');"+"\n"
+                tdInnerHTML += "$('" + inputId +"').disabled = true;"+"\n"
+                tdInnerHTML += "}"+"\n"
+                tdInnerHTML += "});"+"\n"
+                tdInnerHTML += '}, 200)';+"\n"
+                tdInnerHTML += '<\/script>';+"\n"
+
+
+                Element.replace(oldElement, tdInnerHTML);
+            }
+        }
+        // use default values
+        else {
+            if(parentRef.down('.input-days')) {
+                parentRef.down('.input-days').remove();
+            }
+
+            tdInnerHTML = '<select name="' + attributeOperatorName + '" class="' + attributeOperatorClassName + '">';
+            tdInnerHTML += '<option value="">-- choose --</option>';
+            $H(defaultOperatorOptions).each(function(option){
+                if (option.key == oldElement.value) {
+                    tdInnerHTML += '<option value="'+ option.key + '" selected="selected">' + option.value + '</option>';
+                } else {
+                    tdInnerHTML += '<option value="' + option.key + '">' + option.value + '</option>';
+                }
+            });
+            tdInnerHTML += '</select>';
+            Element.replace(oldElement, tdInnerHTML);
+        }
+
+        //show input
+		parentRef.down('.attribute-operator-placeholder').next('span.rule-param').removeClassName('hidden');
+		parentRef.down('.attribute-operator-placeholder').addClassName('hidden');
+
+		parentRef.down('.attribute-operator').addClassName('validate-select-values');
+		parentRef.down('.attribute-operator').removeClassName('validate-select-category-id-values');
+
+		if (parentRef.down('.attribute-name').value == 'category_id') {
+			parentRef.down('.attribute-operator').removeClassName('validate-select-values');
+			parentRef.down('.attribute-operator').addClassName('validate-select-category-id-values');
+		}
+	}
+
+	function removeAttributePatternCodeValue(parentRef)
+	{
+		parentRef.down('.attribute-pattern-code').value = '';
+	}
+
+	function removeAttributePatternValueValue(parentRef)
+	{
+		parentRef.down('.attribute-pattern-value').value = '';
+	}
+
+	// add new rule
+	$('add-new-rule-btn').observe('click', function(){
+		var templateContent = $('add-new-rule-template').innerHTML;
+		var templateData = {id: 'id_' + new Date().valueOf()};
+
+		var ulTemplate = new Template(templateContent);
+		var ulHtml = ulTemplate.evaluate(templateData);
+
+		var ulHtml = '<ul class="rule-param-children clearfix">' + ulHtml + '</ul>';
+
+		this.up('ul').insert({before: ulHtml});
+
+		// get last inserted element
+		lastInsertedUlRef = this.up('ul').previous('ul');
+		//hide input btn and show select
+		showAttributeName(lastInsertedUlRef);
+		attachEvents(lastInsertedUlRef);
+
+	});
+
+
+	function attachEvents(parentRef) {
+		parentRef.down('.atrribute-operator-select').observe('change', function(){
+			hideInputWhenOperatorIsNull(parentRef);
+		});
+
+		// remove rule
+		parentRef.down('.rule-param-remove').observe('click', function(){
+			//console.log(this);
+			removeRule(this);
+		});
+
+
+		// show text values
+		parentRef.down('.rule-param-apply').observe('click', function(){
+			//console.log(this);
+			showTxtValuesRule(parentRef);
+			return false;
+		});
+
+		// show select categories
+		parentRef.down('.rule-param-select').observe('click', function(){
+			//console.log(this);
+			selectCategories(parentRef);
+			return false;
+		});
+
+		parentRef.down('.attribute-name-placeholder').observe('click', function(){
+			showAttributeName(parentRef);
+			return false;
+		});
+
+		parentRef.down('.attribute-operator-placeholder').observe('click', function(){
+			showAttributeOperator(parentRef);
+			return false;
+		});
+
+		parentRef.down('.attribute-pattern-placeholder').observe('click', function(){
+			showAttributePattern(parentRef);
+			return false;
+		});
+
+
+		parentRef.down('.attribute-name').observe('blur', function(){
+			showAttributeNamePlaceholder(parentRef);
+			showAttributeOperatorPlaceholder(parentRef);
+			showAttributePatternPlaceholder(parentRef);
+			return false;
+		});
+
+
+		parentRef.down('.attribute-pattern-value').observe('blur', function(){
+			removeAttributePatternCodeValue(parentRef);
+			showAttributePatternPlaceholder(parentRef);
+			return false;
+		});
+
+        parentRef.down('.attribute-name').observe('change', function(){
+			parentRef.down('.attribute-pattern-value').fire('select:reload', {selectValue: this.value, ref: parentRef});
+			return false;
+		});
+
+        document.observe('select:reload', function(event, el) {
+            event.stop();
+			var selectData = productAttributeValues[event.memo.selectValue];
+
+            var parentRef = event.memo.ref;
+
+			var selectValue = event.memo.selectValue;
+			var oldElement = event.memo.ref.down('.attribute-pattern-value');
+			var attributePatternValueName = oldElement.name;
+			var attributePatternValueClassName = oldElement.className;
+
+			if (selectData.input_type == 'select' || selectData.input_type == 'multiselect') {
+                if(oldElement.next('.grid-cal')) {
+                    oldElement.next('.grid-cal').remove();
+                }
+
+				tdInnerHTML = '<select name="' + attributePatternValueName + '" class="' + attributePatternValueClassName + '">';
+				tdInnerHTML += '<option value="">-- choose --</option>';
+				$H(selectData.options).each(function(option){
+				if (option.value == oldElement.value) {
+					tdInnerHTML += '<option value="'+ option.value + '" selected="selected">' + option.value + '</option>';
+				} else {
+					tdInnerHTML += '<option value="' + option.value + '">' + option.value + '</option>';
+				}
+					});
+				tdInnerHTML += '</select>';
+				Element.replace(oldElement, tdInnerHTML);
+
+			} else if (selectData.input_type == 'datetime' || selectData.input_type == 'date') {
+
+                var inputId = 'id_' + new Date().getTime();
+
+
+
+                // only if input is not already replaced with a date input
+                if (!oldElement.hasClassName('input-date') && !oldElement.hasClassName('select-date')) {
+                    if(oldElement.next('.grid-cal')) {
+                        oldElement.next('.grid-cal').remove();
+                    }
+
+                    var tdInnerHTML = '';
+
+                    tdInnerHTML += '<select id="' + inputId + '_select" name="' + attributePatternValueName + '" class="select-date ' + attributePatternValueClassName + '">';
+                    tdInnerHTML += '<option value="">-- choose --</option>';
+                    datePatternValueOptions.each(function(entry){
+                    if (entry.key == oldElement.value) {
+                        tdInnerHTML += '<option value="'+ entry.key + '" selected="selected">' + entry.value + '</option>';
+                    } else {
+                        tdInnerHTML += '<option value="' + entry.key + '">' + entry.value + '</option>';
+                    }
+                        });
+                    tdInnerHTML += '</select>';
+
+                    //var tdInnerHTML = '';
+                    tdInnerHTML += '<input disabled="disabled" id="' + inputId + '" class="input-date validate-date hidden ' + attributePatternValueClassName + '" type="text" value="' + oldElement.value + '" name="' + attributePatternValueName + '" />';
+                    tdInnerHTML += '<img id="' + inputId + '_trig" class="v-middle grid-cal hidden" style="" title="Select Date" alt="" src="<?php echo $this->getSkinUrl('images/grid-cal.gif'); ?>">'
+
+                    // we set a timeout to have the input id in the DOM when we setup the calendar
+                    tdInnerHTML += '<script type="text/javascript">'+"\n"
+                    tdInnerHTML += 'setTimeout(function(){'+"\n"
+                    tdInnerHTML += 'if(!document.getElementById(\'' + inputId + '\')) return;'+"\n"
+                    tdInnerHTML += "Calendar.setup({"+"\n"
+                    tdInnerHTML += 'inputField: \'' + inputId + '\','+"\n"
+                    tdInnerHTML += 'ifFormat: "%Y-%m-%d",'+"\n"
+                    tdInnerHTML += 'showsTime: false,'+"\n"
+                    tdInnerHTML += 'button: \''+ inputId + '' + '_trig\','+"\n"
+                    tdInnerHTML += 'align: "Bl",'+"\n"
+                    tdInnerHTML += 'singleClick : true'+"\n"
+                    tdInnerHTML += "});"+"\n"
+
+                    tdInnerHTML += "if($('" + inputId +"').value.length >0 && $('" + inputId +"_select').value !='custom_date' && $('" + inputId +"_select').value !='today') {"+"\n"
+                    tdInnerHTML += "$('" + inputId +"_select').value = 'custom_date';"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').removeClassName('hidden');"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').disabled = false;"+"\n"
+                    tdInnerHTML += "$('" + inputId +"_trig').removeClassName('hidden');"+"\n"
+                    tdInnerHTML += "}"+"\n"
+
+                    tdInnerHTML += "$('" + inputId +"_select').observe('change', function(){"+"\n"
+                    //tdInnerHTML += "console.log($('" + inputId +"').disabled = false, 'the date field');"+"\n"
+                    tdInnerHTML += "if(this.value =='custom_date') {"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').removeClassName('hidden');"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').disabled = false;"+"\n"
+                    tdInnerHTML += "$('" + inputId +"_trig').removeClassName('hidden');"+"\n"
+                    tdInnerHTML += "} else {"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').addClassName('hidden');"+"\n"
+                    tdInnerHTML += "$('" + inputId +"').disabled = true;"+"\n"
+                    tdInnerHTML += "$('" + inputId +"_trig').addClassName('hidden');"+"\n"
+                    tdInnerHTML += "}"+"\n"
+                    tdInnerHTML += "});"+"\n"
+
+                    tdInnerHTML += '}, 500)';+"\n"
+                    tdInnerHTML += '<\/script>';+"\n"
+
+                    parentRef.down('.or').addClassName('hidden');
+                    parentRef.down('.or').setStyle({visibility: 'hidden'});
+                    parentRef.down('.attribute-pattern-code').addClassName('hidden');
+
+                    Element.replace(oldElement, tdInnerHTML);
+                }
+			} else {
+                if(oldElement.next('.grid-cal')) {
+                    oldElement.next('.grid-cal').remove();
+                }
+				tdInnerHTML = '<input class="' + attributePatternValueClassName + '" type="text" value="' + oldElement.value + '" name="' + attributePatternValueName + '" />';
+				Element.replace(oldElement, tdInnerHTML);
+
+                parentRef.down('.or').removeClassName('hidden');
+                parentRef.down('.or').setStyle({visibility: 'visible'});
+                parentRef.down('.attribute-pattern-code').removeClassName('hidden');
+
+			}
+			return false;
+        });
+
+
+		parentRef.down('.attribute-pattern-code').observe('blur', function(){
+			removeAttributePatternValueValue(parentRef);
+			showAttributePatternPlaceholder(parentRef);
+			return false;
+		});
+
+		parentRef.down('.attribute-operator').observe('blur', function(){
+			showAttributeOperatorPlaceholder(parentRef);
+			return false;
+		});
+
+		// on content click hide input/select element and show txt values (because blur event requires previous focus on the element)
+		$('content').observe('click', function(event){
+
+			var target = event.explicitOriginalTarget;
+
+
+			if (target.id != 'content' && target.className != 'note') return;
+
+			showTxtValuesRule(parentRef);
+		});
+
+	}
+
+	$$('.rule-param-children').each(function(el) {
+		attachEvents(el);
+	});
+
+
+	//override submit function to show form elements if they are invalid
+	editForm.submit = function(url) {
+
+		// remove validation rules for the add-new-rule
+		$('add-new-rule-template').descendants().each (function(el) {
+			var classNamesToRemove = ['validate-select',
+								  'validate-select-operators',
+								  'validate-select-values',
+								  'validate-select-one-required'
+								  ];
+
+			classNamesToRemove.each (function(classNameToRemove) {
+				if (el.hasClassName(classNameToRemove)) {
+					el.removeClassName(classNameToRemove);
+				}
+			});
+		});
+
+		if(this.validator && this.validator.validate()){
+			$(this.formId).submit();
+        } else {
+
+			$$('.rule-param-children').each(function(el) {
+				if (el.down('.attribute-name').hasClassName('validation-failed')) {
+					showAttributeName(el);
+				}
+
+				if (el.down('.attribute-operator').hasClassName('validation-failed')) {
+					showAttributeOperator(el);
+				}
+
+				if (el.down('.attribute-pattern-value').hasClassName('validation-failed')) {
+					showAttributePattern(el);
+				}
+
+				if (el.down('.attribute-pattern-code').hasClassName('validation-failed')) {
+					showAttributePattern(el);
+				}
+			});
+		}
+        return false;
+	}
+
+
+
+	validOperatorsAttrCodeAttrCode = <?php echo Mage::helper('core')->jsonEncode($this->getOperatorsValidAttrCodeAttrCodeOptions()); ?>;
+	validOperatorsAttrCodeCategoryId = <?php echo Mage::helper('core')->jsonEncode($this->getOperatorsValidAttrCodeCategoryIdOptions()); ?>;
+
+	// add new validation rules
+	Validation.addAllThese([
+        ['validate-select-operators', '<?php echo $this->__('The attribute codes must be different from one another.') ?>', function(v, elm) {
+
+			var parentRef = elm.up('ul');
+
+			if (parentRef.down('.attribute-name').value != ''
+				&& parentRef.down('.attribute-name').value == parentRef.down('.attribute-pattern-code').value) {
+				return false;
+			}
+
+			return true;
+        }],
+		['validate-select-values', '<?php echo $this->__('Please select only one of these values: %s', implode(', ', $this->getOperatorsValidAttrCodeAttrCodeOptions())) ?>', function(v, elm) {
+
+			var parentRef = elm.up('ul');
+
+			// restrict operator option if last selection is attribute code
+			if (!parentRef.down('.attribute-pattern-code').value) {
+				return true;
+			}
+
+			if (!validOperatorsAttrCodeAttrCode[elm.value]) {
+				return false;
+			}
+			return true;
+        }],
+        ['validate-select-category-id-values', '<?php echo $this->__('Please select only one of these values: %s', implode(', ', $this->getOperatorsValidAttrCodeCategoryIdOptions())) ?>', function(v, elm) {
+
+			var parentRef = elm.up('ul');
+
+			if (!validOperatorsAttrCodeCategoryId[elm.value]) {
+				return false;
+			}
+			return true;
+        }],
+		['validate-select-one-required', '<?php echo $this->__('Please fill in one of those fields') ?>', function(v, elm) {
+
+			var parentRef = elm.up('ul');
+
+			if (parentRef.down('.attribute-pattern-code').value == ''
+				&& parentRef.down('.attribute-pattern-value').value == '') {
+				return false;
+			}
+
+			return true;
+        }]
+    ]);
+</script>

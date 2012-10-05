@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<config>
+   <sections>
+		<carriers>
+			<groups>
+				<kega_tnt_direct translate="label" module="shipping">
+					<label>PostNL (TNT direct)</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>13</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <price translate="label">
+							<label>Price</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</price>
+						<!--
+						If the free_shipping_enable flag enable, the system will check free_shipping_subtotal to give free shipping
+						otherwise will use shopping cart price rule behaviour
+						-->
+						<free_shipping_enable translate="label">
+							<label>Free shipping with minimum order amount</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</free_shipping_enable>
+						<free_shipping_subtotal translate="label">
+							<label>Minimum order amount for free shipping</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</free_shipping_subtotal>
+
+                        <reference translate="label">
+							<label>PostNL label) Referentie tekst</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</reference>
+
+						<a030 translate="label">
+							<label>A030) Klantcode</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a030>
+
+                        <a100 translate="label">
+							<label>A100) Klant nummer</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>100</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a100>
+
+                        <a130 translate="label">
+							<label>A130) Afzendernaam</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>130</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a130>
+                        <a139 translate="label">
+                            <label>A139) Afzender straatnaam</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>139</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </a139>
+                        <a140 translate="label">
+							<label>A140) Afzender huisnummer</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>140</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a140>
+                        <a141 translate="label">
+							<label>A141) Afzender huisnummer toevoeging</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>141</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a141>
+                        <a150 translate="label">
+							<label>A150) Afzender postcode (zonder spatie)</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>150</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a150>
+                        <a151 translate="label">
+							<label>A151) Afzender woonplaats</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>151</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a151>
+                        <a220 translate="label">
+                            <label>A220) Landencode afzender (ISO code)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </a220>
+						<a230 translate="label">
+							<label>A230) Aanleverlocatie zendingen (BLS code)</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>230</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</a230>
+
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </specificerrmsg>
+
+                        <sallowspecific translate="label">
+                            <label>Ship to applicable countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>800</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>810</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show method if not applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>820</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showmethod>
+
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>840</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+
+                        <ftp_host translate="label">
+                            <label>PostNL) FTP hostname</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ftp_host>
+                        <ftp_user translate="label">
+                            <label>PostNL) FTP username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ftp_user>
+                        <ftp_pass translate="label">
+                            <label>PostNL) FTP password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ftp_pass>
+                        <ftp_passive translate="label">
+                            <label>PostNL) FTP passive mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ftp_passive>
+                        <handle_as_tnt_direct translate="label">
+                            <label>Also handle the following shipping carriers as PostNL shipments</label>
+                            <comment>To un-select use ctrl + mouseclick.&lt;br&gt;&lt;br&gt;
+                            When shipment is created and carrier type matches PostNL or one of above carriers a track and trace number will automaticly be added as track.&lt;br&gt;
+                            The shipment will than be handled as PostNL (basic AVG).</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <frontend_model>kega_tntdirect/adminhtml_shipping_carriers</frontend_model>
+                            <sort_order>1200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </handle_as_tnt_direct>
+					</fields>
+				</kega_tnt_direct>
+			</groups>
+		</carriers>
+		
+		<!-- Extra settings for sales_pdf refund, these settings are used when inserting the shipment tracking sticker. -->
+        <sales_pdf translate="label" module="sales">
+            <groups>
+                <refund translate="label">
+                    <fields>
+						<kega_tnt_direct_sticker_border translate="label">
+							<label>PostNL sticker - draw border</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</kega_tnt_direct_sticker_border>
+						<kega_tnt_direct_sticker_xpos translate="label">
+							<label>PostNL sticker - X pos</label>
+							<comment>Pixels calculated from the left of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>210</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</kega_tnt_direct_sticker_xpos>
+						<kega_tnt_direct_sticker_ypos translate="label">
+							<label>PostNL sticker - Y pos</label>
+							<comment>Pixels calculated from the bottom of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>220</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</kega_tnt_direct_sticker_ypos>
+						<kega_tnt_direct_sticker_left_padding>
+							<label>PostNL sticker - left padding</label>
+							<comment>If you need some space at the left side of the PostNL sticker (For example: To print a custom instore barcode), you can configure some left spacing.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>230</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</kega_tnt_direct_sticker_left_padding>
+                    </fields>
+                </refund>
+            </groups>
+        </sales_pdf>
+    </sections>
+</config>

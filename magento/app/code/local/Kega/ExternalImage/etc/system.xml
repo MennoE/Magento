@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<catalog>
+			<groups>
+				<externalimage translate="label" module="shipping">
+					<label>External Images</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>13</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<image_path translate="label">
+							<label>Image Main URL</label>
+							<comment>Please make sure that Base URL ends with '/' (slash), e.g. http://imagedomain/product_images/</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</image_path>
+						<secure_image_path translate="label">
+							<label>Image Secure URL</label>
+							<comment>Please make sure that Base URL ends with '/' (slash), e.g. https://imagedomain/product_images/</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</secure_image_path>
+						<brand_image_path translate="label">
+							<label>Brand Image Path</label>
+							<comment>Please make sure that Base URL ends with '/' (slash), e.g. https://imagedomain/product_images/</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</brand_image_path>
+						<brand_image_prefix translate="label">
+							<label>Brand Image Prefix</label>
+							<comment>Please make sure that Base URL ends with '/' (slash), e.g. https://imagedomain/product_images/</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</brand_image_prefix>
+					</fields>
+				</externalimage>
+			</groups>
+
+		</catalog>
+	</sections>
+</config>

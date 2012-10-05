@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_CatalogInventory>
+			<version>0.1.0</version>
+		</Kega_CatalogInventory>
+	</modules>
+	<global>
+		<models>
+			<cataloginventory>
+				<rewrite>
+					<observer>Kega_CatalogInventory_Model_Observer</observer>
+				</rewrite>
+			</cataloginventory>
+		</models>
+	</global>
+</config>

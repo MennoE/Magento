@@ -1,0 +1,176 @@
+<?php $productAttributesValues = $this->getProductAttributesValues(); ?>
+<?php $_htmlId = uniqid(); ?>
+<?php $formValues = $this->getFormValues(); ?>
+<div class="entry-edit action-panel">
+	<div class="entry-edit-head collapseable">
+		<a href="#" class="action-collapse"><?php echo Mage::helper('kega_productattributedefault')->__('Creëer/stel attributen in (optioneel)') ?></a>
+	</div>
+	<?php $attributeClass = (empty($formValues)? ' hidden': ''); ?>
+
+	<div class="fieldset<?php echo $attributeClass; ?>">
+		<div class="grid" id="grid<?php echo $_htmlId ?>">
+			<table cellspacing="0" class="data-table" id="<?php echo $_htmlId ?>_grid" width="100%">
+				<col width="40%" />
+				<col width="40%" />
+				<col />
+				<thead>
+				    <tr class="headings">
+					<th><?php echo Mage::helper('kega_productattributedefault')->__('Attribute Name') ?></th>
+					<th><?php echo Mage::helper('kega_productattributedefault')->__('Attribute Value') ?></th>
+					<th class="last"><?php echo Mage::helper('kega_productattributedefault')->__('Action') ?></th>
+				    </tr>
+				</thead>
+				<tbody id="<?php echo $_htmlId ?>_list">
+				    <tr id="row-attribute-template-edit" class="template no-display" rel="">
+					<td class="cell-attribute-name">
+					    <select class="input-text input-select attribute-name" id="attribute_code_#id#" name="product_attribute_default[attributes][#id#][attribute_code]">
+					    <option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+					    <?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+					    <option value="<?php echo $optionValue; ?>"><?php echo $optionInfo['name']; ?></option>
+					    <?php endforeach; ?>
+					    </select>
+					<td class="cell-attribute-value"><input type="hidden" class="input-text" id="attribute_value_#id#" name="product_attribute_default[attributes][#id#][attribute_value]" /></td>
+					<td class="cell-remove a-center last">
+					    <input type="hidden" class="product-attribute-row-id" name="product_attribute_default[attributes][#id#][attribute_row_id]" value="#id#" />
+					    <button class="scalable delete delete-attribute" type="button"><span><?php echo Mage::helper('adminhtml')->__('Delete') ?></span></button>
+					</td>
+				    </tr>
+				</tbody>
+				<tfoot>
+				    <tr>
+					<td colspan="3" class="last" style="padding:8px">
+					    <button id="add-attribute" type="button" class="button"><span><span><?php echo $this->__('Add Attribute'); ?></span></span></button>
+					</td>
+				    </tr>
+				</tfoot>
+			</table>
+		</div><!-- end grid -->
+	</div><!-- end fieldset -->
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+var containerGridId = 'grid<?php echo $_htmlId ?>';
+var templateContentEdit = $('row-attribute-template-edit').innerHTML;
+var productAttributeValues = <?php echo Mage::helper('core')->jsonEncode($productAttributesValues) ?>;
+var productAttribute = {
+    div : $('row-attribute-template-edit'),
+    addAttachmentBtn: $('add-attribute'),
+    templateSyntax : /(^|.|\r|\n)(#(\w+)#)/,
+    templateTextEdit : templateContentEdit,
+    templateValues: productAttributeValues,
+    add : function(data) {
+        this.template = new Template(this.templateTextEdit, this.templateSyntax);
+
+        if(!data.id){
+            data = {};
+            data.id  = 'id_'+new Date().valueOf();
+            this.template = new Template(this.templateTextEdit, this.templateSyntax);
+        }
+
+        Element.insert(this.div, {'before':this.template.evaluate(data)});
+
+		this.bindUpdateAttrValues();
+		this.bindRemoveButtons();
+
+        //set selected attribute id
+        if (data.attribute_code) {
+            $A($('attribute_code_'+data.id).options).each(function(option){
+                if (option.value==data.attribute_code) option.selected = true;
+            });
+        }
+
+		//set hidden el attribute value
+		if (data.attribute_value) {
+				$('attribute_value_'+data.id).value = data.attribute_value;
+		}
+
+		// to load the attribute value options/or input
+		$('attribute_code_'+data.id).fire("select:loaded");
+
+    },
+    remove : function(event){
+        var element = $(Event.findElement(event, 'tr'));
+        if(element){
+            element.addClassName('no-display');
+            element.addClassName('ignore-validate');
+            element.remove();
+
+        }
+    },
+    updateAttrValues : function(event){
+		var elementParent = $(Event.findElement(event, 'tr'));
+		if (!elementParent) return;
+
+		var element = elementParent.down('td.cell-attribute-value');
+		var elementProductAttrId = elementParent.down('td.cell-remove input.product-attribute-row-id');
+
+		var selectData = this.templateValues[event.target.value];
+
+		var tdInnerHTML = '';
+
+		var selectValue = $('attribute_value_'+elementProductAttrId.value).value;
+
+		//console.log(selectData, 'select data');
+
+		if (!selectData) {
+		   tdInnerHTML = '<input class="input-text" type="hidden" value="' + selectValue + '" id="attribute_value_'+elementProductAttrId.value+'" name="product_attribute_default[attributes]['+elementProductAttrId.value+'][attribute_value]" />';
+		   element.update(tdInnerHTML);
+		   return;
+		}
+
+		// create select element
+		if (selectData.type == 'select') {
+			tdInnerHTML = '<select id="attribute_value_'+elementProductAttrId.value+'" name="product_attribute_default[attributes]['+elementProductAttrId.value+'][attribute_value]" class="input-select input-text">';
+			if (selectValue == '') {
+				tdInnerHTML += '<option value="" selected="selected">-- empty --</option>';
+			} else {
+				tdInnerHTML += '<option value="">-- empty --</option>';
+			}
+			$H(selectData.options).each(function(option){
+			if (option.key == selectValue) {
+				tdInnerHTML += '<option value="'+option.key+'" selected="selected">'+ option.value +'</option>';
+			} else {
+				tdInnerHTML += '<option value="'+option.key+'">'+ option.value +'</option>';
+			}
+				});
+			tdInnerHTML += '</select>';
+		} else if (selectData.type == 'text' ){
+			// create text element
+			tdInnerHTML = '<input class="input-text" value="' + selectValue + '" id="attribute_value_'+elementProductAttrId.value+'" name="product_attribute_default[attributes]['+elementProductAttrId.value+'][attribute_value]" />';
+		}
+		element.update(tdInnerHTML);
+    },
+    bindRemoveButtons : function(){
+    	var buttons = $$('#' + containerGridId + ' button.delete-attribute');
+        for(var i=0;i<buttons.length;i++) {
+            if(!$(buttons[i]).binded){
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+    },
+    bindUpdateAttrValues : function(){
+    	var elements = $$('#' + containerGridId + ' select.attribute-name');
+        for(var i=0;i<elements.length;i++) {
+            if(!$(elements[i]).binded){
+                $(elements[i]).binded = true;
+                Event.observe(elements[i], 'change', this.updateAttrValues.bind(this));
+				Event.observe(elements[i], 'select:loaded', this.updateAttrValues.bind(this));
+            }
+        }
+    }
+}
+
+productAttribute.bindRemoveButtons();
+productAttribute.bindUpdateAttrValues();
+Event.observe('add-attribute', 'click', productAttribute.add.bind(productAttribute));
+
+<?php foreach ($formValues as $formValue): ?>
+    productAttribute.add(<?php echo Mage::helper('core')->jsonEncode($formValue) ?>);
+<?php endforeach; ?>
+</script>

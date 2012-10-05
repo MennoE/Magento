@@ -1,0 +1,60 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @see Mage_Catalog_Block_Layer_Filter
+ */
+?>
+<?php $colorChart = Mage::helper('init/catalog')->getColorChart(); ?>
+
+<ol class="clearfix">
+<?php $textItems = array(); ?>
+<?php $i=1; foreach ($this->getItems() as $_item): ?>
+    <?php $color = $colorChart[$_item->getLabel()]; ?>
+    <?php if ($color): ?>
+    <li class="color<?php if(($i %4) == false) echo ' last'; ?>">
+        <?php if ($_item->getCount() > 0): ?>
+        <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>" title="<?php echo $_item->getCount() ?> <?=$this->__('Article(s)');?>" style="background-color: #<?=$color?>"><?php echo $_item->getLabel() ?></a>
+        <?php else: echo $_item->getLabel() ?>
+        <?php endif; ?>
+    </li>
+    <?php $i++; else: $textItems[] = $_item; ?>
+	<?php endif; ?>
+<?php endforeach ?>
+
+<?php $i=1; foreach ($textItems as $_item): ?>
+    <li class="<?=$i==1 ? 'first-label' : '';?><?php if(($i %2) == false) echo ' right'; ?>">
+        <?php if ($_item->getCount() > 0): ?>
+        <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?></a>
+        <?php else: echo $_item->getLabel() ?>
+        <?php endif; ?>
+        (<?php echo $_item->getCount() ?>)
+    </li>
+<?php $i++; endforeach ?>
+</ol>

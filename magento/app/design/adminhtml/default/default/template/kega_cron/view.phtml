@@ -1,0 +1,23 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->__('Cron Schedule') ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container">
+    <table cellspacing="25" width="100%">
+        <tr>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Available tasks') ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('availableTask'); ?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Task Overview') ?></h4></div>
+                    <fieldset class="np"><?php echo $this->getChildHtml('taskOverview'); ?></fieldset>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

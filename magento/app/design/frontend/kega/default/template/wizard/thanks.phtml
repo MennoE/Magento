@@ -1,0 +1,27 @@
+<h1><?=$this->__('Order');?></h1>
+<div id="wizard-thanks-details" class="wizard-block">
+	<div class="wizard-block-content">
+		<h2 class="wizard-block-step"><?php echo $this->__('Your order has been succesfully payed') ?></h2>
+
+<?
+	$store = Mage::app()->getStore();
+
+	$block = Mage::getModel('cms/block')->setStoreId($store->getId())
+			->load($this->getLayout()->createBlock('cms/block')
+			->setBlockId('wizard_thanks_page')->getBlockId());
+
+	echo $block->getContent();
+?>
+		<p>
+			<a href="/" class="as-button"><?php echo $this->__('Proceed shopping') ?></a>
+		</p>
+	</div>
+</div>
+<?
+        $quoteId = Mage::getSingleton('checkout/session')->getLastQuoteId();
+        $analyticsBlock = Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('google_analytics');
+        if ($quoteId && ($analyticsBlock instanceof Mage_Core_Block_Abstract)) {
+                $quote = Mage::getModel('sales/quote')->load($quoteId);
+                $analyticsBlock->setQuote($quote);
+        }
+?>

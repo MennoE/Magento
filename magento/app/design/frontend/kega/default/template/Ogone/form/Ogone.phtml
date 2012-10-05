@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * Magento Ogone Payment extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mage
+ * @package    Mage_Ogone
+ * @copyright  Copyright (c) 2008 ALTIC Charly Clairmont (CCH)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php
+	$_code=$this->getMethodCode() ;
+	$_method = $this->getMethod();
+?>
+<script type="text/javascript">
+	function setBankValue(bankId, value)
+	{
+		$(bankId).setValue(value);
+
+        //check ogone
+        $('p_method_ogone').writeAttribute('checked', 'checked');
+        payment.switchMethod('ogone');
+
+	}
+</script>
+<fieldset class="form-list">
+	<div id="payment_form_<?php echo $_code ?>">
+		<?php
+			if ($_method) {
+				$pmList = Mage::getModel('ogone/source_paymentMethodsList')->getPMList();
+				$bankList = Mage::getModel('ogone/source_paymentMethodsList')->getIdealBanks();
+
+				$isIdealActive = false; //PM iDeal is not active by default
+				$availableTypes = $_method->getConfigData('cctypes');
+				if ($availableTypes) {
+					$availableTypes = explode(',', $availableTypes);
+					$isIdealActive = in_array('iDEAL', $availableTypes);
+				}
+
+				//show the banks fo iDeal if it is active
+				$availableIdealBanks = $_method->getConfigData('idealbanks');
+
+				if ($availableIdealBanks && $isIdealActive) {
+					$availableIdealBanks = explode(',', $availableIdealBanks);
+				?>
+					<div class="payment-method">
+						<input type="hidden" name="payment[cc_type]" value="iDEAL" />
+						<img src="https://secure.ogone.com/images/iDEAL_choice.gif" id="ideal-logo" alt="iDeal logo" />
+						<p class="structural"><?php echo $this->__('Choose your bank') ?></p>
+						<div class="method-container">
+							<ul class="method-options">
+							<?php foreach ($bankList as $bank) :?>
+								<?php $bankValue = $bank->getPmValue(); ?>
+								<?php if (!in_array($bankValue, $availableIdealBanks)) continue; ?>
+								<li>
+									<input id="bank_<?php echo $bank->getPmValue();?>" type="radio" name="payment[cc_type]" value="iDEAL" onchange="setBankValue('payment_cc_bank', '<?php echo $bank->getPmValue()?>')" />
+									<label for="bank_<?php echo $bank->getPmValue();?>" class="bank-image" style="background-image: url(<?php echo $this->getSkinUrl('images/bank_logos/'.$bank->getPmUrlLogo()) ?>);">
+									<?php echo $bank->getPmName()?>
+									</label>
+								</li>
+							<?php endforeach; ?>
+							</ul>
+						</div>
+						<input type="hidden" name="payment[cc_bank]" id="payment_cc_bank" />
+					</div>
+				<?php
+				}
+
+
+				if ($availableTypes) {
+				?>
+					<div class="payment-method">
+						<p><?php echo $this->__('Creditcard') ?></p>
+						<div class="method-container">
+							<ul class="method-options">
+							<?php foreach ($pmList as $pm) :?>
+								<?php $pmName = $pm->getPmName(); ?>
+								<?php if (!in_array($pmName, $availableTypes) || $pmName == 'iDEAL') continue;?>
+									<li>
+                                     <input id="cc_<?php echo $pm->getPmName();?>" type="radio" name="payment[cc_type]" value="<?php echo $pm->getPmName(); ?>" onchange="setBankValue('payment_cc_bank', '')" />
+                                     <label for="cc_<?php echo $pm->getPmName();?>" class="bank-image" style="background-image: url(<?php echo $this->getSkinUrl('images/bank_logos/'.str_replace(' ', '-', strtolower($pm->getPmName())).'.png') ?>);">
+									 <?php echo $pm->getPmName()?>
+									 </label>
+                                  </li>
+							<?php endforeach; ?>
+							</ul>
+						</div>
+					</div>
+
+				<?php
+
+				}
+
+			}
+		/*
+		$list = Mage::getModel('ogone/source_paymentMethodsList')->getPMList();
+
+		for ($i = 0; $i < sizeof($list); $i++) {
+		$pm = $list[$i];
+		$pmArrayOption[] = array('value' => $pm->getPmName(), 'label' => $pm->getPmName());
+		}
+
+		*/
+
+
+
+		?>
+	</div>
+</fieldset>

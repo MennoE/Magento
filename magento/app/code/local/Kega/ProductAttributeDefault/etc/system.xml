@@ -1,0 +1,45 @@
+<config>
+    <sections>
+        <kega_productattributedefault translate="label" module="kega_productattributedefault">
+            <label>Kega ProductEnricher</label>
+            <tab>catalog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+			<groups>
+				<general_settings translate="label">
+                    <label>General Settings</label>
+                    <tab>catalog</tab>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<extra_attributes_visibility translate="label">
+							<label>Extra Attributes Visibility</label>
+							<frontend_model>kega_productattributedefault/adminhtml_system_config_form_field_extraattributes</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized</backend_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+                            <comment><![CDATA[The extra attributes are product attributes that are not present in Magento Admin Attributes Section; these attributes are displayed in the Static/Dynamic dropdown depending on the selected value.]]></comment>
+						</extra_attributes_visibility>
+                        <notification_email translate="label">
+							<label>Notification email</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment><![CDATA[Email where error messages related to urapidflow product update are sent]]></comment>
+						</notification_email>
+					</fields>
+                </general_settings>
+            </groups>
+        </kega_productattributedefault>
+    </sections>
+</config>

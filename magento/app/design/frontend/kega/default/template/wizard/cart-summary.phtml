@@ -1,0 +1,44 @@
+<?
+	$totals = $this->getTotals();
+	$cart = $this->getLayout()->createBlock('checkout/cart_sidebar');
+	$helper = Mage::helper('checkout');
+?>
+<h1><?=$this->__('Order');?></h1>
+<div id="cart-summary" class="wizard-block wizard-block-summary content-block">
+	<div class="wizard-block-content clearfix">
+	<h2 class="wizard-block-step"><span>1</span> <?php echo $this->__('Shopping Cart') ?></h2>
+<? if (count($this->getItems())): ?>
+
+		<table class="data-table cart-table">
+			<thead>
+				<tr>
+					<th></th>
+					<th><span class="structural"><?php echo $this->__('Product Name') ?></span></th>
+					<th><?php echo $this->__('Product size') ?></th>
+					<th><?php echo $this->__('Qty') ?></th>
+					<th class="c-subtotal"><?php echo $this->__('Unit Price') ?></th>
+				</tr>
+			</thead>
+
+			<tbody class="products">
+			<?php $counter = 1; ?>
+			<?php foreach($this->getItems() as $_item): ?>
+				<? $counter % 2 == 0 ? $_item->setBackground('even') : $_item->setBackground('odd'); ?>
+				<?php echo $this->getItemHtml($_item) ?>
+				<?php $counter++; ?>
+			<?php endforeach ?>
+			</tbody>
+
+		</table>
+		<div class="totals">
+			<?php echo $this->getChildHtml('totals'); ?>
+		</div>
+<? else: ?>
+		<p>
+			<?php echo $this->__('No products in cart') ?>
+		</p>
+<? endif; ?>
+
+		<p class="edit"><a href="<?php echo $this->getUrl('checkout/cart')?>" class="as-button secondary-button small"><?php echo $this->__('Edit info');?></a></p>
+	</div>
+</div>

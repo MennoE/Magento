@@ -1,0 +1,234 @@
+<layout version="0.1.0">
+	<default>
+
+		<!-- load our customer banner positions as page default -->
+		<update handle="banner_positions" />
+
+		<!-- remove all enterprise unneeded js/css, add kega default files -->
+		<reference name="head">
+			<action method="removeItem"><type>skin_css</type><name>css/styles-ie.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/widgets.css</name></action>
+
+			<action method="removeItem"><type>js</type><name>lib/ds-sleight.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/ie6.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/iehover-fix.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/wizard.js</name></action>
+
+			<action method="addItem"><type>skin_css</type><name>css/structure.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/colorbox.css</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.jqzoom.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/colorbox.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/wizard.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/global.js</name></action>
+		</reference>
+
+		<!-- underneath removes are not needed in 99% of the projects -->
+		<remove name="right.poll" />
+		<remove name="paypal.partner.right.logo" />
+		<remove name="product.tag.list" />
+
+		<reference name="right">
+			<action method="unsetChild"><name>right.reports.product.viewed</name></action>
+			<action method="unsetChild"><name>right.reports.product.compared</name></action>
+			<action method="unsetChild"><name>cart_sidebar</name></action>
+		</reference>
+
+        <reference name="right">
+			<action method="unsetChild"><name>catalog.compare.sidebar</name></action>
+        </reference>
+
+        <reference name="footer">
+			<block type="init/page_html_footer" name="footer_links" template="page/html/footer-links.phtml" />
+		</reference>
+
+		<!-- Move Google Analytics code to head -->
+		<reference name="after_body_start">
+			<action method="unsetChild"><name>google_analytics</name></action>
+		</reference>
+		<reference name="head">
+			<block type="googleanalytics/ga" name="google_analytics" as="google_analytics" />
+		</reference>
+	</default>
+
+	<!-- add custom banner positions to footer, pre-content and for within the main navigation foldouts -->
+	<banner_positions>
+		<reference name="footer">
+			<block type="core/text_list" name="footer-banner" translate="label">
+				<label>Footer banner position</label>
+			</block>
+		</reference>
+		<reference name="root">
+            <block type="core/text_list" name="pre-content" before="content" translate="label">
+                <label>Pre-Content Area</label>
+            </block>
+		</reference>
+
+		<reference name="catalog.topnav">
+	        <block type="core/text_list" name="banner-topnav-1" before="content" translate="label">
+                <label>Topnav position 1</label>
+	        </block>
+	        <block type="core/text_list" name="banner-topnav-2" before="content" translate="label">
+                <label>Topnav position 2</label>
+	        </block>
+	        <block type="core/text_list" name="banner-topnav-3" before="content" translate="label">
+                <label>Topnav position 3</label>
+	        </block>
+	        <block type="core/text_list" name="banner-topnav-4" before="content" translate="label">
+                <label>Topnav position 4</label>
+	        </block>
+	        <block type="core/text_list" name="banner-topnav-5" before="content" translate="label">
+                <label>Topnav position 5</label>
+	        </block>
+		</reference>
+	</banner_positions>
+	
+	<!-- recently viewed handle -->
+	<recently_viewed_products>
+		<reference name="footer.before">
+			<block type="reports/product_viewed" name="reports-product-viewed" after="-" template="reports/product_viewed.phtml" />
+		</reference>
+	</recently_viewed_products>
+
+	<!-- search box -->
+	<catalogsearch_result_index>
+		<reference name="content">
+			<block type="init/frontend" name="catalogsearchbox" before="-" template="catalogsearch/searchbox.phtml" />
+		</reference>
+	</catalogsearch_result_index>
+
+	<!-- display modes -->
+	<category_displaymode_subhome>
+		<reference name="root">
+			<action method="addBodyClass"><class>subhome</class></action>
+		</reference>
+		<reference name="product_list">
+			<action method="setTemplate"><template>catalog/category/subhome.phtml</template></action>			
+		</reference>
+	</category_displaymode_subhome>
+
+	<!-- add default home breadcrumb to homepage -->
+	<cms_index_index>
+		<reference name="breadcrumbs">
+			<action method="addCrumb">
+				<crumbName>home</crumbName>
+				<crumbInfo><label>Home</label><title>Home</title></crumbInfo>
+			</action>
+		</reference>
+	</cms_index_index>
+
+	<!--  cannot be part of default handle due to loading order of xml, even within local.xml, default handle is always loaded first -->
+	<catalog_product_view translate="label">
+		<update handle="recently_viewed_products" />
+		<reference name="head">
+			<action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery-1.3.1.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery.jqzoom1.0.1.js</name></action>
+		</reference>
+		<!-- use this for displaying color options -->
+		<reference name="product.info">
+			<block type="catalog/product_view" name="product.coloroptions" as="color_options" template="catalog/product/view/color-options.phtml"/>
+		</reference>
+    </catalog_product_view>
+
+	<!-- remove all unneeded (99% of the time) account dashboard blocks and items from account navigation -->
+    <customer_account translate="label">
+    	<remove name="catalog.compare.sidebar"/>
+        <remove name="sale.reorder.sidebar"/>
+
+        <reference name="customer_account_navigation">
+            <action method="removeLink"><name>enterprise_giftcardaccount</name></action>
+            <action method="removeLink"><name>reviews</name></action>
+            <action method="removeLink"><name>enterprise_customerbalance</name></action>
+            <action method="removeLink"><name>giftregistry</name></action>
+            <action method="removeLink"><name>invitations</name></action>
+            <action method="removeLink"><name>tags</name></action>
+            <action method="removeLink"><name>newsletter</name></action>
+            <action method="removeLink"><name>billing_agreements</name></action>
+            <action method="removeLink"><name>recurring_profiles</name></action>
+            <action method="removeLink"><name>wishlist</name></action>
+            <action method="removeLink"><name>downloadable_products</name></action>
+            <action method="removeLink"><name>enterprise_reward</name></action>
+        </reference>
+    </customer_account>
+
+	<!-- never display the reorder block on the website -->
+    <customer_logged_in>
+    	<remove name="sale.reorder.sidebar"/>
+    </customer_logged_in>
+
+	<!-- grant all customer related pages the mode-customer body class for generic styling purposes -->
+    <customer_account_login>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+    </customer_account_login>
+    <customer_account_logoutsuccess>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+    </customer_account_logoutsuccess>
+
+    <customer_account_create>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+        <!-- Update for custom reusable customer forms -->
+        <reference name="content">
+			<action method="unsetChildren" />
+			<block type="customer/form_register" name="customer_form_wrapper" template="customer/form/register.phtml">
+				<block type="customer/form_register" name="customer.form.register" template="customer/form/register/form.phtml">
+					<action method="setShowAddressFields"><value>true</value></action>
+					<action method="append"><block>customer.form.register.fields.before</block><alias>form_fields_before</alias></action>
+					<action method="append"><block>customer_form_user_attributes</block></action>
+					<action method="append"><block>customer_form_address_user_attributes</block></action>
+					<block type="wizard/wizard" name="wizard.register.customer.data" template="customer/form/register/form/customer-data.phtml" />
+					<block type="wizard/wizard" name="wizard.register.customer.address" template="customer/form/register/form/customer-address.phtml" />
+					<block type="wizard/wizard" name="wizard.register.customer.login" template="customer/form/register/form/customer-login.phtml" />
+					<block type="customer/form_register" name="wizard.register.customer.newsletter" template="customer/form/register/form/customer-newsletter.phtml" />
+				</block>
+			</block>
+		</reference>
+    </customer_account_create>
+
+    <customer_account_forgotpassword>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+    </customer_account_forgotpassword>
+    <customer_account_confirmation>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+    </customer_account_confirmation>
+
+    <customer_account_edit>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+        </reference>
+		<!-- Update for custom reusable customer forms -->
+		<reference name="customer_edit">
+			<block type="customer/form_edit" name="wizard.register.customer.data" template="customer/form/register/form/customer-data.phtml" />
+		</reference>
+    </customer_account_edit>
+
+    <customer_address_form>
+		<!-- Update for custom reusable customer forms -->
+		<reference name="customer_address_edit">
+			<block type="customer/address_edit" name="wizard.register.customer.address.data" template="customer/form/register/form/customer-address-data.phtml" />
+			<block type="customer/address_edit" name="wizard.register.customer.address" template="customer/form/register/form/customer-address.phtml" />
+		</reference>
+    </customer_address_form>
+
+    <customer_account>
+    	<reference name="root">
+            <action method="addBodyClass"><class>mode-customer</class></action>
+            <action method="addBodyClass"><class>mode-account</class></action>
+        </reference>
+    </customer_account>
+    
+    <vacancy_vacancies_index>
+        <reference name="content">
+            <block type="vacancy/vacancy" name="vacancy-apply" after="-" template="vacancy/open-application.phtml"/>
+        </reference>
+	</vacancy_vacancies_index>
+</layout>

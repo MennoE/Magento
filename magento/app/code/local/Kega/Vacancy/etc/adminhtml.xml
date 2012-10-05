@@ -1,0 +1,53 @@
+<config>
+	<menu>
+		<store>
+			<children>
+				<vacancy module="vacancy">
+					<title>Vacancies</title>
+					<sort_order>10</sort_order>
+					<children>
+						<vacancy module="vacancy">
+							<title>Manage vacancies</title>
+							<sort_order>0</sort_order>
+							<action>vacancy/adminhtml_vacancy</action>
+						</vacancy>
+					</children>
+				</vacancy>
+			</children>
+		</store>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					 <store>
+						<children>
+							<vacancy translate="title">
+								<title>Vacancies</title>
+								<sort_order>0</sort_order>
+								<children>
+									<vacancy translate="title">
+										<title>Vacancies</title>
+										<sort_order>0</sort_order>
+									</vacancy>
+								</children>
+							</vacancy>
+						</children>
+					</store>
+					<system>
+						<children>
+							<config>
+								<children>
+									<vacancy translate="title" module="vacancy">
+										<title>Vacancy</title>
+										<sort_order>50</sort_order>
+									</vacancy>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

@@ -1,0 +1,36 @@
+<?php echo $this->getChildHtml('categories_add'); ?>
+<?php echo $this->getChildHtml('categories_remove'); ?>
+
+<?php echo $this->getChildHtml('attributes'); ?>
+
+<?php echo $this->getChildHtml('attributes_dynamic'); ?>
+
+<div class="form-list">
+		<p class="note">
+				<?php echo $this->__('You can fill in:'); ?>
+				<?php echo $this->__('Categories'); ?>;
+				<?php echo $this->__('Attributes'); ?>;
+				<?php echo $this->__('Categories + Attributes'); ?>
+		</p>
+</div>
+
+<script type="text/javascript">
+		$$('.action-collapse').each(function(el){
+		  el.observe('click', function(event){
+			  el.up().next('.fieldset').toggleClassName('hidden');
+			  Event.stop(event);
+			  });
+		});
+</script>
+<?php
+/**
+ * @todo Anda B. 24.10.2011  - move the stylesheet below in a separate stylesheet
+ * The style is for the variables pop-up window
+ */
+?>
+<style type="text/css">
+	#modal_dialog_message {
+		max-height: 550px;
+		overflow: scroll;
+	}
+</style>

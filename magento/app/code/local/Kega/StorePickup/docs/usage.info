@@ -1,0 +1,10 @@
+- the store shipping address is added when the order is loaded (sales_order_load_after event),
+the original shipping address is can be retrieved with $orderModel->getOriginalShippingAddress();
+
+- when the order is saved (sales_order_save_before event) the store shipping data
+is removed and the original shipping address is added. (so in database the data is not changed)
+
+- the store shipping address is not added when looping through an order collection
+because the event sales_order_load_after is not triggered.
+So in this case nothing is changed, to get the store shipping address use :
+Mage::helper('kega_sales')->addStorePickupDataToShipping($orderModel, $clone = false);

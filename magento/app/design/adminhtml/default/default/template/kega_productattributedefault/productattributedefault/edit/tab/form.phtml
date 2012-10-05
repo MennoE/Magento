@@ -1,0 +1,104 @@
+<?php $formValues = $this->getFormValues(); ?>
+<?php $yesNoValues = Mage::getModel('adminhtml/system_config_source_yesno')->toOptionArray(); ?>
+<?php $storeViews = Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true); ?>
+<?php $productTypes = $this->getProductTypesOptions(); ?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4><?php echo Mage::helper('kega_productattributedefault')->__('General Info')?></h4></div>
+    <div class="fieldset">
+        <table cellspacing="0" class="form-list">
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Regelnaam')?> <span class="required">*</span></td>
+                <td class="value">
+                    <input type="text" class="input-text required-entry" name="product_attribute_default[rule_name]" value="<?php echo $this->htmlEscape($formValues['rule_name']); ?>" >
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Status')?></td>
+                <td class="value">
+                    <?php $selectOptions = $this->getStatusOptions(); ?>
+                    <select name="product_attribute_default[is_enabled]">
+                        <?php foreach ($selectOptions as $k => $v): ?>
+                        <?php $selected = ($k == $formValues['is_enabled'])? ' selected="selected"' : ''; ?>
+                        <option value="<?php echo $k; ?>"<?php echo $selected; ?>><?php echo $v; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Is Dry Run')?></td>
+                <td class="value">
+                    <?php $selectOptions = $this->getDryRunOptions(); ?>
+                    <select name="product_attribute_default[dry_run]">
+                        <?php foreach ($selectOptions as $k => $v): ?>
+                        <?php $selected = ($k == $formValues['dry_run'])? ' selected="selected"' : ''; ?>
+                        <option value="<?php echo $k; ?>"<?php echo $selected; ?>><?php echo $v; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td class="note">
+                    <?php echo $this->__('For testing purposes; the products are not updated if is set to \'yes\'; you can check the log to see which products were updated'); ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Overwrite manual product changes')?></td>
+                <td class="value">
+                    <select name="product_attribute_default[overwrite_product_manual_changes]">
+                        <?php foreach ($yesNoValues as $v): ?>
+                        <?php $selected = ($v['value'] == $formValues['overwrite_product_manual_changes'])? ' selected="selected"' : ''; ?>
+                        <option value="<?php echo $v['value']; ?>"<?php echo $selected; ?>><?php echo $v['label']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td class="note">
+                    <?php echo $this->__('If yes, will update the product even if the product was manually updated by the user (Eg: description was manually changed)'); ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Apply to stores')?> <span class="required">*</span></td>
+                <td class="value">
+                    <select name="product_attribute_default[apply_to_stores][]" class="required-entry" multiple="multiple" size="10">
+                        <?php foreach ($storeViews as $storeView): ?>
+
+                        <?php if (is_array($storeView['value'])): ?>
+                        <optgroup label="<?php echo $storeView['label']?>">
+                        	<?php foreach ($storeView['value'] as $storeViewValue): ?>
+                        	<?php $selected = (in_array($storeViewValue['value'], $formValues['apply_to_stores']))? ' selected="selected"' : ''; ?>
+                        	<option value="<?php echo $storeViewValue['value']; ?>"<?php echo $selected; ?>><?php echo $storeViewValue['label']; ?></option>
+                        	<?php endforeach; ?>
+                        </optgroup>
+                        <?php else: ?>
+                        <?php $selected = (in_array($storeView['value'], $formValues['apply_to_stores']))? ' selected="selected"' : ''; ?>
+                        <option value="<?php echo $storeView['value']; ?>"<?php echo $selected; ?>><?php echo $storeView['label']; ?></option>
+                        <?php endif; ?>
+                        jkl;'
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td class="note">
+                    <?php echo $this->__('The rule will only be applied to products from the selected stores'); ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('kega_productattributedefault')->__('Apply only to selected product types')?> <span class="required">*</span></td>
+                <td class="value">
+                    <select name="product_attribute_default[product_types][]" class="required-entry" multiple="multiple" size="10">
+                        <?php foreach ($productTypes as $productTypeId => $productTypeValue): ?>
+                        <?php $selected = (in_array($productTypeId, $formValues['product_types']))? ' selected="selected"' : ''; ?>
+                        <option value="<?php echo $productTypeId; ?>"<?php echo $selected; ?>><?php echo $productTypeValue; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td class="note">
+                    <?php echo $this->__('The rule will only be applied to selected product types and that are not associated with a configurable product'); ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div><!-- end entry-edit -->

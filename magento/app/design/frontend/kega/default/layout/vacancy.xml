@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <!-- Defaults -->
+    <vacancy_vacancies translate="label">
+        <label>Vacancies General</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+            <action method="addBodyClass"><class>vacancy-pages</class></action>
+        </reference>
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            
+        </reference>
+        <reference name="left">
+            <block type="vacancy/vacancy" name="vacancy-regions" template="vacancy/sidebar.phtml"/>
+        </reference>
+    </vacancy_vacancies>
+
+	<!-- index vacancies/index -->
+	<vacancy_vacancies_index translate="label">
+        <label>Vacancies index</label>
+		<update handle="vacancy_vacancies" />
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="breadcrumbs">
+			<action method="addCrumb">
+				<crumbName>Vacancies</crumbName>
+				<crumbInfo><label>Vacancies</label><title>Vacancies</title></crumbInfo>
+			</action>
+		</reference>
+        <reference name="content">
+            <block type="vacancy/vacancy" name="vacancies" template="vacancy/vacancy.phtml" />
+			<block type="cms/block" name="vacancy-sidebar" as="vacancy-sidebar">
+				<action method="setBlockId"><block_id>vacancy-sidebar</block_id></action>
+			</block>
+		</reference>
+    </vacancy_vacancies_index>
+
+	<!-- vacancies/details -->
+	<vacancy_vacancies_details translate="label">
+        <label>Vacancies details</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+            <action method="addBodyClass"><class>vacancy-details</class></action>
+        </reference>
+        <update handle="vacancy_vacancies" />
+        <reference name="breadcrumbs">
+        	<action method="addCrumb">
+                <crumbName>Vacancies</crumbName>
+				<crumbInfo><label>Vacancies</label><title>Vacancies</title><link>/vacatures/</link></crumbInfo>
+            </action>
+        </reference>
+		<reference name="content">
+            <block type="vacancy/vacancy" name="vacancy-details" template="vacancy/details.phtml"/>
+            <block type="vacancy/vacancy" name="vacancy-apply" template="vacancy/form.phtml"/>
+        </reference>
+    </vacancy_vacancies_details>
+
+	<!-- vacancies/apply -->
+	<vacancy_vacancies_apply translate="label">
+        <label>Vacancies apply</label>
+        <update handle="vacancy_vacancies" />
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+				<crumbName>Vacancies</crumbName>
+				<crumbInfo><label>Vacancies</label><title>Vacancies</title><link>/vacatures/</link></crumbInfo>
+			</action>
+            <action method="addCrumb">
+                <crumbName>Apply</crumbName>
+                <crumbInfo><label>Apply</label><title>Apply</title></crumbInfo>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="vacancy/vacancy" name="hello" template="vacancy/apply.phtml"/>
+        </reference>
+    </vacancy_vacancies_apply>
+
+
+	<vacancy_vacancies_applied translate="label">
+        <label>Vacancies applied</label>
+        <update handle="vacancy_vacancies" />
+		<reference name="content">
+            <block type="vacancy/vacancy" name="hello" template="vacancy/applied.phtml" />
+        </reference>
+    </vacancy_vacancies_applied>
+</layout>

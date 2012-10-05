@@ -1,0 +1,24 @@
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('store')->__('Extra opening dates') ?></h4>
+	</div>
+	<fieldset>
+
+		<table cellspacing="0" class="form-list" id="table_cataloginventory">
+			<tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Extra opening list') ?></label></td>
+				<td class="value">
+					<?php $extraopeningIds = $this->getExtraopeningIds(); ?>
+                    <select id="extraopening_list" name="<?php echo $this->getFieldSuffix() ?>[]" class="select" multiple size="5">
+						<?php foreach ($this->getExtraopeningList() as $option): ?>
+						<?php $_selected = (isset($extraopeningIds[$option->getId()])) ? 'selected="selected"' : '' ?>
+						<option value="<?php echo $option->getId() ?>" <?php echo $_selected ?>><?php echo $option->getTitle() . ' [' . date('d-m-y', strtotime($option->getDatetimeFrom())).' - ' . date('d-m-y', strtotime($option->getDatetimeTo())) . ']'; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+		</table>
+
+	</fieldset>
+</div>

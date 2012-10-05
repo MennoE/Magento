@@ -1,0 +1,62 @@
+<?php
+$currentCategory;
+$items  = $this->getItems();
+$mode = ($this->getCategoryMode() ? 'category' : 'index');
+if ($mode == 'category') {
+	$permalink = $this->getRequest()->getParam('permalink', null);
+	$storeId = Mage::app()->getStore()->getStoreId();
+	$currentCategory = Mage::getModel('faq/category')->loadByPermalinkAndStore($permalink, $storeId);
+}
+$questionLimit = (
+	$this->getQuestionLimit() && !Mage::registry('faq_search')
+		? $this->getQuestionLimit()
+		: false
+);
+?>
+<div class="container mode-<?=$mode;?>"
+<?=($mode == 'category' && $currentCategory['category_image']) ? 'style="background-image:url(/media/faq/'.$currentCategory['category_image'].')"' : '';?>>
+	<? $counter = 1;
+    if(count($items)):
+        foreach($items as $id => $category): ?>
+            <div id="customerservice-q<?=$counter;?>" class="questionbox <?= $counter % 2 == 1 ? 'begin' : '';?>"
+                <?php echo $mode == 'index' && $category['overview_image'] ? 'style="background-image:url(/media/faq/' . $category['overview_image'] . ');"' : ''; ?>>
+                <h2><?=$category['name'];?></h2>
+                    <ul>
+                        <? $qCounter = 1;?>
+                        <? foreach($category['questions'] as $qid => $question): ?>
+                        <li>
+                            <h3 id="question-<?=$category['permalink'] . '-' . $qid;?>">
+
+                            <a href="<?=Mage::getModel('faq/category')->getUrl($category['permalink']);?>#question-<?=$category['permalink'] . '-' . $qid;?>">
+                                <?=$question['question'];?>
+                            </a>
+                            </h3>
+                            <?php if($mode == 'category'):?>
+                                <div class="answer">
+                                    <?=trim($question['answer']);?>
+                                </div>
+                            <?php endif;?>
+                        </li>
+                        <?php
+                        if(is_numeric($questionLimit) && $qCounter >= $questionLimit) {
+                            break;
+                        }
+                        $qCounter++;
+                        ?>
+                        <? endforeach; ?>
+                    </ul>
+                <p class="faq-continue">
+                    <?php if($mode == 'index'):?>
+                        <a href="<?=Mage::getModel('faq/category')->getUrl($category['permalink']);?>"><?=$this->__('More questions')?></a>
+                    <?php else:?>
+				        <a href="<?=Mage::getUrl('faq');?>"><?=$this->__('&lt; Back')?></a>
+                    <?php endif;?>
+                </p>
+            </div>
+        <? $counter++; ?>
+        <? endforeach; ?>
+    <? else: ?>
+        <p><?php echo $this->__("No questions found, <a href='%s'>return</a> to index", $this->getUrl('kega_faq')); ?></p>
+    <? endif; ?>
+
+</div>

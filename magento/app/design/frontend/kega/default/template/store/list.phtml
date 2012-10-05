@@ -1,0 +1,21 @@
+<div id="storelist">
+	<ul>
+	<?php
+		$stores = $this->getStores();
+		if (count($stores) && ($this->getRequest()->getParam('view') == 'all' || $this->getRequest()->getParam('criteria'))) {
+			$counter = 1;
+			foreach($stores as $store) {
+				$var['class'] = $counter % 2 == 0 ? 'even' : 'odd';
+				$this->getStoreHtml($store, 'store/basic.phtml', $var);
+				$counter++;
+			}
+		}
+	?>
+	</ul>
+</div>
+
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+	var markers = [<?=$this->getMarkers();?>];
+//--><!]]>
+</script>

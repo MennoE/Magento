@@ -1,0 +1,221 @@
+<config>
+    <sections>
+		<identity translate="label">
+			<fields>
+				<logo translate="label comment">
+					<label>Logo for PDF Print-outs (max 545 width x 50~200 heigth)</label>
+				</logo>
+			</fields>
+		</identity>
+        <sales_pdf translate="label" module="sales">
+            <groups>
+                <invoice translate="label">
+                    <fields>
+                        <header_logo translate="label">
+							<label>Header logo</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The logo can be adjusted under: Sales > Sales > Invoice and Packing Slip Design</comment>
+						</header_logo>
+						<top_margin translate="label">
+							<label>Top margin</label>
+							<comment>The space below the logo or top of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</top_margin>
+						<!-- We adjust the default Magento label of this setting. -->
+                        <put_order_id translate="label">
+                            <label>Display Order barcode</label>
+                            <sort_order>30</sort_order>
+                        </put_order_id>
+                    </fields>
+                </invoice>
+                <shipment translate="label">
+                    <fields>
+						<header_logo translate="label">
+							<label>Header logo</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The logo can be adjusted under: Sales > Sales > Invoice and Packing Slip Design</comment>
+						</header_logo>
+						<top_margin translate="label">
+							<label>Top margin</label>
+							<comment>The space below the logo or top of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</top_margin>
+						<!-- We adjust the default Magento label of this setting. -->
+                        <put_order_id translate="label">
+                            <label>Display Order barcode</label>
+                            <sort_order>30</sort_order>
+                        </put_order_id>
+                    </fields>
+                </shipment>
+                <refund translate="label">
+                    <label>Shipment - Refund page</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<header_logo translate="label">
+							<label>Header logo</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The logo can be adjusted under: Sales > Sales > Invoice and Packing Slip Design</comment>
+						</header_logo>
+						<top_margin translate="label">
+							<label>Top margin</label>
+							<comment>The space below the logo or top of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</top_margin>
+                        <put_order_id translate="label">
+                            <label>Display Order barcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </put_order_id>
+
+						<return_sticker_active translate="label">
+							<label>Return sticker - Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</return_sticker_active>
+						<return_sticker_border translate="label">
+							<label>Return sticker - draw border</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</return_sticker_border>
+						<return_sticker_rotate translate="label">
+							<label>Return sticker - Rotate</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</return_sticker_rotate>
+						<return_sticker_xpos translate="label">
+							<label>Return sticker - X pos</label>
+							<comment>Pixels calculated from the left of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>130</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</return_sticker_xpos>
+						<return_sticker_ypos translate="label">
+							<label>Return sticker - Y pos</label>
+							<comment>Pixels calculated from the bottom of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>140</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</return_sticker_ypos>
+						<return_sticker_name translate="label">
+							<label>Return sticker - Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>150</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</return_sticker_name>
+						<return_sticker_address translate="label">
+							<label>Return sticker - Address</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>160</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</return_sticker_address>
+						<return_sticker_postcode translate="label">
+							<label>Return sticker - Postcode</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>170</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</return_sticker_postcode>
+						<return_sticker_city translate="label">
+							<label>Return sticker - City</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>180</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</return_sticker_city>
+                    </fields>
+                </refund>
+                <creditmemo translate="label">
+                    <fields>
+						<header_logo translate="label">
+							<label>Header logo</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The logo can be adjusted under: Sales > Sales > Invoice and Packing Slip Design</comment>
+						</header_logo>
+						<top_margin translate="label">
+							<label>Top margin</label>
+							<comment>The space below the logo or top of the page.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-number required-entry</validate>
+						</top_margin>
+						<!-- We adjust the default Magento label of this setting. -->
+                        <put_order_id translate="label">
+                            <label>Display Order barcode</label>
+                            <sort_order>30</sort_order>
+                        </put_order_id>
+                    </fields>
+                </creditmemo>
+            </groups>
+        </sales_pdf>
+    </sections>
+</config>

@@ -1,0 +1,29 @@
+<?php
+$candidate = $this->getCandidate();
+$vacancy = $this->getVacancy($candidate['vacancy_id']);
+$fields = $this->getFields();
+$fileFields = $this->getFilefields();
+$storeFields = $this->getStorefields();
+
+echo "Er is gereageerd op de volgende vacature:";
+echo PHP_EOL;
+echo $vacancy['name_full'];
+echo ' (' .$this->getUrl('*/*/details/'). 'show/' . $vacancy['vacancy_id'] . ')' . PHP_EOL;
+
+foreach($this->getFields() as $field) {
+    if(!empty($candidate[$field])) {
+        if(in_array($field, $fileFields)) {
+
+            echo $this->__($field) . ': ';
+            echo $this->getUrl('*/*/file/') . 'field/' . $field . '/hash/' . $candidate['hash'] . '/' . $candidate[$field] . PHP_EOL;
+        } else if(in_array($field, $storeFields)) {
+            echo $this->__($field) . ': ';
+            echo Mage::getModel('store/store')->load($candidate[$field])->getName() . PHP_EOL;
+        } else {
+            echo $this->__($field) . ': ';
+            echo $candidate[$field] . PHP_EOL;
+        }
+    }
+}
+echo 'Tijdstip plaatsing: ';
+echo $candidate['ctime'] . PHP_EOL;

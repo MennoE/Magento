@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_Adminhtml>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Kega_Adminhtml>
+	</modules>
+</config>

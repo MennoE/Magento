@@ -1,0 +1,24 @@
+<div id="giftcard" class="discount">
+	<? if (Mage::getSingleton('checkout/session')->getGiftcardCardId()): ?>
+    <h3><?php echo $this->__('You are currently using your giftcard') ?></h3>
+	<? else: ?>
+	<h3><?php echo $this->__('Do you have a giftcard') ?></h3>
+	<? endif; ?>
+    <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/wizard/checkGiftcard') ?>" method="post">
+        <fieldset>
+			<? if (Mage::getSingleton('checkout/session')->getGiftcardCardId()): ?>
+				<p class="remove-giftcard-desc"><?php echo $this->__('Remove my giftcard from this order') ?></p>
+				<a href="<?php echo $this->getUrl('checkout/wizard/removeGiftcard') ?>" class="as-button"><?php echo $this->__('Deactive giftcard code') ?></a>
+			<? else: ?>
+				<p><?php echo $this->__('Enter your giftcard here') ?></p>
+
+				<label for="giftcard_number" class="structural"><?php echo $this->__('Coupon code');?></label>
+				<input type="text" name="giftcard[number]" id="giftcard_number" class="text-input" value="2323245" />
+				<input type="hidden" name="giftcard[pin]" id="giftcard_pin" class="text-input" value="1234" />
+
+
+				<button type="submit" class="button secondary"><?php echo $this->__('Activate giftcard code') ?></button>
+			<? endif; ?>
+        </fieldset>
+    </form>
+</div>

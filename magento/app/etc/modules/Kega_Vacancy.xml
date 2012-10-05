@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_Vacancy>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Kega_Vacancy>
+    </modules>
+</config> 

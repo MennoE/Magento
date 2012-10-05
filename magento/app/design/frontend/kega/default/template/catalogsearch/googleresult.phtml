@@ -1,0 +1,81 @@
+<? $google = $this->getGoogleResults(); ?>
+<?php if (Mage::getSingleton('catalogsearch/layer')->getProductCollection()->getSize() == 0) : ?>
+	<p class="no-products"><?=$this->__('No products found')?></p>
+<?php endif; ?>
+<form id="search_in_page" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+    <fieldset class="form-search">
+        <label for="search" class="structural"><?php echo $this->__('Search:') ?></label>
+        <input id="search" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" class="input-text search" value="<?=$this->helper('catalogsearch')->getEscapedQueryText()?>" />
+        <button type="submit" title="<?php echo $this->__('Search') ?>" class="search"><span><span><?php echo $this->__('Search again') ?></span></span></button>
+        <div id="search_autocomplete" class="search-autocomplete"></div>
+        <script type="text/javascript">
+        //<![CDATA[
+            var searchForm = new Varien.searchForm('search_mini_form', 'search', '');
+            searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
+        //]]>
+        </script>
+    </fieldset>
+</form>
+<div id="google-result">
+	<h2>Website resultaten voor '<?=htmlentities($this->getRequest()->getParam('q'));?>'</h2>
+	<? if (count($google)): ?>
+	<? if ($google['end'] > 1): ?>
+	<div class="pages">
+		<ul class="pagination">
+			<? $i = $google['start']; ?>
+			<? $page = $this->getRequest()->getParam('p', 1); ?>
+			<? if ($page > 1): ?>
+			<li class="prev"><a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$page-1;?>">Terug</a></li>
+			<? endif; ?>
+			<? while($i <= $google['end']): ?>
+			<li>
+				<? if ($page == $i): ?>
+				<span><?=$i;?></span>
+				<? else: ?>
+				<a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$i;?>"><?=$i;?></a>
+				<? endif; ?>
+			</li>
+
+				<? $i++; ?>
+			<? endwhile; ?>
+			<li class="next"><a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$page+1;?>">Volgende</a></li>
+		</ul>
+	</div>
+	<? endif; ?>
+
+	<ul class="page-results">
+		<? foreach($google['results'] as $result): ?>
+		<li>
+			<h3><a href="<?=$result['link'];?>"><?=$result['title'];?></a></h3>
+			<p class="desc"><?=$result['desc'];?></p>
+		</li>
+		<? endforeach; ?>
+	</ul>
+
+	<? if ($google['end'] > 1): ?>
+	<div class="pages">
+		<ul class="pagination">
+			<? $i = $google['start']; ?>
+			<? $page = $this->getRequest()->getParam('p', 1); ?>
+			<? if ($page > 1): ?>
+			<li class="prev"><a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$page-1;?>">Terug</a></li>
+			<? endif; ?>
+			<? while($i <= $google['end']): ?>
+			<li>
+				<? if ($page == $i): ?>
+				<span><?=$i;?></span>
+				<? else: ?>
+				<a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$i;?>"><?=$i;?></a>
+				<? endif; ?>
+			</li>
+
+				<? $i++; ?>
+			<? endwhile; ?>
+			<li class="next"><a href="<?php echo $this->getUrl('catalogsearch/result'); ?>?q=<?=urlencode($this->getRequest()->getParam('q'));?>&amp;type=site&amp;p=<?=$page+1;?>">Volgende</a></li>
+		</ul>
+	</div>
+	<? endif; ?>
+	<? else: ?>
+	<p><?=$this->__('Your search returns no results.'); ?></p>
+	<? endif; ?>
+</div>

@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_Wizard>
+            <version>0.0.3</version>
+        </Kega_Wizard>
+    </modules>
+    <global>
+		<rewrite>
+			<kega_wizard_wizard>
+				<from><![CDATA[#^/checkout/wizard#]]></from>
+				<to>/wizard/wizard</to>
+			</kega_wizard_wizard>
+			<kega_wizard_instore>
+                <from><![CDATA[#^/checkout/instore#]]></from>
+                <to>/wizard/instore</to>
+            </kega_wizard_instore>
+        </rewrite>
+
+        <blocks>
+            <wizard>
+                <class>Kega_Wizard_Block</class>
+            </wizard>
+			<checkout>
+				<rewrite>
+				  <cart_sidebar>Kega_Wizard_Block_Cart_Sidebar</cart_sidebar>
+				</rewrite>
+			</checkout>
+        </blocks>
+        <models>
+            <wizard>
+                <class>Kega_Wizard_Model</class>
+            </wizard>
+            <sales>
+				<rewrite>
+					<quote_address_total_shipping>Kega_Wizard_Model_Quote_Address_Total_Shipping</quote_address_total_shipping>
+				</rewrite>
+            </sales>
+        </models>
+        <helpers>
+            <wizard>
+                <class>Kega_Wizard_Helper</class>
+            </wizard>
+        </helpers>
+        <resources>
+            <wizard_setup>
+                <setup>
+                    <module>Kega_Wizard</module>
+                    <class>Kega_Wizard_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </wizard_setup>
+            <store_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </store_write>
+            <store_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </store_read>
+        </resources>
+        <events>
+			<!--
+				When a customer logs in, we reset the "merged_from_quote_id" and "merged_with_quote_id" fields.
+				In this way the cart items are not marked as "old/restored" anymore.
+			-->
+			<load_customer_quote_before>
+				<observers>
+					<kega_wizard_checkout_observer_load_customer_quote_before>
+						<class>wizard/checkout_observer</class>
+						<method>loadCustomerQuoteBefore</method>
+					</kega_wizard_checkout_observer_load_customer_quote_before>
+				</observers>
+			</load_customer_quote_before>
+
+			<!--
+				When a customer logs in, the old quote is merged with the new quote.
+				We merge the quotes in a different way, than Magento does by default.
+			-->
+			<sales_quote_merge_before>
+				<observers>
+					<kega_wizard_quote_observer_merge_before>
+						<class>wizard/quote_observer</class>
+						<method>mergeBefore</method>
+					</kega_wizard_quote_observer_merge_before>
+				</observers>
+			</sales_quote_merge_before>
+
+            <controller_front_init_routers>
+                <observers>
+                    <kega_wizard_observer>
+                        <type>singleton</type>
+                        <class>Kega_Wizard_Model_Observer</class>
+                        <method>saveStoreCode</method>
+                    </kega_wizard_observer>
+                </observers>
+            </controller_front_init_routers>
+			<controller_action_postdispatch_customer_account_loginPost>
+                <observers>
+                    <kega_wizard_checkout_redirect>
+                        <class>Kega_Wizard_Model_Observer</class>
+                        <method>checkoutRedirect</method>
+                    </kega_wizard_checkout_redirect>
+                </observers>
+			</controller_action_postdispatch_customer_account_loginPost>
+			<!--
+				When a new invoice is registred and selected payment method is instore,
+				we force the capture case to 'not_capture' (if none is given).
+				This because otherwise it is set to status 'paid' automatically.
+			-->
+			<sales_order_invoice_register>
+				<observers>
+					<kega_wizard_setCaptureCase>
+						<type>singleton</type>
+						<class>kega_wizard/order_invoice_observer</class>
+						<method>setCaptureCase</method>
+					</kega_wizard_setCaptureCase>
+				</observers>
+			</sales_order_invoice_register>
+        </events>
+        <sales>
+            <order>
+                <statuses>
+                    <in_store_ordered translate="label"><label>Ordered in store</label></in_store_ordered>
+                    <in_store_accepted translate="label"><label>Accepted in store</label></in_store_accepted>
+                    <in_store_collected translate="label"><label>Collected in store</label></in_store_collected>
+                </statuses>
+                <states>
+                    <in_store_ordered translate="label">
+                        <label>Ordered in store</label>
+                        <statuses>
+                            <in_store_ordered default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_ordered>
+                    <in_store_accepted translate="label">
+                        <label>Accepted in store</label>
+                        <statuses>
+                            <in_store_accepted default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_accepted>
+                    <in_store_collected translate="label">
+                        <label>Collected in store</label>
+                        <statuses>
+                            <in_store_collected default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_collected>
+                </states>
+            </order>
+        </sales>
+    </global>
+    <frontend>
+        <routers>
+            <Kega_Wizard>
+                <use>standard</use>
+                <args>
+                    <module>Kega_Wizard</module>
+                    <frontName>wizard</frontName>
+                </args>
+            </Kega_Wizard>
+        </routers>
+        <secure_url>
+            <wizard>/checkout/wizard</wizard>
+            <cart>/checkout/cart</cart>
+        </secure_url>
+        <layout>
+            <updates>
+                <wizard>
+                    <file>wizard.xml</file>
+                </wizard>
+            </updates>
+        </layout>
+		<translate>
+			<modules>
+				<Kega_Wizard>
+					<files>
+						<default>Kega_Wizard.csv</default>
+					</files>
+				</Kega_Wizard>
+			</modules>
+		</translate>
+    </frontend>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Kega_Wizard>
+					<files>
+						<default>Kega_Wizard.csv</default>
+					</files>
+				</Kega_Wizard>
+			</modules>
+		</translate>
+	</adminhtml>
+    <default>
+        <payment>
+            <instore>
+                <active>0</active>
+                <model>wizard/method_instore</model>
+                <title>Instore payment</title>
+                <order_status>pending</order_status>
+            </instore>
+        </payment>
+    </default>
+    <crontab>
+		<jobs>
+			<wizard_instorefeedback>
+				<schedule><cron_expr>45 9,12,14,21 * * *</cron_expr></schedule>
+				<run><model>wizard/observer::processCashRegisterFeedback</model></run>
+			</wizard_instorefeedback>
+		</jobs>
+	</crontab>
+</config>

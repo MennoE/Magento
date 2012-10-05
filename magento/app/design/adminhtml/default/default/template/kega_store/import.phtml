@@ -1,0 +1,79 @@
+<style>
+.store_import {background:none repeat scroll 0 0 #E7EFEF; border:1px solid #CDDDDD; margin-bottom:10px; padding:10px;}
+.store_import button {}
+</style>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-export"><?php echo $this->__('Import Stores') ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+	<div>
+		<form id="import_form" action="<?php echo $this->getUrl('*/*/importPost') ?>" method="post" enctype="multipart/form-data">
+			<?php echo $this->getBlockHtml('formkey')?>
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('store')->__('Import Stores') ?></h4>
+			</div>
+			<fieldset>
+				<table cellspacing="0" class="form-list">
+					<tr>
+						<td class="label"><label for="import_file"><?php echo $this->__('Upload import csv file') ?>:</label></td>
+						<td class="value">
+							<input type="file" name="import_file" id="import_file" class="input-file required-entry"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="label"><label><?php echo $this->__('CSV file delimeter') ?>:</label></td>
+						<td class="value">
+							<input type="text" name="delimeter" value=";"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="value" colspan="2">
+							<?php echo $this->getButtonHtml('Import Stores', "this.form.submit()") ?>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+		<script type="text/javascript">
+			var importForm = new varienForm('import_form');
+		</script>
+	</div>
+
+
+	<div>
+		<form id="import_form_extraopening" action="<?php echo $this->getUrl('*/*/importPostExtraOpening') ?>" method="post" enctype="multipart/form-data">
+			<?php echo $this->getBlockHtml('formkey')?>
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('store')->__('Import ExtraOpening') ?></h4>
+			</div>
+			<fieldset>
+				<table cellspacing="0" class="form-list">
+				<tr>
+					<td class="label"><label for="import_file"><?php echo $this->__('Upload import csv file') ?>:</label></td>
+					<td class="value">
+						<input type="file" name="import_file_extraopening" id="import_file_extra" class="input-file required-entry"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="label"><label><?php echo $this->__('CSV file delimeter') ?>:</label></td>
+					<td class="value">
+						<input type="text" name="delimeter" value=";"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="value" colspan="2">
+					<?php echo $this->getButtonHtml('Import ExtraOpening Dates', "this.form.submit()") ?>
+					</td>
+				</tr>
+				</table>
+			</fieldset>
+		</form>
+		<script type="text/javascript">
+			var importForm = new varienForm('import_form_extraopening');
+		</script>
+	</div>
+</div>

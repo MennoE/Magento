@@ -1,0 +1,167 @@
+<? $store = $this->getStoreDetails(); ?>
+<? $extraOpenings = $store->getExtraopenings(); ?>
+
+<h2 class="page-title"><?php echo $this->__('Search for a shop'); ?></h2>
+
+<div id="store-details">
+
+	<div id="directions" class="store-blocks">
+		<h2><?=$this->__('Directions');?></h2>
+		<form action="" method="get" id="routeplanner" class="theme1">
+			<fieldset>
+				<label for="search" class="structural"><?=$this->__('Startpoint');?></label>
+				<input type="text" name="search" value="<?= $this->__('City or zip'); ?>" class="empty-focus" />
+				<button class="arrow search" type="submit">
+					<span><?=$this->__('Search');?></span>
+				</button>
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="establishment-<?=$store->getId();?>-content" class="establishment-content">
+		<? if ($store->getStoreImage()): ?>
+			<img class="store-image" src="/media/upload/stores/<?=$store->getStoreImage();?>" alt="<?php echo $store->getCity();?>" />
+		<? endif; ?>
+		<div id="store-information" class="store-blocks">
+			<? if ($store->getManagerImage()): ?>
+			<img src="/media/upload/stores/<?=$store->getManagerImage();?>" width="128" alt="<?=$store->getManagerName();?>" class="store-manager-image" />
+			<?endif;?>
+
+			<h1><?php echo $store->getCity();?></h1>
+
+			<address>
+				<span><?=$store->getAddress();?>&nbsp;<?=$store->getNumber();?><?=$store->getNumberExt();?></span>
+				<span><?=$store->getZipcode();?> <?=$store->getCity();?></span>
+				<span><?=$this->__('Tel.');?> <?=$store->getPhone();?></span>
+			</address>
+
+			<div id="store-manager">
+				<? if ($store->getManagerName()):?>
+				<h2><?=$this->__('Store manager');?></h2>
+				<p><?=$store->getManagerName();?></p>
+				<?endif;?>
+			</div>
+		</div>
+
+		<div id="store-time" class="store-blocks">
+
+			<h2><?=$this->__('Timetable');?></h2>
+			<dl class="time-table">
+				<dt><?=$this->__('Monday');?>:</dt>
+				<dd><?=$store->getMondayopen1();?> - <?=$store->getMondayclose1();?></dd>
+				<dt><?=$this->__('Tuesday');?>:</dt>
+				<dd><?=$store->getTuesdayopen1();?> - <?=$store->getTuesdayclose1();?></dd>
+				<dt><?=$this->__('Wednesday');?>:</dt>
+				<dd><?=$store->getWednesdayopen1();?> - <?=$store->getWednesdayclose1();?></dd>
+				<dt><?=$this->__('Thursday');?>:</dt>
+				<dd><?=$store->getThursdayopen1();?> - <?=$store->getThursdayclose1();?></dd>
+				<dt><?=$this->__('Friday');?>:</dt>
+				<dd><?=$store->getFridayopen1();?> - <?=$store->getFridayclose1();?></dd>
+				<dt><?=$this->__('Saturday');?>:</dt>
+				<dd><?=$store->getSaturdayopen1();?> - <?=$store->getSaturdayclose1();?></dd>
+				<? if ($store->getSundayopen1() != ''):?>
+				<dt><?=$this->__('Sunday');?>:</dt>
+				<dd><?=$store->getSundayopen1();?> - <?=$store->getSundayclose1();?> (indien koopzondag)</dd>
+				<?endif;?>
+			</dl>
+
+			<? $extraOpenings = $store->getExtraopenings(); ?>
+
+			<? if (count($extraOpenings['OPEN']) > 0):?>
+
+			<h2><?=$this->__('Extra-openings');?></h2>
+			<ul class="extra-openings">
+			<?
+			foreach ($extraOpenings['OPEN'] as $key=>$val):
+				echo '<li>' . $val['datetime_from_parsed'] . ' - ' . $val['datetime_to_parsed'] . ' (' . $val['title'] . ')</li>';
+			endforeach;
+			?>
+			</ul>
+				<? if (count($store->getExtraopenings()) > 3):?>
+				<p>
+					<a href="#" class="extra-openings-toggle next-page"><?php echo $this->__('All upcoming extra-openings'); ?></a>
+				</p>
+				<? endif; ?>
+			<? endif;?>
+
+			<? if (count($extraOpenings['CLOSED']) > 0):?>
+
+			<h2><?=$this->__('Closed on');?></h2>
+			<ul class="extra-openings">
+			<?
+			foreach ($extraOpenings['CLOSED'] as $key=>$val):
+				echo '<li>' . $val['datetime_from_parsed'] . ' - ' . $val['datetime_to_parsed'] . '</li>';
+			endforeach;
+			?>
+			</ul>
+			<? endif; ?>
+		</div>
+
+		<?if ($store->getDescription()):?>
+		<div id="store-description" class="store-blocks">
+			<h2><?=$this->__('Store Description');?></h2>
+			<p><?= $store->getDescription(); ?></p>
+		</div>
+		<?endif;?>
+
+		<? $nearbyShops = $this->getStoresByGoogleCode(
+			$store->getLat(),
+			$store->getLng(),
+			Mage::app()->getStore()->getConfig('store/google_map/store_search_radius')
+		); ?>
+		<? if (count($nearbyShops)): ?>
+		<div id="storelist" class="store-blocks">
+			<h2><?php echo $this->__('Stores nearby'); ?></h2>
+			<ul>
+				<? foreach($nearbyShops as $shop): ?>
+				<li>
+					<a href="#" class="expand">
+						<span><?=$shop->getName();?>,</span>
+						<?=$shop->getAddress();?>
+					</a>
+
+					<div class="address">
+						<address>
+							<span><?=$shop->getAddress();?>&nbsp;<?=$store->getNumber();?><?=$store->getNumberExt();?></span>
+							<span><?=$shop->getZipcode();?> <?=$shop->getCity();?></span>
+							<span><?=$this->__('Tel.');?> <?=$shop->getPhone();?></span>
+						</address>
+						<p><a class="next-page" href="<?= $this->getUrl('winkel').$shop->getCustomUrl();?>"><?php echo $this->__('Show opening times and route'); ?></a></p>
+					</div>
+				</li>
+				<? endforeach; ?>
+			</ul>
+		</div>
+		<? endif; ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+
+	var markers = [<?=$this->getMarkers();?>];
+
+	<?php if(isset($_GET['search'])):
+
+
+		$extra = Mage::app()->getStore()->getConfig('store/google_map/store_country_criteria');
+		if ($extra) {
+		    $criteria = htmlentities($_GET['search']) . ", " . $extra;
+		} else {
+		    $criteria = htmlentities($_GET['search']);
+		}
+
+		?>
+
+		jQuery(document).ready(function(){
+			var map = Store.getMap();
+			map.findStores('<?=$this->jsQuoteEscape($criteria);?>', 0);
+		});
+
+	<?php endif;?>
+
+
+//--><!]]>
+</script>
+
+

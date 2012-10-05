@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<kega_admincolors>
+			<version>0.0.1</version>
+		</kega_admincolors>
+	</modules>
+	<global>
+		<helpers>
+			<kega_admincolors><class>Kega_Admincolors_Helper</class></kega_admincolors>
+		</helpers>
+		<models>
+			<kega_admincolors><class>Kega_Admincolors_Model</class></kega_admincolors>
+		</models>
+	</global>
+	<adminhtml>
+		<layout>
+			<updates>
+				<kega_admincolors>
+					<file>kega_admincolors.xml</file>
+				</kega_admincolors>
+			</updates>
+		</layout>
+		<events>
+			<controller_action_layout_generate_blocks_after>
+				<observers>
+					<kega_admincolors_bodyclass>
+						<type>singleton</type>
+						<class>kega_admincolors/observer</class>
+						<method>bodyclass</method>
+					</kega_admincolors_bodyclass>
+				</observers>
+			</controller_action_layout_generate_blocks_after>
+		</events>
+    </adminhtml>
+</config>

@@ -1,0 +1,51 @@
+<?php echo $this->getChildHtml('form_fields_before')?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $postUrl = $this->getUrl('checkout/wizard/billingPost');
+} else {
+    $postUrl = $this->getPostActionUrl();
+}
+?>
+<form action="<?php echo $postUrl; ?>" method="post" class="theme1 account-form" id="form-validate" enctype="multipart/form-data">
+	<?php if ($this->helper('customer')->isLoggedIn()) : ?>
+		<?php // Show personal data form of billing address ?>
+		<?=$this->getChildHtml('wizard.register.customer.address.data'); ?>
+	<?php else: ?>
+		<?php // Show personal data form of account ?>
+		<?=$this->getChildHtml('wizard.register.customer.data'); ?>
+	<?php endif; ?>
+	<?php if($this->getShowAddressFields()): ?>
+	<?=$this->getChildHtml('wizard.register.customer.address'); ?>
+	<?php endif; ?>
+	<?=$this->getChildHtml('wizard.register.customer.login'); ?>
+	<?=$this->getChildHtml('wizard.register.customer.newsletter'); ?>
+	<input type="hidden" name="default_billing" value="1" />
+	<input type="hidden" name="default_shipping" value="1" />
+	<?php if(Mage::helper('wizard')->isLoggedInWizard()): ?>
+        <div class="buttons-set form-buttons">
+            <p class="back-link">
+                <a href="<?php echo $this->getUrl('checkout/cart') ?>" class="back-link">&lt; <?=$this->__('Previous step') ?></a>
+            </p>
+            <button type="submit" class="button" title="<?php echo $this->__('Submit') ?>"><span><span><?php echo $this->__('Continue my order') ?></span></span></button>
+        </div>
+    <?php else: ?>
+        <div class="buttons-set form-buttons">
+        	<p class="back-link"><a href="<?php echo Mage::helper('init/catalog')->getCustomCategoryUrl('privacy_statement'); ?>" class="colorbox"><?=$this->__('Privacy statement');?></a></p>
+            <button type="submit" class="button" title="<?php echo $this->__('Submit') ?>"><span><span><?php echo $this->__('Create Account') ?></span></span></button>
+        </div>
+    <?php endif; ?>
+    <p class="required-fields"><?php echo $this->__('* Required Fields') ?></p>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+    <?php if($this->getShowAddressFields()): ?>
+    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+    <?php endif; ?>
+
+    Form.getElements('form-validate').each(function(element) {
+        element.setAttribute('autocomplete', 'off');
+    });
+//]]>
+</script>

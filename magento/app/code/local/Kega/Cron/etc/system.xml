@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <system>
+            <groups>
+                <cron translate="label comment" module="cron">
+                    <label>Cron (Scheduled Tasks) - all the times are in minutes</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>15</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>For correct URLs generated during cron runs please make sure that Web > Secure and Unsecure Base URLs are explicitly set.</comment>
+                    <fields>
+                        <exception_backtrace translate="label">
+                            <label>Backtrace Exceptions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </exception_backtrace>
+                        <exception_email translate="label">
+                            <label>E-mail Exceptions to</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>510</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </exception_email>
+                    </fields>
+                </cron>
+            </groups>
+        </system>
+    </sections>
+</config>

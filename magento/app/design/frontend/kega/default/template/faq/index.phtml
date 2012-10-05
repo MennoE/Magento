@@ -1,0 +1,15 @@
+<div id="faq">
+	<h1><?=$this->__('Faq');?></h1>
+	<p class="desc"><?=Mage::helper('init/catalog')->getCategoryContent(9); ?></p>
+	<form id="faq_search" action="#faq_search" method="post" class="theme1">
+	<fieldset>
+		<p>
+			<label for="question" class="newline">Hoe kunnen we je helpen? Doorzoek alle onderwerpen:</label>
+			<input name="criteria" type="text" id="question" title="Stel hier je vraag" class="empty-focus" value="<?=$this->getSearchQuery()?>">
+			<button type="submit" title="Zoeken" value="Zoeken" class="search"><span>Zoeken</span></button>
+		</p>
+		<input type="hidden" name="do" value="search" />
+	</fieldset>
+	</form>
+	<?=$this->getChildHtml('faq_list');?>
+</div>

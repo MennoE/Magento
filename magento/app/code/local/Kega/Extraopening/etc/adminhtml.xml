@@ -1,0 +1,37 @@
+<config>
+	<menu>
+		<store>
+			<children>
+				<store>
+					<children>
+						<extraopening module="extraopening">
+							<title>Extraopening</title>
+							<sort_order>0</sort_order>
+							<action>extraopening/adminhtml_extraopening</action>
+						</extraopening>
+					</children>
+				</store>
+			</children>
+		</store>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					 <store>
+						<children>
+							<store>
+								<children>
+									<extraopening translate="title">
+										<title>Extraopening</title>
+										<sort_order>10</sort_order>
+									</extraopening>
+								</children>
+							</store>
+						</children>
+					</store>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

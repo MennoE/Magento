@@ -1,0 +1,40 @@
+<?php
+/**
+ * Magento Ogone Payment extension
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mage
+ * @package    Mage_Ogone
+ * @copyright  Copyright (c) 2008 ALTIC Charly Clairmont (CCH)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php if($_info = $this->getInfo()): ?>
+<p>
+<strong><?php echo $this->__('Ogone Payement') ;?></strong>
+<?php 
+ $pm = $this->getPaymentMethod();
+ $pmId = $this->getPaymentTransactionId();
+ if($pm ){ 
+?>
+<br/>
+<?php echo $this->__('Card type:') ?> <strong><?php echo $pm->getPmValue(); ?></strong>
+<br/>
+<?php echo $this->__('Card Brand:') ?> <strong><?php echo $pm->getPmBrand(); ?></strong>
+<?php if($pmId ){ ?>	
+	<br/>
+	<?php echo $this->__('Ogone Transaction Id:') ?> <strong><?php echo $pmId ?></strong>
+<?php } ?>
+<?php } ?>
+</p>
+<?php else: ?>
+<?php endif; ?>
+<?php if($this->getDebugMode()): ?>
+Ogone is in debug mode
+<?php endif; ?>

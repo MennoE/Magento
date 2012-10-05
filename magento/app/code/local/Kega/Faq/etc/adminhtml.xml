@@ -1,0 +1,50 @@
+<config>
+	<menu>
+		<cms>
+			<children>
+				<faq module="faq">
+					<title>Faq</title>
+					<sort_order>1</sort_order>
+					<children>
+						<categories module="faq">
+							<title>Manage Faq Categories</title>
+							<sort_order>0</sort_order>
+							<action>faq/adminhtml_category</action>
+						</categories>
+						<questions module="faq">
+							<title>Manage Faq Questions</title>
+							<sort_order>1</sort_order>
+							<action>faq/adminhtml_question</action>
+						</questions>
+					</children>
+				</faq>
+			</children>
+		</cms>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					 <cms>
+						<children>
+							<faq translate="title" module="tax">
+								<title>Faq</title>
+								<sort_order>511</sort_order>
+								<children>
+									<categories translate="title">
+										<title>Categories</title>
+										<sort_order>0</sort_order>
+									</categories>
+									<questions translate="title">
+										<title>Questions</title>
+										<sort_order>10</sort_order>
+									</questions>
+								</children>
+							</faq>
+						</children>
+					</cms>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

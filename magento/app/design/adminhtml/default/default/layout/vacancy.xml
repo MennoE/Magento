@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <vacancy_adminhtml_vacancy_index>
+        <reference name="content">
+            <block type="vacancy/adminhtml_vacancy" name="vacancy" />
+        </reference>
+    </vacancy_adminhtml_vacancy_index>
+</layout>

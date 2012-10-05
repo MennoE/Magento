@@ -1,0 +1,18 @@
+== Sysload module ==
+Redirect visitors to static service page on high server load.
+
+There are several options for redirecting:
+- Redirect only new visitors.
+- Redirect all visitors except the ones in the checkout
+- Redirect all visitors.
+
+The load treshold for all these options is configurable per option. 
+
+=== Testing ===
+For testing purposes load value can be faked. Use "?test-load=22" in url to 
+simulate a load of 22. 
+
+=== Configuration ===
+Config settings can be found under: 
+System > Configuration > System > Sysload
+ 

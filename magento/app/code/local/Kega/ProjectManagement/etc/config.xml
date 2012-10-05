@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<config>
+    <description><![CDATA[Magento Admin Functionality - Search Orders By Sku, View backup files from import]]></description>
+    <modules>
+        <Kega_ProjectManagement>
+            <version>0.0.1</version>
+        </Kega_ProjectManagement>
+    </modules>
+    <frontend>
+        <routers>
+            <projectmanagement>
+                <use>standard</use>
+                <args>
+                    <module>Kega_ProjectManagement</module>
+                    <frontName>projectmanagement</frontName>
+                </args>
+            </projectmanagement>
+        </routers>
+        <layout>
+            <updates>
+                <projectmanagement>
+                    <file>projectmanagement.xml</file>
+                </projectmanagement>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Kega_ProjectManagement before="Mage_Adminhtml">Kega_ProjectManagement_Adminhtml</Kega_ProjectManagement>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <projectmanagement module="projectmanagement">
+                    <file>projectmanagement.xml</file>
+                </projectmanagement>
+            </updates>
+        </layout>
+        <menu>
+            <projectmanagement>
+                <title>Project Management</title>
+                <sort_order>90</sort_order>
+                <children>
+                    <backupfiles translate="title" module="projectmanagement">
+                        <title>View Backup Files</title>
+                        <action>adminhtml/projectmanagement/backupfilesList</action>
+                    </backupfiles>
+                    <search_order translate="title" module="projectmanagement">
+                        <title>Search Order</title>
+                        <action>adminhtml/projectmanagement/searchOrder</action>
+                    </search_order>
+                </children>
+            </projectmanagement>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <projectmanagement>
+                            <children>
+                                <backup_files translate="title" module="projectmanagement">
+                                    <title>View Backup Files</title>
+                                </backup_files>
+                                <search_order translate="title" module="projectmanagement">
+                                    <title>Search Order</title>
+                                </search_order>
+                            </children>
+                        </projectmanagement>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <kega_projectmanagement translate="title" module="projectmanagement">
+                                            <title>Project Management</title>
+                                            <sort_order>301</sort_order>
+                                        </kega_projectmanagement>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <global>
+        <blocks>
+            <projectmanagement>
+                <class>Kega_ProjectManagement_Block</class>
+            </projectmanagement>
+        </blocks>
+        <helpers>
+            <projectmanagement>
+                <class>Kega_ProjectManagement_Helper</class>
+            </projectmanagement>
+        </helpers>
+        <models>
+            <projectmanagement>
+                <class>Kega_ProjectManagement_Model</class>
+            </projectmanagement>
+        </models>
+    </global>
+</config>

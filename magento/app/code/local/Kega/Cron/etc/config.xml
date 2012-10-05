@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_Cron>
+			<version>0.1.0</version>
+		</Kega_Cron>
+	</modules>
+	<global>
+		<models>
+			<cron_mysql4>
+				<rewrite>
+					<schedule>Kega_Cron_Model_Mysql4_Schedule</schedule>
+				</rewrite>
+			</cron_mysql4>
+			<cron>
+				<rewrite>
+					<observer>Kega_Cron_Model_Observer</observer>
+				</rewrite>
+			</cron>
+		</models>
+		<blocks>
+			<cron><class>Kega_Cron_Block</class></cron>
+		</blocks>
+		<helpers>
+			<cron>
+				<rewrite>
+					<data>Kega_Cron_Helper_Data</data>
+				</rewrite>
+			</cron>
+		</helpers>
+	</global>
+
+	<admin>
+		<routers>
+			<cron>
+				<use>admin</use>
+				<args>
+					<module>Kega_Cron</module>
+					<frontName>cron</frontName>
+				</args>
+			</cron>
+		</routers>
+	</admin>
+</config>

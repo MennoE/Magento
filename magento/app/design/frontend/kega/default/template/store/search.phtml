@@ -1,0 +1,15 @@
+<?php $criteria = $this->getRequest()->getParam('criteria', '1234AB'); ?>
+<h1 class="page-title"><?php echo $this->__('Search for a shop'); ?></h1>
+<form action="<?=$this->getUrl('winkels');?>" method="get" id="store-search" class="theme1">
+	<fieldset>
+		<h2><?=$this->__('Search on zip or city'); ?></h2>
+		<p>
+			<label for="criteria" class="structural"><?=$this->__('Shop search'); ?></label>
+			<input type="text" name="criteria" value="<?=$criteria?>" id="criteria" class="empty-focus" size="20" />
+			<button class="search" type="submit"><?=$this->__('Search');?></button>
+		</p>
+		<p class="next-page-wrap">
+			<a class="all-store-link next-page" href="<?=$this->getUrl('winkels');?>?view=all"><?php echo $this->__('View all stores'); ?></a>
+		</p>
+	</fieldset>
+</form>

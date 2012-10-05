@@ -1,0 +1,64 @@
+<?php
+    $formData = $this->getFormData();
+    $formFieldPrefix = $this->getFieldSuffix();
+?>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('store')->__('Routes') ?></h4>
+	</div>
+	<fieldset>
+
+		<table cellspacing="0" class="form-list" id="table_routes">
+			<tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Monday route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[mondayroute]" value="<?php echo $formData['mondayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Tuesday route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[tuesdayroute]" value="<?php echo $formData['tuesdayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Wednesday route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[wednesdayroute]" value="<?php echo $formData['wednesdayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Thursdayroute route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[thursdayroute]" value="<?php echo $formData['thursdayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Fridayroute route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[fridayroute]" value="<?php echo $formData['fridayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Saturdayroute route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[saturdayroute]" value="<?php echo $formData['saturdayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+            <tr>
+				<td class="label"><label for="extraopening_list"><?php echo Mage::helper('store')->__('Sundayroute route') ?></label></td>
+				<td class="value">
+					<input type="text" class="input-text" name="<?php echo $formFieldPrefix; ?>[sundayroute]" value="<?php echo $formData['sundayroute']; ?>" />
+				</td>
+				<td class="value scope-label"><?php echo Mage::helper('store')->__('[GLOBAL]') ?></td>
+			</tr>
+		</table>
+
+	</fieldset>
+</div>

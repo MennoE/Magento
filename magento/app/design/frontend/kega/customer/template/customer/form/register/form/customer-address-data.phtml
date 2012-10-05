@@ -1,0 +1,12 @@
+<?php $form = Mage::helper('kega_customer')->getCustomerFormData($this); ?>
+<fieldset class="content-block">
+	<h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+	<?php echo $this->getBlockHtml('formkey')?>
+	<input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+	<input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+	<?php echo $this->getNameBlockHtml($form) ?>
+	<p class="right">
+		<label for="company"><?php echo $this->__('Company') ?></label>
+		<input type="text" name="company" id="company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->htmlEscape($form->getCompany()) ?>" class="input-text" />
+	</p>
+</fieldset>

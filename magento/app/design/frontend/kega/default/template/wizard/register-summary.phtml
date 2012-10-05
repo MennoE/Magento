@@ -1,0 +1,35 @@
+<div id="wizard-personal-details" class="wizard-block wizard-block-summary content-block">
+	<div class="wizard-block-content clearfix">
+		<h2 class="wizard-block-step"><span>2</span> <?php echo $this->__('Personal details') ?></h2>
+
+		<? $billing = $this->getBillingAddress(); ?>
+		<div id="billing-summary">
+			<h3><?php echo $this->__('Invoice address') ?></h3>
+			<address>
+				<span class="n"><?php echo $this->htmlEscape(
+					$billing->getFirstname() . ' ' .
+					$billing->getMiddlename() . ' ' .
+					$billing->getLastname()) ?>
+				</span>
+				<span class="adr"><?php echo $this->htmlEscape($billing->getStreet(1) . ' ' . $billing->getStreet(2)); ?></span>
+				<span class="zip"><?php echo $this->htmlEscape($billing->getPostcode()); ?></span>
+				<span class="city"><?php echo $this->htmlEscape($billing->getCity()); ?></span>
+				<? $country = Mage::getModel('directory/country')->loadByCode($billing->getCountry()); ?>
+				<span class="country"><?php echo $this->htmlEscape($country->getName()); ?></span>
+			</address>
+		</div>
+		<div id="additional-information">
+			<h3><?php echo $this->__('Additional information') ?></h3>
+			<dl>
+				<dt><?php echo $this->__('Telefoon') ?>:</dt>
+				<dd><?php echo $billing->getTelephone(); ?></dd>
+				<dt><?php echo $this->__('E-mail') ?>:</dt>
+				<dd><?php echo $billing->getEmail(); ?></dd>
+				<dt><?php echo $this->__('Newsletter') ?>:</dt>
+				<dd><?php echo $this->subscribedToNewsletter() ? $this->__('yes') : $this->__('no'); ?></dd>
+			</dl>
+		</div>
+
+		<p class="edit"><a href="<?php echo $this->getUrl('checkout/wizard') . '#wizard-personal-details' ?>" class="as-button secondary-button small"><?php echo $this->__('Edit info');?></a></p>
+	</div>
+</div>

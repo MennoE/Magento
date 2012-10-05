@@ -1,0 +1,62 @@
+<config>
+	<menu>
+		<store module="store">
+			<title>Retail</title>
+			<sort_order>71</sort_order>
+			<children>
+				<store module="store">
+					<title>Store</title>
+					<sort_order>0</sort_order>
+					<children>
+						<items module="store">
+							<title>Manage Stores</title>
+							<sort_order>0</sort_order>
+							<action>store/adminhtml_store</action>
+						</items>
+						<import module="store">
+							<title>Import Stores</title>
+							<sort_order>1</sort_order>
+							<action>store/adminhtml_import</action>
+						</import>
+					</children>
+<!--                        <action>store/adminhtml_store</action>-->
+				</store>
+			</children>
+		</store>
+   </menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<store translate="title">
+						<title>Retail</title>
+						<sort_order>600</sort_order>
+						<children>
+							<store translate="title">
+								<title>Store</title>
+								<sort_order>0</sort_order>
+								<children>
+									<items translate="title">
+										<title>Manage Stores</title>
+										<sort_order>0</sort_order>
+									</items>
+								</children>
+							</store>
+						</children>
+					</store>
+					<system>
+						<children>
+							<config>
+								<children>
+									<store>
+										<title>Store configurations</title>
+									</store>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

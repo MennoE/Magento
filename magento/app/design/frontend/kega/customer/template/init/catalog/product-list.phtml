@@ -1,0 +1,76 @@
+<?php
+$product = $this->getProduct();
+$productHelper = Mage::helper('init/product');
+$productNameStripped = $this->stripTags($product->getName(), null, true);
+
+$labels = $this->getShowLabels() ? $productHelper->getLabels($product) : array();
+$colors = $this->getColorOptions() ? $productHelper->getColorRelatedProducts($product->getSku()) : array();
+$brandUrl = $this->getShowBrandlogo() ? $productHelper->retrieveBrandLogo($product) : false;
+
+?>
+
+<<?=$this->getTag();?><?=($this->getClass() ? ' class="'.$this->getClass().'"' : '');?>>
+    <div class="product-image">
+        <a href="<?php echo $product->getProductUrl() ?>" title="<?=$productNameStripped;?>">
+            <img src="<?php echo $this->helper('catalog/image')
+                                   ->init($product, $this->getImageSize())
+                                   ->resize(188, 228); ?>" alt="<?=$productNameStripped; ?>" />
+        </a>
+        <?php if(count($labels)):?>
+        <ul class="labels">
+            <?php foreach($labels as $label):?>
+            <li>
+				<img src="<?php echo $catalogHelper->getLabelsFromImageserve($label->getValue())?>" alt="<?php echo $label->getValue(); ?>" />
+            </li>
+            <?php endforeach;?>
+        </ul>
+        <?php endif;?>
+    </div>
+    <div class="productlist-info">
+        <? if ($this->getSaleable()): ?>
+        <form method="post" action="/checkout/cart/add?qty=1&amp;product=<?=$product->getId() ?>" class="product_addtocart_form product-shop">
+            <fieldset>
+        <? endif; ?>
+                <? if ($brandUrl): ?>
+                    <p class="logo"><img src="<?=$brandUrl;?>" alt="<?php echo $productNameStripped; ?>" /></p>
+                <? endif; ?>
+
+                <?php if($this->getShowName()):?>
+                <h2 class="product-name">
+                    <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $productNameStripped; ?>">
+                        <span><?=$product->getName();?></span>
+                    </a>
+                </h2>
+        <?php if(count($colors)):?>
+            <p class="morecolors">
+                <span class="more"><?php echo $this->__('More') ?></span><?php echo $this->__(' Colors') ?>
+            </p>
+        <?php endif;?>
+                <?php endif;?>
+                <?=Mage::helper('init/catalog')->getPriceHtml($product, false)?>
+
+
+                    <? if ($this->getSaleable()): ?>
+                        <?php if($product->isSaleable()): ?>
+                            <?php if($this->getNoCart()): ?>
+                                <p>
+                                    <a href="<?php echo $product->getProductUrl() ?>" class="add-to-cart-small"><span class="shopping-bag-small"><?php echo $this->__('Add to Cart'); ?></span></a>
+                                </p>
+                            <?php else: ?>
+                                <p>
+                                    <button type="submit" title="<?php echo $this->__('Add to Cart') ?>">
+                                        <span class="add-to-cart-small"><span class="shopping-bag-small"><?php echo $this->__('Add to Cart') ?></span></span>
+                                    </button>
+                                </p>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                    <? endif; ?>
+
+        <? if ($this->getSaleable()): ?>
+            </fieldset>
+        </form>
+        <? endif; ?>
+    </div>
+</<?=$this->getTag();?>>

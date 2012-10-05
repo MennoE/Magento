@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Magento Ogone Payment extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mage
+ * @package    Mage_Ogone
+ * @copyright  Copyright (c) 2008 ALTIC Charly Clairmont (CCH)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Mage_Ogone>
+            <version>0.6.2</version>
+        </Mage_Ogone>
+    </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Mage_Ogone before="Mage_Adminhtml">Mage_Ogone</Mage_Ogone>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <global>
+        <models>
+            <ogone>
+                <class>Mage_Ogone_Model</class>
+            </ogone>
+        	<sales>
+				<rewrite>
+					<order_creditmemo>Mage_Ogone_Model_Order_Creditmemo</order_creditmemo>
+				</rewrite>
+			</sales>
+		</models>
+        <blocks>
+            <ogone>
+                <class>Mage_Ogone_Block</class>
+            </ogone>
+			<adminhtml>
+				<rewrite>
+					<sales_order_creditmemo_view>Mage_Ogone_Block_Adminhtml_Sales_Order_Creditmemo_View</sales_order_creditmemo_view>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+        <resources>
+            <ogone_orig_setup>
+                <setup>
+                    <module>Mage_Ogone</module>
+                    <class>Mage_Ogone_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ogone_orig_setup>
+            <ogone_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ogone_write>
+            <ogone_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ogone_read>
+        </resources>
+        <helpers>
+            <ogone>
+                <class>Mage_Ogone_Helper</class>
+            </ogone>
+        </helpers>
+        <payment>
+            <ogone>
+                <languages>
+                    <FR>
+                        <code>FR</code>
+                        <name>Français</name>
+                    </FR>
+                    <EN>
+                        <code>EN</code>
+                        <name>Anglais</name>
+                    </EN>
+                    <US>
+                        <code>US</code>
+                        <name>Anglais des Etats-Unis</name>
+                    </US>
+                    <ES>
+                        <code>ES</code>
+                        <name>Espagnol</name>
+                    </ES>
+                    <DE>
+                        <code>DE</code>
+                        <name>Allemand</name>
+                    </DE>
+                    <IT>
+                        <code>IT</code>
+                        <name>Italien</name>
+                    </IT>
+                    <NL>
+                        <code>NL</code>
+                        <name>Néerlandais</name>
+                    </NL>
+                    <PT>
+                        <code>PT</code>
+                        <name>Portugais</name>
+                    </PT>
+                </languages>
+                <currencies>
+                    <EUR>
+                        <code>978</code>
+                        <name>Euro</name>
+                    </EUR>
+                    <CAD>
+                        <code>124</code>
+                        <name>Dollar Canadien</name>
+                    </CAD>
+                    <CHF>
+                        <code>756</code>
+                        <name>Franc Suisse</name>
+                    </CHF>
+                    <SEK>
+                        <code>752</code>
+                        <name>Couronne Suédoise</name>
+                    </SEK>
+                    <GBP>
+                        <code>826</code>
+                        <name>Livre Sterling</name>
+                    </GBP>
+                    <USD>
+                        <code>840</code>
+                        <name>Dollar US</name>
+                    </USD>
+                </currencies>
+            </ogone>
+        </payment>
+        <events>
+        	<!-- Sets state to refund requested if creditmemo grand total > 0 -->
+            <sales_order_creditmemo_refund>
+                <observers>
+                    <mage_ogone_setStateRefundRequested>
+                        <type>singleton</type>
+                        <class>ogone/observer</class>
+                        <method>setStateRefundRequested</method>
+                    </mage_ogone_setStateRefundRequested>
+                </observers>
+            </sales_order_creditmemo_refund>
+        </events>
+    </global>
+
+    <adminhtml>
+        <!-- nom du fichier de traduction pour la partie admin FACULTATIF -->
+        <translate>
+            <modules>
+                <Mage_Ogone>
+                    <files>
+                        <default>Mage_Ogone.csv</default>
+                    </files>
+                </Mage_Ogone>
+            </modules>
+        </translate>
+
+        <events>
+            <!-- Adds export to Ogone option to the creditmemo grid page -->
+            <adminhtml_grid_prepare_massaction_block_after_sales_creditmemo_grid>
+                <observers>
+                    <mage_ogone_addMassExportToOgoneAction>
+                        <type>singleton</type>
+                        <class>ogone/observer</class>
+                        <method>addMassExportToOgoneAction</method>
+                    </mage_ogone_addMassExportToOgoneAction>
+                </observers>
+            </adminhtml_grid_prepare_massaction_block_after_sales_creditmemo_grid>
+        </events>
+    </adminhtml>
+
+    <frontend>
+        <blocks>
+            <ogone>
+                <class>Mage_Ogone_Block</class>
+            </ogone>
+        </blocks>
+        <routers>
+            <ogone>
+                <use>standard</use>
+                <args>
+                    <module>Mage_Ogone</module>
+                    <frontName>ogone</frontName>
+                </args>
+            </ogone>
+        </routers>
+        <layout>
+            <updates>
+                <ogone>
+                    <file>ogone.xml</file>
+                </ogone>
+            </updates>
+        </layout>
+        <!-- nom du fichier de traduction pour la partie front FACULTATIF -->
+        <translate>
+            <modules>
+                <Mage_Ogone>
+                    <files>
+                        <default>Mage_Ogone.csv</default>
+                    </files>
+                </Mage_Ogone>
+            </modules>
+        </translate>
+    </frontend>
+
+    <default>
+        <payment>
+            <!-- liste des differentes sous methodes de paiement -->
+            <ogone>
+                <!-- valeurs par defaut des champs dans la partie admin -->
+                <active>0</active><!-- mode de paiement enabled ou disabled?-->
+
+                <model>ogone/method_ogone</model>
+
+                <title>Ogone Payment</title>
+
+                <order_status>pending</order_status>
+
+				<ogone_logo>https://secure.ogone.com/images/ogone.gif</ogone_logo>
+				<SHA1PASS></SHA1PASS> <!-- password to compute sha1 key -->
+                		<PSPID></PSPID>
+				<Currency></Currency>
+				<Language></Language>
+				<!-- Optional fields for design -->
+				<!--Static template page -->
+				<PAGE_TITLE></PAGE_TITLE> <!-- Title for static template -->
+				<BGCOLOR>#AF390A</BGCOLOR> <!-- Background color for static template-->
+				<TXTCOLOR>#CDC40F</TXTCOLOR> <!-- Text color for static template-->
+				<TBLBGCOLOR>#CDC40F</TBLBGCOLOR> <!-- Table background color for static template-->
+				<TBLTXTCOLOR>#000000</TBLTXTCOLOR> <!-- Table text color for static template-->
+				<BUTTONBGCOL>#763642</BUTTONBGCOL><!--OR Button background color for static template-->
+				<BUTTONTXTCOLOR>#CDC40F</BUTTONTXTCOLOR> <!-- Button text color for static template-->
+				<FONTTYPE>Verdana</FONTTYPE><!-- Font Type for static template: default = Verdana-->
+				<LOGO></LOGO> <!-- Logo filename for static template: send logo to support with your PSPID in the subject-->
+				<!-- or dynamic template page -->
+				<TP></TP> <!-- The full URL of the Template Page hosted on the merchant's site and containing the "payment string" eg: http://www.MyEcommerceSite.com/TemplatePage.htm or templateSTD3.htm -->
+				<!--Post-payment redirection -->
+				<accepturl></accepturl> <!-- demo_accepturl.htm-->
+				<declineurl></declineurl> <!-- demo_declineurl.htm-->
+				<exceptionurl></exceptionurl><!-- demo_exceptionurl.htm-->
+				<cancelurl></cancelurl> <!-- demo_cancelurl.htm-->
+				<!-- Link to your website in case of standard confirmation page built by Ogone -->
+				<homeurl></homeurl>
+				<catalogurl></catalogurl>
+				<!-- Other optional fields -->
+				<CN></CN> <!-- Optional client name -->
+				<EMAIL></EMAIL> <!-- Optional client email-->
+				<PM></PM> <!-- Optional Payment Method : <EM>CreditCard, iDEAL, ING HomePay, KBC Online, CBC Online, DEXIA NetBanking</EM> -->
+				<BRAND></BRAND> <!-- Optional, can be deduced from the card number-->
+				<SHASign></SHASign>
+				<Signature></Signature>
+				<ownerZIP></ownerZIP>
+				<owneraddress></owneraddress>
+				<ownercty></ownercty>
+				<Alias></Alias>
+				<AliasUsage></AliasUsage>
+				<AliasOperationCOM></AliasOperationCOM><!-- Optional order description-->
+				<COMPLUS></COMPLUS><!-- Optional additional info for post-payment feedback-->
+				<PARAMPLUS></PARAMPLUS> <!-- Optional params for post-payment feedback-->
+				<PARAMVAR></PARAMVAR> <!-- Optional url Variable for post-payment feedback-->
+				<USERID></USERID> <!-- Optional userid for account with User Manager.-->
+				<CreditCode></CreditCode> <!-- Optional CreditCode for Cofinoga/NetReserve.-->
+
+				<debug>0</debug>
+                <allowspecific>0</allowspecific>
+            </ogone>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,41 @@
+<div id="<?php echo $this->getHtmlId() ?>">
+    <table cellspacing="0" cellpadding="0" class="massaction">
+        <tr>
+            <td>
+                <div class="right">
+                    <div class="entry-edit">
+                        <form action="<?php echo $this->getSaveUrl() ?>" method="GET" id="search_order_by_product_sku_form">
+                            <?php echo $this->getBlockHtml('formkey')?>
+
+                            <fieldset>
+                                <span class="field-row">
+                                    <label><?php echo $this->__('Product SKU') ?></label>
+                                    <input type="text" class="input-text required-entry" name="product_sku" value="<?php echo $this->getSelectedProductSku(); ?>" />
+                                </span>
+                                <span class="field-row">
+                                    <button type="submit"><span><?php echo $this->__('Submit'); ?></span></button>
+                                </span>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    <table>
+    </table>
+<?php if(!$this->getParentBlock()->canDisplayContainer()): ?>
+<script type="text/javascript">
+    <?php echo $this->getJsObjectName() ?>.setGridIds('<?php echo $this->getGridIdsJson() ?>');
+</script>
+<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+    //overrided to remove product_sku param
+    varienGrid.prototype.resetFilter = function() {
+        this.addVarToUrl(this.filterVar, '')
+        this.addVarToUrl('product_sku', '');
+        this.reload();
+    };
+</script>
+

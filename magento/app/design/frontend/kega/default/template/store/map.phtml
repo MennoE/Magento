@@ -1,0 +1,20 @@
+<?
+/**
+ * get language from config, only add language parameter to url if it's set in config
+ * google falls back to browser language for map interface if no lang parameter isn't set
+ */
+$language = Mage::getStoreConfig('store/google_map/language');
+$language != null ? $language = '&amp;hl='.$language : $language = '';
+
+$geodata = Mage::registry('geodata');
+if (isset($geodata)){
+	$settings = sprintf('long:%s;lat:%s;zoom:%s', $geodata['long'], $geodata['lat'], $geodata['zoom']);
+}else{
+	$store = $this->getStoreDetails();
+
+	$settings = sprintf('long:%s;lat:%s;zoom:%s', $store->getLng(), $store->getLat(), 11);
+}
+?>
+
+<div id="map" class="settings{<?=$settings;?>}"></div>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false<?=$language?>&amp;key=<?=Mage::helper('store')->getGoogleKey();?>" type="text/javascript"></script>

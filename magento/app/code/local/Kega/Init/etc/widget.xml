@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Banner
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+-->
+<widgets>
+    <enterprise_banner>
+        <parameters>
+            <template>
+                <values>
+                    <cms_content translate="label">
+                        <value>banner/widget/cms-content.phtml</value>
+                        <label>CMS content template</label>
+                    </cms_content>
+                    <!-- grid banner templates - 4 columns -->
+                    <grid_four_one translate="label">
+                        <value>banner/widget/grids/banner-four-1col.phtml</value>
+                        <label>Grid 4x1 banner</label>
+                    </grid_four_one>
+                    <grid_four_two translate="label">
+                        <value>banner/widget/grids/banner-four-2col.phtml</value>
+                        <label>Grid 4x2 banner</label>
+                    </grid_four_two>
+                    <grid_four_three translate="label">
+                        <value>banner/widget/grids/banner-four-3col.phtml</value>
+                        <label>Grid 4x3 banner</label>
+                    </grid_four_three>
+                    <grid_four_four translate="label">
+                        <value>banner/widget/grids/banner-four-4col.phtml</value>
+                        <label>Grid 4x4 banner</label>
+                    </grid_four_four>
+                    <!-- grid banner templates - 3 columns -->
+                    <grid_three_one translate="label">
+                        <value>banner/widget/grids/banner-three-1col.phtml</value>
+                        <label>Grid 3x1 banner</label>
+                    </grid_three_one>
+                    <grid_three_two translate="label">
+                        <value>banner/widget/grids/banner-three-2col.phtml</value>
+                        <label>Grid 3x2 banner</label>
+                    </grid_three_two>
+                    <grid_three_three translate="label">
+                        <value>banner/widget/grids/banner-three-3col.phtml</value>
+                        <label>Grid 3x3 banner</label>
+                    </grid_three_three>
+                </values>
+            </template>
+        </parameters>
+    </enterprise_banner>
+</widgets>

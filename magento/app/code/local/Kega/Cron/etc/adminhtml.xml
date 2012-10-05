@@ -1,0 +1,43 @@
+<config>
+	<menu>
+		<system  module="adminhtml">
+			<children>
+				<config>
+					<children>
+						<config translate="title">
+							<title>Configuration</title>
+							<action>adminhtml/system_config</action>
+						</config>
+						<cron translate="title">
+							<title>Cron Schedule</title>
+							<action>cron/schedule/view</action>
+						</cron>
+					</children>
+				</config>
+			</children>
+		</system>
+	</menu>
+<!--		<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<freecms>
+										<title>Banners</title>
+										<sort_order>50</sort_order>
+									</freecms>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>-->
+</config>

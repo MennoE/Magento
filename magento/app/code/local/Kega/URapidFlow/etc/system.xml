@@ -1,0 +1,146 @@
+<config>
+    <sections>
+        <urapidflow>
+			<groups>
+				<import translate="label" module="urapidflow">
+                    <label>Import</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+						<confirmation_email translate="label" module="urapidflow">
+							<label>Confirmation email</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</confirmation_email>
+						<confirmation_email_subject translate="label" module="urapidflow">
+							<label>Confirmation email subject</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</confirmation_email_subject>
+					</fields>
+                </import>
+                <import_ftp translate="label" module="urapidflow">
+                    <label>Importeren - FTP settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                       <testmode translate="label" module="urapidflow">
+                            <label>Test mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>If 'yes' files will NOT be deleted from the FTP during the import process. Also, the sequence number of the import will NOT be incremented. NOTE: this should be set to 'no' when on a live environment.</comment>
+                        </testmode>
+						<host translate="label" module="urapidflow">
+                            <label>Host</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host>
+                        <user translate="label" module="urapidflow">
+                            <label>User</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </user>
+                        <password translate="label" module="urapidflow">
+                            <label>Password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                       </password>
+                        <directory translate="label" module="urapidflow">
+                            <label>Directory</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                       </directory>
+                       <passive translate="label" module="urapidflow">
+                            <label>Passive mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </passive>
+                    </fields>
+                </import_ftp>
+
+				<import_advanced translate="label" module="urapidflow">
+                    <label>Import (geavanceerd)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+                       <import_configurable_with_state translate="label" module="urapidflow">
+                            <label>Import configurables as active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </import_configurable_with_state>
+					</fields>
+                </import_advanced>
+
+				<directories_cleanup translate="label">
+					<label>Directories Cleanup</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>80</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<file_age translate="label" module="urapidflow">
+							<label>Weeks</label>
+							<comment>Delete files older than x weeks</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>kega_urapidflow/config_weeks</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</file_age>
+						<directories translate="label" module="urapidflow">
+							<label>Directories</label>
+							<comment>Specify directories that needs to be cleaned up. The directory root is /var/urapidflow/.</comment>
+							<frontend_model>kega_urapidflow/adminhtml_form_field_directories</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</directories>
+					</fields>
+				</directories_cleanup>
+            </groups>
+        </urapidflow>
+    </sections>
+</config>

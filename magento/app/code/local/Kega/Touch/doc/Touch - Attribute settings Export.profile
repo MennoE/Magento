@@ -1,0 +1,1 @@
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"UTF-8","to":"","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"store_ids":["3"],"row_types":["EA","EAXP"],"entity_types":["4"]}}

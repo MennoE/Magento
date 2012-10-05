@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+      <Kega_CatalogSearch>
+        <active>true</active>
+        <codePool>local</codePool>
+      </Kega_CatalogSearch>
+    </modules>
+</config>

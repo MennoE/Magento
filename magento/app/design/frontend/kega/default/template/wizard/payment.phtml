@@ -1,0 +1,29 @@
+<div id="wizard-payment-details" class="wizard-block content-block">
+	<div class="wizard-block-content clearfix">
+		<h2 class="wizard-block-step"><span>4</span> <?php echo $this->__('Payment') ?></h2>
+		<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+		<div class="totals">
+			<?php echo $this->getChildHtml('totals'); ?>
+		</div>
+
+		<form action="<?php echo $this->getUrl('checkout/wizard/order')?>" method="post" id="payment-methods">
+			<fieldset>
+				<?php echo $this->getChildHtml('methods'); ?>
+				<div id="agreement-wrap">
+					<a href="#terms" id="terms-link" class="colorbox"><?=$this->__('Yes, I agree with the terms and conditions'); ?></a>
+					<div class="structural">
+						<div id="terms">
+						<?=Mage::getModel('catalog/category')->load(Mage::getStoreConfig('extrasettings/general/terms_conditions_page'))->getDescription();?>
+						</div>
+					</div>
+				</div>
+				<p class="footer">
+					<button type="submit"><?php echo $this->__('Pay and send order') ?></button>
+                    <span class="load-payment"><img src="<?=$this->getSkinUrl()?>images/kega/loading.gif" /> <?=Mage::getStoreConfig('checkout/paymentpage/loadtext')?></span>
+					<a href="<?php echo $this->getUrl('checkout/wizard/delivery/') ?>?back=1#wizard-delivery-details" class="back-link">&lt; <?=$this->__('Previous step') ?></a>
+				</p>
+			</fieldset>
+		</form>
+	</div>
+</div>

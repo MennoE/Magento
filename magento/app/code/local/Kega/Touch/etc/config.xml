@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+		<Kega_Touch>
+			<version>0.0.1</version>
+		</Kega_Touch>
+	</modules>
+	<global>
+        <models>
+            <kega_touch>
+                <class>Kega_Touch_Model</class>
+                <resourceModel>kega_touch_mysql4</resourceModel>
+            </kega_touch>
+		</models>
+        <helpers>
+        	<kega_touch>
+            	<class>Kega_Touch_Helper</class>
+            </kega_touch>
+        </helpers>
+        <events>
+			<!-- Redirect URapidFlow product output -->
+			<urapidflow_catalog_product_export_before_output>
+				<observers>
+					<kega_touch_redirectOutput>
+						<type>singleton</type>
+						<class>kega_touch/observer</class>
+						<method>redirectOutput</method>
+					</kega_touch_redirectOutput>
+				</observers>
+			</urapidflow_catalog_product_export_before_output>
+
+			<!-- Redirect URapidFlow category output -->
+			<urapidflow_catalog_category_export_before_output>
+				<observers>
+					<kega_touch_redirectOutput>
+						<type>singleton</type>
+						<class>kega_touch/observer</class>
+						<method>redirectOutput</method>
+					</kega_touch_redirectOutput>
+				</observers>
+			</urapidflow_catalog_category_export_before_output>
+
+			<!--
+			Update the updated_at value of the catalog/product when cataloginventory/stock_item is saved (updated).
+			We need this for the stock export to the touch app, because the app needs to know what products have an updated stock.
+			-->
+			<cataloginventory_stock_item_save_commit_after>
+				<observers>
+					<kega_touch_setProductUpdatedAt>
+						<type>singleton</type>
+						<class>kega_touch/product_observer</class>
+						<method>setUpdatedAt</method>
+					</kega_touch_setProductUpdatedAt>
+				</observers>
+			</cataloginventory_stock_item_save_commit_after>
+		</events>
+		<blocks>
+			<kega_touch>
+				<rewrite>
+					<adminhtml_core_stores>Kega_Touch_Block_Adminhtml_Core_Stores</adminhtml_core_stores>
+					<adminhtml_payment_methods>Kega_Touch_Block_Adminhtml_Payment_Methods</adminhtml_payment_methods>
+				</rewrite>
+			</kega_touch>
+		</blocks>
+  	</global>
+	<crontab>
+		<jobs>
+			<!-- Create catalog.db every morning at 5.30 hour. -->
+			<kega_touch_createCatalogDb>
+				<schedule><cron_expr>30 5 * * *</cron_expr></schedule>
+				<run><model>kega_touch/observer::createCatalogDb</model></run>
+			</kega_touch_createCatalogDb>
+
+			<!-- Create stock.db every 30min between 07 and 23 hour. -->
+			<kega_touch_createStockDb>
+				<schedule><cron_expr>*/30 7-23 * * *</cron_expr></schedule>
+				<run><model>kega_touch/observer::createStockDb</model></run>
+			</kega_touch_createStockDb>
+		</jobs>
+	</crontab>
+</config>

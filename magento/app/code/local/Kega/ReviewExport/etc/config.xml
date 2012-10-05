@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_ReviewExport>
+            <version>0.1.0</version>
+        </Kega_ReviewExport>
+    </modules>
+    <global>
+        <models>
+            <kega_reviewexport>
+                <class>Kega_ReviewExport_Model</class>
+            </kega_reviewexport>
+        </models>
+        <helpers>
+            <kega_reviewexport>
+                <class>Kega_ReviewExport_Helper</class>
+            </kega_reviewexport>
+        </helpers>
+    </global>
+</config>

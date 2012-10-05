@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+		<Kega_Autoprint>
+			<version>0.1.0</version>
+		</Kega_Autoprint>
+	</modules>
+	<global>
+        <helpers>
+			<kega_autoprint>
+				<class>Kega_Autoprint_Helper</class>
+			</kega_autoprint>
+        </helpers>
+		<models>
+			<kega_autoprint>
+				<class>Kega_Autoprint_Model</class>
+			</kega_autoprint>
+		</models>
+	</global>
+	<frontend>
+		<translate>
+			<modules>
+				<Kega_Autoprint>
+					<files>
+						<default>Kega_Autoprint.csv</default>
+					</files>
+				</Kega_Autoprint>
+			</modules>
+		</translate>
+    </frontend>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Kega_Autoprint>
+					<files>
+						<default>Kega_Autoprint.csv</default>
+					</files>
+				</Kega_Autoprint>
+			</modules>
+		</translate>
+		<events>
+			<!--
+				We want to redirect the PDF download responses.
+				- Catch the content and save it to FTP server.
+				- Redirect the browser to ActiveX download page.
+				or
+				- Do nothing...
+			-->
+			<adminhtml_controller_action_prepare_download_response>
+				<observers>
+					<kega_autoprint_prepareDownloadResponse>
+						<class>kega_autoprint/observer</class>
+						<method>prepareDownloadResponse</method>
+					</kega_autoprint_prepareDownloadResponse>
+				</observers>
+			</adminhtml_controller_action_prepare_download_response>
+			<!--
+				When a shipment is created and saved in the admin, we want to print the PDF's automaticly.
+				So we upload the shipment PDF to the FTP server, output the ActiveX script
+				and redirect to the print refund controller / action.
+			-->
+			<controller_action_postdispatch_adminhtml_sales_order_shipment_save>
+				<observers>
+					<kega_autoprint_printPackslipAndRefundPDF>
+						<class>kega_autoprint/shipment_observer</class>
+						<method>printPackslipAndRefundPDF</method>
+					</kega_autoprint_printPackslipAndRefundPDF>
+				</observers>
+			</controller_action_postdispatch_adminhtml_sales_order_shipment_save>
+		</events>
+	</adminhtml>
+	<default>
+		<sales_pdf>
+			<autoprint>
+				<passive>0</passive>
+			</autoprint>
+			<invoice>
+				<autoprint_tray>normal</autoprint_tray>
+			</invoice>
+			<shipment>
+				<autoprint_tray>normal</autoprint_tray>
+			</shipment>
+			<refund>
+				<autoprint_tray>sticker</autoprint_tray>
+			</refund>
+			<creditmemo>
+				<autoprint_tray>normal</autoprint_tray>
+			</creditmemo>
+		</sales_pdf>
+	</default>
+</config>

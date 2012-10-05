@@ -1,0 +1,16 @@
+<?
+	$store = Mage::app()->getStore();
+	foreach(array('exhange-return', 'safe-payment', 'warranty', 'delivery') as $item):
+
+		$block = Mage::getModel('cms/block')->setStoreId($store->getId())
+				->load($this->getLayout()->createBlock('cms/block')
+				->setBlockId($item . '_' . $store->getCode())->getBlockId());
+
+		if ($block->getIsActive()):
+?>
+<div class="cart-sellingpoint-block">
+	<h2 id="cart-<?=$item?>"><?=$block->getTitle();?></h2>
+	<p class="content"><?=$block->getContent();?></p>
+</div>
+		<? endif; ?>
+<? endforeach; ?>

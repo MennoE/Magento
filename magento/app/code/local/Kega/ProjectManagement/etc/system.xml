@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <kega_projectmanagement translate="label" module="projectmanagement">
+            <class>separator-top</class>
+            <label>Project Management</label>
+            <tab>advanced</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>301</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <backup_files translate="label">
+                    <label>Backup Files</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <file_paths translate="label">
+                            <label>Backup files/dirs paths</label>
+                            <frontend_model>projectmanagement/adminhtml_form_field_backupfiles</frontend_model>
+                            <backend_model>projectmanagement/adminhtml_system_config_backend_serialized_array_backupfile</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </file_paths>
+                    </fields>
+                </backup_files>
+            </groups>
+        </kega_projectmanagement>
+    </sections>
+</config>

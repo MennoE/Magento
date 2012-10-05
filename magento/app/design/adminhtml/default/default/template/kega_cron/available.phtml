@@ -1,0 +1,31 @@
+<div class="grid">
+	<div class="hor-scroll">
+		<table cellspacing="0" id="availableGrid_table" class="data">
+		    <col>
+		    <col width="200">
+		    <col width="200">
+		    <col width="150">
+	        <thead>
+            	<tr class="headings">
+                    <th><span class="nobr"><a class="not-sort" title="asc" name="job_code" href="#"><span class="sort-title">Job Code</span></a></span></th>
+                    <th><span class="nobr"><a class="not-sort" title="asc" name="last_run_at" href="#"><span class="sort-title"><?php echo $this->__('Last run at')?></span></a></span></th>
+                    <th><span class="nobr"><a class="not-sort" title="asc" name="next_run_at" href="#"><span class="sort-title"><?php echo $this->__('Next run at')?></span></a></span></th>
+                    <th class="no-link last"></th>
+                </tr>
+        	</thead>
+		    <tbody id="">
+		    	<?php $_collection = $this->getAvailableCollection()?>
+		    	<?php $i = 1;?>
+		    	<?php foreach ($_collection as $item):?>
+					<tr title="" <?php if ($i%2):?> class="even" <?php endif;?> >
+						<td class=" "><?php echo $item->getJobCode() ?></td>
+						<td class="a-left "><?php echo ($item->getLastRunAt() ? Mage::app()->getLocale()->date($item->getLastRunAt()) : Mage::helper('cron')->__('n/a')) ?></td>
+						<td class="a-left "><?php echo ($item->getNextRunAt() ? Mage::app()->getLocale()->date($item->getNextRunAt()) : Mage::helper('cron')->__('n/a')) ?></td>
+						<td class=" last" style="text-align: center;"><button title="Click to schedule '<?php echo $item->getJobCode()?>'" onclick="this.style.display='none'; location.href='<?php echo $this->getUrl('*/*/schedule', array('job_code' => $item->getJobCode()))?>'" type="button"><span>Schedule</span></button></a></td>
+					</tr>
+		    		<?php $i++;?>
+		    	<?php endforeach;?>
+		    </tbody>
+		</table>
+	</div>
+</div>

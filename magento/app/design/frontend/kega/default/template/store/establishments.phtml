@@ -1,0 +1,20 @@
+<div id="establishments-results">
+	<h2><?=$this->__('Stores');?></h2>
+
+	<? if (Mage::registry('store-detail')) {
+			foreach($this->getStoreDetails() as $store) {
+				$this->getStoreHtml($store);
+			}
+		} else {
+			$stores = $this->getStores();
+			foreach($stores as $store) {
+				$this->getStoreHtml($store);
+			}
+		}
+	?>
+	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
+		var markers = [<?=$this->getMarkers();?>];
+	//--><!]]>
+	</script>
+</div>

@@ -1,0 +1,66 @@
+<form action="<?php echo Mage::getUrl('contact'); ?>" method="post" id="contact-form" class="form-theme1">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+    <h2><?=$this->__('Contact ');?></h2>
+
+    <?php $errors = $this->getValidateErrors(); ?>
+    <?php if(!empty($errors['required']) || !empty($errors['invalid'])):?>
+    <p class="intro errors"><?=$this->__('Not all fields contain valid data');?>:</p>
+
+    <ul class="errors">
+        <?php foreach($errors['required'] as $_error):?>
+        <li>'<?=$this->__($_error)?>' <?=$this->__('is a required field');?>.</li>
+        <?php endforeach;?>
+        <?php foreach($errors['invalid'] as $_error):?>
+        <li>'<?=$this->__($_error)?>' <?=$this->__('has invalid value');?>.</li>
+        <?php endforeach;?>
+    </ul>
+    <?php endif;?>
+    <p class="radio-options">
+        <span class="as-label"><?=$this->__('Select a category')?></span>
+        <input type="radio" name="question-type" value="general" id="question-type-general" />
+        <label for="question-type-general"><?=$this->__('General')?></label>
+
+        <input type="radio" name="question-type" value="webshop" id="question-type-webshop" />
+        <label for="question-type-webshop"><?=$this->__('Webshop')?></label>
+    </p>
+    <p>
+        <label for="name"><?=$this->__('Your name');?><?=$this->checkRequired('name');?></label>
+        <input type="text" name="name" id="name" class="text-input required-entry" value="<?=$this->getValue('name')?>" />
+    </p>
+    <p>
+        <label for="e-mail"><?=$this->__('Your emailaddress');?><?=$this->checkRequired('e-mail');?></label>
+        <input type="text" name="e-mail" id="e-mail" class="required-entry text-input" value="<?=$this->getValue('e-mail')?>" />
+    </p>
+    <p>
+        <label for="phone"><?=$this->__('Your phone');?><?=$this->checkRequired('phone');?></label>
+        <input type="text" name="phone" id="phone" class="text-input medium" value="<?=$this->getValue('phone')?>" />
+    </p>
+    <p>
+        <label for="address"><?=$this->__('Your address');?><?=$this->checkRequired('address');?></label>
+        <input type="text" name="address" id="address" class="text-input required-entry" value="<?=$this->getValue('address')?>" />
+    </p>
+	<p>
+        <label for="zipcode"><?=$this->__('Your zipcode');?><?=$this->checkRequired('zipcode');?></label>
+        <input type="text" name="zipcode" id="zipcode" class="text-input required-entry" value="<?=$this->getValue('zipcode')?>" />
+    </p>
+    <p>
+        <label for="city"><?=$this->__('Your city');?><?=$this->checkRequired('city');?></label>
+        <input type="text" name="city" id="city" class="text-input required-entry" value="<?=$this->getValue('city')?>" />
+    </p>
+    <p class="hide">
+        <label for="city"><?=$this->__('Your data');?><span class="required">*</span></label>
+        <input type="text" name="data" id="data" class="text-input" value="<?=$this->getValue('data')?>" />
+    </p>
+    <p>
+        <label for="comment"><?=$this->__('Your comment');?><?=$this->checkRequired('comment');?></label>
+        <textarea name="comment" id="comment" rows="4" cols="36" class="text-input required-entry"><?=$this->getValue('comment')?></textarea>
+    </p>
+    <p class="footer">
+        <button type="submit" class="button"><?=$this->__('Submit');?></button>
+    </p>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+	var dataForm = new VarienForm('contact-form');
+//]]>
+</script>

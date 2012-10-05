@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_CatalogSearch>
+            <version>0.0.1</version>
+        </Kega_CatalogSearch>
+    </modules>
+	<global>
+		<blocks>
+			<catalogsearch>
+				<rewrite>
+				  <result>Kega_CatalogSearch_Block_Result</result>
+				</rewrite>
+			</catalogsearch>
+		</blocks>
+	</global>
+	<frontend>
+        <routers>
+            <catalogsearch>
+				<args>
+					<modules>
+						<Kega_CatalogSearch before="Mage_CatalogSearch">Kega_CatalogSearch</Kega_CatalogSearch>
+					</modules>
+				</args>
+            </catalogsearch>
+        </routers>
+    </frontend>
+    <default>
+        <catalog>
+            <search>
+                <use_google_cse>0</use_google_cse>
+            </search>
+        </catalog>
+    </default>
+</config>

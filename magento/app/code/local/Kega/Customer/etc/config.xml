@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_Customer>
+			<version>1.0.0</version>
+		</Kega_Customer>
+	</modules>
+
+	<global>
+		<blocks>
+			<customer>
+				<rewrite>
+					<account_navigation>Kega_Customer_Block_Account_Navigation</account_navigation>
+				</rewrite>
+			</customer>
+		</blocks>
+		<helpers>
+			<kega_customer>
+				<class>Kega_Customer_Helper</class>
+			</kega_customer>
+		</helpers>
+	</global>
+</config>

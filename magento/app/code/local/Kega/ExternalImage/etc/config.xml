@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_ExternalImage>
+			<version>1.0.0</version>
+		</Kega_ExternalImage>
+	</modules>
+
+	<global>
+		<blocks>
+			<catalog>
+				<rewrite>
+					<product_view_media>Kega_ExternalImage_Block_Catalog_Product_View_Media</product_view_media>
+				</rewrite>
+			</catalog>
+		</blocks>
+
+		<helpers>
+			<catalog>
+				<rewrite>
+					<image>Kega_ExternalImage_Helper_Catalog_Image</image>
+				</rewrite>
+			</catalog>
+		</helpers>
+
+		<models>
+			<externalimage>
+				<class>Kega_ExternalImage_Model</class>
+				<resourceModel>externalimage_mysql4</resourceModel>
+			</externalimage>
+			<externalimage_mysql4>
+				<class>Kega_ExternalImage_Model_Mysql4</class>
+				<entities>
+					<gallery>
+						<table>externalimage_gallery</table>
+					</gallery>
+				</entities>
+			</externalimage_mysql4>
+
+			<catalog>
+				<rewrite>
+					<product>Kega_ExternalImage_Model_Catalog_Product</product>
+				</rewrite>
+			</catalog>
+			<catalog_resource_eav_mysql4> 
+				<rewrite> 
+					<product>Kega_ExternalImage_Model_Mysql4_Catalog_Product</product> 
+				</rewrite> 
+			</catalog_resource_eav_mysql4> 
+		</models>
+
+		<resources> 
+			<externalimage_setup> 
+				<setup> 
+					<module>Kega_ExternalImage</module> 
+					<class>Kega_ExternalImage_Model_Mysql4_Setup</class> 
+				</setup> 
+				<connection> 
+					<use>core_setup</use> 
+				</connection> 
+			</externalimage_setup> 
+			<externalimage_write> 
+				<connection> 
+					<use>core_write</use> 
+				</connection> 
+			</externalimage_write> 
+			<externalimage_read> 
+				<connection> 
+					<use>core_read</use> 
+				</connection> 
+			</externalimage_read> 
+		</resources> 
+	</global>
+
+	<default>
+		<catalog>
+			<externalimage>
+				<image_path></image_path>
+			</externalimage>
+		</catalog>
+	</default>
+</config>

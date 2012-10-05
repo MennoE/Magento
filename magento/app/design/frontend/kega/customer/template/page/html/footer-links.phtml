@@ -1,0 +1,46 @@
+<div class="footer-links">
+    <div class="footer-links-block">
+        <?php $footerLeft = $this->getColumns('col_one'); ?>
+        <?php foreach($footerLeft as $items): ?>
+            <h2><?php echo $items->getName(); ?></h2>
+            <ol>
+                <?php foreach($items->getChildrenCategories() as $child):?>
+                    <li><a href="<?=$child->getUrl();?>"><?=$child->getName();?></a></li>
+                <?php endforeach;?>
+            </ol>
+        <?php endforeach; ?>
+    </div>
+    <div class="footer-links-block">
+        <?php $footerCenter = $this->getColumns('col_two'); ?>
+        <?php foreach($footerCenter as $items): ?>
+            <h2><?php echo $items->getName(); ?></h2>
+            <ol>
+                <?php foreach($items->getChildrenCategories() as $child):?>
+                    <li><a href="<?=$child->getUrl();?>"><?=$child->getName();?></a></li>
+                <?php endforeach;?>
+            </ol>
+        <?php endforeach; ?>
+    </div>
+    <div class="footer-links-block">
+        <?php $footerRight = $this->getColumns('col_three'); ?>
+        <?php foreach($footerRight as $items): ?>
+            <h2><?php echo $items->getName(); ?></h2>
+            <ol>
+                <?php foreach($items->getChildrenCategories() as $child):?>
+                    <li><a href="<?=$child->getUrl();?>"><?=$child->getName();?></a></li>
+                <?php endforeach;?>
+            </ol>
+        <?php endforeach; ?>
+    </div>
+    <div class="footer-links-block">
+        <?php $footerRight = $this->getColumns('col_four'); ?>
+        <?php foreach($footerRight as $items): ?>
+            <h2><?php echo $items->getName(); ?></h2>
+            <ol>
+                <?php foreach($items->getChildrenCategories() as $child):?>
+                    <li><a href="<?=$child->getUrl();?>"><?=$child->getName();?></a></li>
+                <?php endforeach;?>
+            </ol>
+        <?php endforeach; ?>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Reactie op vacature</title>
+<style type="text/css">* {font-family:verdana;font-size:11px;}</style>
+</head>
+<body>
+<?php
+$candidate = $this->getCandidate();
+$vacancy = $this->getVacancy($candidate['vacancy_id']);
+$fields = $this->getFields();
+$fileFields = $this->getFilefields();
+$storeFields = $this->getStorefields();
+?>
+<table border="0" cellpadding="3" cellspacing="0">
+    <tr>
+        <th colspan="2" align="left">
+            Er is gereageerd op de volgende vacature:<br />
+            <a href="<?=$this->getUrl('vacatures/vacancies/details/'). 'show/' . $vacancy['vacancy_id'];?>"><?=$vacancy['name_full']?></a>
+        </th>
+    </tr>
+    <?php foreach($this->getFields() as $field):?>
+    <?php if(!empty($candidate[$field]) && !in_array($field, $fileFields)):?>
+    <?php if(in_array($field, $storeFields)):?>
+    <tr>
+        <th align="left"><?=$this->__($field);?></th>
+        <td><?=Mage::getModel('store/store')->load($candidate[$field])->getName()?></td>
+    </tr>
+    <?php else:?>
+    <tr>
+        <th align="left"><?=$this->__($field);?></th>
+        <td><?=$candidate[$field]?></td>
+    </tr>
+    <?php endif;?>
+    <?php endif;?>
+    <?php endforeach;?>
+    <tr>
+        <th align="left">Tijdstip plaatsing</th>
+        <td><?=$candidate['ctime']?></td>
+    </tr>
+</table>
+</body>
+</html>

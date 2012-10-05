@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <kega_sysload>
+            <active>true</active>
+            <codePool>local</codePool>
+        </kega_sysload>
+    </modules>
+</config>

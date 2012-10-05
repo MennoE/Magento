@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_Recently>
+            <version>0.0.1</version>
+        </Kega_Recently>
+    </modules>
+	<frontend>
+        <routers>
+            <recently>
+                <use>standard</use>
+                <args>
+                    <module>Kega_Recently</module>
+                    <frontName>recently</frontName>
+                </args>
+            </recently>
+        </routers>
+    </frontend>
+    <global>
+        <models>
+            <recently>
+                <class>Kega_Recently_Model</class>
+            </recently>
+        </models>
+        <helpers>
+            <recently>
+                <class>Kega_Recently_Helper</class>
+            </recently>
+        </helpers>
+    </global>
+</config>

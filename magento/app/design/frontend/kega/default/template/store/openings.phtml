@@ -1,0 +1,33 @@
+<? $store = $this->getStoreDetails(); ?>
+<? $extraOpenings = $store->getAllOpeningDays(); ?>
+<? $date = $this->getRequest()->getParam('date', false);?>
+
+<div id="store-openings">
+    <h3><?=$this->__('Extra Openings');?></h3>
+    <div id="openings-list">
+        <?php $i = 1; foreach($extraOpenings as $opening): ?>
+	<? if (!count($opening['stores'])) continue; ?>
+        <?php $expanded = ($date == substr($opening['datetime'], 0, 10) ? ' expanded' : ''); ?>
+        <h4><a href="#" id="opening-head_<?=$i;?>" class="head<?=$expanded?>">
+			<?=ucfirst($this->__(strftime('%A', strtotime($opening['datetime']))));?>
+            <?=strftime('%e', strtotime($opening['datetime']));?>
+            <?=$this->__(strftime('%B', strtotime($opening['datetime'])));?>
+            <?=strftime('%Y', strtotime($opening['datetime']));?>
+        </a></h4>
+        <div id="opening-content_<?=$i;?>" class="opening-content">
+            <ul>
+                <?php foreach($opening['stores'] as $store): ?>
+                <li>
+                    <a href="<?=$store->getUrl();?>" class="title">
+                    <?=$store->getName();?>,</a>
+                    <?=$store->getAddress();?>
+                    <a href="<?=$store->getUrl();?>" class="route">
+						<?=sprintf($this->__('Show opening times and route'), $store->getName())?>
+					</a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php $i++; endforeach;?>
+    </div>
+</div>

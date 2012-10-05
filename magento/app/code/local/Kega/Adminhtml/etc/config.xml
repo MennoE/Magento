@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_Adminhtml>
+			<version>0.1.0</version>
+		</Kega_Adminhtml>
+	</modules>
+
+	<global>
+		<blocks>
+			<kega_adminhtml>
+				<class>Kega_Adminhtml_Block</class>
+			</kega_adminhtml>
+			<adminhtml>
+				<rewrite>
+					<system_store_edit_form>Kega_Adminhtml_Block_System_Store_Edit_Form</system_store_edit_form>
+					<catalog_helper_form_wysiwyg>Kega_Adminhtml_Block_Catalog_Helper_Form_Wysiwyg</catalog_helper_form_wysiwyg>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+
+		<resources>
+			<kega_adminhtml_setup>
+				<setup>
+					<module>Kega_Adminhtml</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</kega_adminhtml_setup>
+			<kega_adminhtml_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</kega_adminhtml_write>
+			<kega_adminhtml_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</kega_adminhtml_read>
+		</resources>
+	</global>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Kega_Essentials before="Mage_Adminhtml_System">Kega_Adminhtml</Kega_Essentials>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+</config>

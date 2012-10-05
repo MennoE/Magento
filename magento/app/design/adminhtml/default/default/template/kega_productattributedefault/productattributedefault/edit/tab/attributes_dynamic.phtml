@@ -1,0 +1,185 @@
+<?php $productAttributesValues = $this->getProductAttributesValues(); ?>
+<?php $_htmlId = uniqid(); ?>
+<?php $formValues = $this->getFormValues(); ?>
+<div class="entry-edit">
+	<div class="entry-edit-head collapseable">
+		<a href="#" class="action-collapse"><?php echo Mage::helper('kega_productattributedefault')->__('Creëer/stel dynamische attributen waarden in (optioneel)') ?></a>
+	</div>
+	<?php $attributeClass = (empty($formValues)? ' hidden': ''); ?>
+
+	<div class="fieldset<?php echo $attributeClass; ?>">
+		<div class="grid" id="grid<?php echo $_htmlId ?>">
+			<table cellspacing="0" class="data-table" id="<?php echo $_htmlId ?>_grid" width="100%">
+				<col width="40%" />
+				<col width="40%" />
+				<col />
+				<thead>
+				    <tr class="headings">
+					<th><?php echo Mage::helper('kega_productattributedefault')->__('Attribute Name') ?></th>
+					<th><?php echo Mage::helper('kega_productattributedefault')->__('Attribute Value') ?></th>
+					<th class="last"><?php echo Mage::helper('kega_productattributedefault')->__('Action') ?></th>
+				    </tr>
+				</thead>
+				<tbody id="<?php echo $_htmlId ?>_list">
+				    <tr id="row-attribute-dynamic-template-edit" class="template no-display">
+						<td class="cell-attribute-name">
+						    <select class="input-text input-select attribute-name" id="attribute_dynamic_code_#id#" name="product_attribute_default[attributes_dynamic][#id#][attribute_code]">
+						    <option value=""><?php echo Mage::helper('kega_productattributedefault')->__('-- choose --') ?></option>
+						    <?php foreach ($productAttributesValues as $optionValue => $optionInfo): ?>
+						    <option value="<?php echo $optionValue; ?>"><?php echo $optionInfo['name']; ?></option>
+						    <?php endforeach; ?>
+						    </select>
+						<td class="cell-attribute-value">
+							<input type="text" class="input-text" id="attribute_dynamic_value_#id#" name="product_attribute_default[attributes_dynamic][#id#][attribute_value]" />							
+						    <button id="id_#id#" class="scalable show-template-vars" style="" type="button">
+								<span>Insert Attribute Values...</span>
+							</button>
+						</td>
+						<td class="cell-remove a-center last">
+						    <input type="hidden" class="product-attribute-dynamic-row-id" name="product_attribute_default[attributes_dynamic][#id#][attribute_row_id]" value="#id#" />
+						    <button class="scalable delete delete-attribute" type="button"><span><?php echo Mage::helper('adminhtml')->__('Delete') ?></span></button>
+						</td>
+				    </tr>
+				</tbody>
+				<tfoot>
+				    <tr>
+					<td colspan="3" class="last" style="padding:8px">
+					    <button id="add-attribute-dynamic" type="button" class="button"><span><span><?php echo $this->__('Add Attribute'); ?></span></span></button>
+					</td>
+				    </tr>
+				</tfoot>
+			</table>
+		</div><!-- end grid -->
+	</div><!-- end fieldset -->	
+</div>
+<script type="text/javascript">
+var templateVars = <?php echo json_encode($this->getDynamicVariables()); ?>;
+var containerGridId = 'grid<?php echo $_htmlId ?>';
+var templateContentEdit = $('row-attribute-dynamic-template-edit').innerHTML;
+var productAttributeValues = <?php echo Mage::helper('core')->jsonEncode($productAttributesValues) ?>;
+var productAttributeDynamic = {
+    div : $('row-attribute-dynamic-template-edit'),
+    addAttachmentBtn : $('add-attribute'),
+    templateSyntax : /(^|.|\r|\n)(#(\w+)#)/,
+    templateTextEdit : templateContentEdit,
+    templateValues : productAttributeValues,
+    templateVarText: '',
+    add : function(data) {
+        this.template = new Template(this.templateTextEdit, this.templateSyntax);
+
+        if(!data.id){
+            data = {};
+            data.id  = 'id_'+new Date().valueOf();
+            this.template = new Template(this.templateTextEdit, this.templateSyntax);
+        }
+
+        Element.insert(this.div, {'before':this.template.evaluate(data)});
+
+		this.bindTemplateVars();
+		this.bindUpdateAttrValues();
+		this.bindRemoveButtons();
+
+        // set attribute code value
+        if (data.attribute_code) {
+        	$('attribute_dynamic_code_'+data.id).value = data.attribute_code;
+        }
+
+        this.templateVarText = $('attribute_dynamic_value_'+data.id);
+
+		// set el attribute value
+		if (data.attribute_value) {				
+			$('attribute_dynamic_value_'+data.id).value = data.attribute_value;
+		}		
+		
+    },
+    remove : function(event) {
+        var element = $(Event.findElement(event, 'tr'));
+        if(element){
+            element.addClassName('no-display');
+            element.addClassName('ignore-validate');
+            element.remove();
+
+        }
+    },
+    // updates the hidden attr value based on the visible .attribute-value elements
+    updateAttrValue : function(event) {       
+		var elementParent = $(Event.findElement(event, 'tr'));
+		if (!elementParent) return;
+		
+		var element = elementParent.down('td.cell-attribute-value');
+		var elementProductAttrId = elementParent.down('td.cell-remove input.product-attribute-dynamic-row-id');
+
+		var elementAttributeValue = $('attribute_dynamic_value_' +elementProductAttrId.value);
+
+		var attributeValue = [];
+
+		// get attribute values
+		var elements = element.select('.attribute-value');
+        for (var i=0; i<elements.length; i++) {
+        	if (elements[i].nodeName.toLowerCase() == 'select') {
+        		attributeValue.push({type: 'select', value: elements[i].value, index: elements[i].readAttribute('data-value')});
+            } else {
+            	attributeValue.push({type: 'text', value: elements[i].value, index: elements[i].readAttribute('data-value')});
+            }	
+        }
+        elementAttributeValue.value = attributeValue.toJSON();
+        
+    },
+    bindRemoveButtons : function() {
+        var buttons = $$('#' + containerGridId + ' button.delete-attribute');
+        for (var i=0; i<buttons.length; i++) { 
+            if (!$(buttons[i]).binded) {
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+    },
+    // when .attribute-value are changed we have to update the hidden attribute-value element
+    bindUpdateAttrValues : function() {
+        var elements = $$('#' + containerGridId + ' .attribute-value');
+        for (var i=0; i<elements.length; i++) {
+            if (!$(elements[i]).binded) {
+                $(elements[i]).binded = true;
+                if (elements[i].nodeName.toLowerCase() == 'select') {
+                	Event.observe(elements[i], 'change', this.updateAttrValue.bind(this));
+                } else {
+                	Event.observe(elements[i], 'blur', this.updateAttrValue.bind(this));
+                }
+            }
+        }
+    },
+
+    
+    bindTemplateVars : function() {
+        var elements = $$('#' + containerGridId + ' button.show-template-vars');        
+        for (var i=0; i<elements.length; i++) {
+            if (!$(elements[i]).binded) {
+                $(elements[i]).binded = true;
+                console.log(elements[i], 'bind button');
+                Event.observe(elements[i], 'click', this.openVariableChooser.bind(this));
+            }
+        }
+    },
+
+    openVariableChooser: function() {       
+        Variables.init(this.templateVarText);
+        if (this.variables == null) {
+            Variables.resetData();
+            this.variables = templateVars;
+            var templateVariablesValue = $(this.templateVarText).value;
+        }
+        if (this.variables) {
+            Variables.openVariableChooser(this.variables);
+        }
+    }
+}
+
+productAttributeDynamic.bindTemplateVars();
+productAttributeDynamic.bindRemoveButtons();
+productAttributeDynamic.bindUpdateAttrValues();
+Event.observe('add-attribute-dynamic', 'click', productAttributeDynamic.add.bind(productAttributeDynamic));
+
+<?php foreach ($formValues as $formValue): ?>
+	productAttributeDynamic.add(<?php echo Mage::helper('core')->jsonEncode($formValue) ?>);
+<?php endforeach; ?>
+</script>

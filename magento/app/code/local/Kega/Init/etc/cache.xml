@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <placeholders>
+        <kega_init_messages>
+            <block>core/messages</block>
+            <placeholder>SYSTEM_MESSAGES</placeholder>
+            <container>Kega_Init_Model_PageCache_NoCache</container>
+          </kega_init_messages>
+    </placeholders>
+</config>

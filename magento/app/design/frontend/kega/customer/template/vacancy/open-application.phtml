@@ -1,0 +1,287 @@
+<?php
+    $vacancy = $this->getVacancy();
+    $errors = $this->getVacancyApplyErrors();
+    $formType = 'type-'.$vacancy['vacancy_form_type'];
+?>
+<div id="vacancy-apply">
+    <h2><?=$this->__('Apply for this job');?></h2>
+    <form method="post" enctype="multipart/form-data" action="" id="vacancy-apply-form" class="theme1">
+        <fieldset class="clearfix">
+            <input type="hidden" name="vacancy-type" value="<?php echo $formType; ?>" />
+            <?php if(!empty($errors)):?>
+            <p class="errors-message">
+                <?=$this->__('One of the required fields is not, or not correclty filled in.');?>
+            </p>
+            <?php endif;?>
+            <?php
+            if(!empty($errors['invalid']) && $errors['invalid'] == 'cv'):?>
+            <p class="errors-message">
+                <?=$this->__('The selected cv file is invalid. Select another one or contact us if you think your file is valid.');?>
+            </p>
+            <?php endif;?>
+
+            <p class="newline">
+                <label for="apply-for" class="above"><?php echo $this->__('I want to apply for'); ?> *</label>
+                <input type="text" name="apply-for-function" id="apply-for" class="<?=$this->hasErrorsClass('apply-for');?> required-entry"/>
+            </p>
+
+            <?php $stores = $this->getStores(); ?>
+            <p class="newline onlytext"><strong><?php echo $this->__('I want to work at'); ?></strong></p>
+            <p class="newline">
+                <label for="preferred-store-1" class="first"><em>*</em><?=$this->__('preferred-store-1');?></label>
+                <select name="preferred-store-1" id="preferred-store-1" class="required-entry">
+                    <option value="<?php echo $this->__('Choose'); ?>"><?php echo $this->__('Choose'); ?></option>
+                    <?php foreach($stores as $store):?>
+                    <option value="<?=$store->getId();?>" <?=($this->getPostValue('preferred-store-1') == $store->getId() ? 'selected="selected"' : '');?> class="<?=$this->hasErrorsClass('preferred-store-1');?>"><?=$store->getName();?></option>
+                    <?php endforeach;?>
+                </select>
+            </p>
+            <p class="newline">
+                <label for="preferred-store-2" class="first"><?=$this->__('preferred-store-2');?></label>
+                <select name="preferred-store-2" id="preferred-store-2">
+                    <option value=""><?=$this->__('Make a choice');?></option>
+                    <?php foreach($stores as $store):?>
+                    <option value="<?=$store->getId();?>" <?=($this->getPostValue('preferred-store-2') == $store->getId() ? 'selected="selected"' : '');?>><?=$store->getName();?></option>
+                    <?php endforeach;?>
+                </select>
+            </p>
+            <p>
+                <label for="preferred-store-3" class="first"><?=$this->__('preferred-store-3');?></label>
+                <select name="preferred-store-3" id="preferred-store-3">
+                    <option value=""><?=$this->__('Make a choice');?></option>
+                    <?php foreach($stores as $store):?>
+                    <option value="<?=$store->getId();?>" <?=($this->getPostValue('preferred-store-3') == $store->getId() ? 'selected="selected"' : '');?>><?=$store->getName();?></option>
+                    <?php endforeach;?>
+                </select>
+            </p>
+        </fieldset>
+
+        <fieldset class="clearfix">
+            <h3 class="newline"><?=$this->__('Availabillity');?></h3>
+            <p class="large">
+                <label for="available-from" class="first"><?=$this->__('available-from');?></label>
+                <input type="text" name="available-from" class="input-text <?=$this->hasErrorsClass('available-from');?> required-entry" id="available-from" value="<?=$this->getPostValue('available-from');?>" />
+                [dd-mm-jjjj]
+            </p>
+            <p class="form-row newline large">
+                <label for="available-days" class="first"><?=$this->__('available-days');?>:</label>
+                <ul class="available-days">
+                    <?php $dayArray = $this->getDays(); ?>
+                    <?php for($i = 0; $i <= 6; $i++):?>
+                    <?php $day = $this->__($dayArray[$i]); ?>
+                    <li>
+                        <input type="checkbox" name="available-days[]" id="available-days-<?=$i?>" value="<?=ucfirst($day);?>" <?=(in_array($day, $this->getPostValue('available-days', array())) ? 'checked="checked"' : '')?>>
+                        <label for="available-days-<?=$i?>"><?php echo $day;?></label>
+                    </li>
+                    <?php endfor;?>
+                </ul>
+            </p>
+        </fieldset>
+
+        <fieldset class="clearfix">
+            <h3 class="newline"><?=$this->__('Personal data');?></h3>
+            <p class="clearfix gender">
+                <label class="inline"><?=$this->__('Gender');?></label>
+                <input type="radio" name="gender" id="gender-male" value="male" <?=($this->getPostValue('gender') == 'male' ? 'checked="checked"' : '');?> />
+                <span>
+                    <label for="gender-male" class="inline"><?=$this->__('Male');?></label>
+                </span>
+                <input type="radio" name="gender" id="gender-female" value="female" <?=($this->getPostValue('gender') == 'female' ? 'checked="checked"' : 'checked="checked"');?> />
+                <span>
+                    <label for="gender-female" class="inline"><?=$this->__('Female');?></label>
+                </span>
+            </p>
+
+            <p class="small">
+                <label for="initials" class="first required"><em>*</em><?=$this->__('Prefix');?></label>
+                <input type="text" name="initials" class="input-text <?=$this->hasErrorsClass('initials');?> required-entry" id="initials" value="<?=$this->getPostValue('initials');?>" />
+            </p>
+            <p class="newline">
+                <label for="first-name" class="required"><em>*</em><?=$this->__('First Name');?></label>
+                <input type="text" name="first-name" class="input-text <?=$this->hasErrorsClass('first-name');?> required-entry" id="first-name" value="<?=$this->getPostValue('first-name');?>" />
+            </p>
+            <p>
+                <label for="last-name" class="required"><em>*</em><?=$this->__('Last Name');?></label>
+                <input type="text" name="last-name" class="input-text <?=$this->hasErrorsClass('last-name');?> required-entry" id="last-name" value="<?=$this->getPostValue('last-name');?>" />
+            </p>
+            <p>
+                <label for="vacancy-street" class="required"><em>*</em><?=$this->__('Street');?></label>
+                <input type="text" name="street" class="input-text <?=$this->hasErrorsClass('street');?> required-entry" id="vacancy-street" value="<?=$this->getPostValue('street');?>" />
+            </p>
+            <p class="small newline">
+                <label for="vacancy-number" class="required"><em>*</em><?=$this->__('Nr.');?></label>
+                <input type="text" name="number" class="input-text <?=$this->hasErrorsClass('number');?> required-entry" id="vacancy-number" value="<?=$this->getPostValue('number');?>" />
+            </p>
+            <p class="small addition">
+                <label for="number-addition"><?=$this->__('Addition');?>:</label>
+                <input type="text" name="number-addition" class="input-text <?=$this->hasErrorsClass('number-addition');?>" id="number-addition" value="<?=$this->getPostValue('number-addition');?>" />
+            </p>
+            <p>
+                <label for="vacancy-postcode" class="required"><em>*</em><?=$this->__('Postcode');?></label>
+                <input type="text" name="postcode" class="input-text <?=$this->hasErrorsClass('postcode');?> required-entry" id="vacancy-postcode" value="<?=$this->getPostValue('postcode');?>" />
+            </p>
+            <p>
+                <label for="vacancy-city" class="required"><em>*</em><?=$this->__('City');?></label>
+                <input type="text" name="city" class="input-text <?=$this->hasErrorsClass('city');?> required-entry" id="vacancy-city" value="<?=$this->getPostValue('city');?>" />
+            </p>
+            <p class="newline">
+                <label for="birth-date" class="first"><?=$this->__('birth-date');?> (DD-MM-JJJJ):</label>
+                <input type="text" name="birth-date" class="input-text <?=$this->hasErrorsClass('birth-date');?>" id="birth-date" value="<?=$this->getPostValue('birth-date');?>" />
+            </p>
+            <p class="newline">
+                <label class="first" for="nationality">Nationaliteit:</label>
+                <input id="nationality" class="input-text " type="text" value="" name="nationality">
+            </p>
+            <p>
+                <label for="vacancy-phone" class="first"><?=$this->__('phone');?>:</label>
+                <input type="text" name="phone" class="input-text <?=$this->hasErrorsClass('phone');?> required-entry" id="vacancy-phone" value="<?=$this->getPostValue('phone');?>" />
+            </p>
+            <p>
+                <label for="vacancy-phone-mobile" class="first"><?=$this->__('phone-mobile');?>:</label>
+                <input type="text" name="phone-mobile" class="input-text <?=$this->hasErrorsClass('phone-mobile');?>" id="vacancy-phone-mobile" value="<?=$this->getPostValue('phone-mobile');?>" />
+            </p>
+            <p>
+                <label for="vacancy-email" class="required"><em>*</em><?=$this->__('E-mail');?></label>
+                <input type="text" name="email" class="input-text <?=$this->hasErrorsClass('email');?> required-entry validate-email" id="vacancy-email" value="<?=$this->getPostValue('email');?>" />
+            </p>
+        </fieldset>
+        
+        <fieldset>
+            <h3><?=$this->__('Trainings');?></h3>
+            <p class="newline radio">
+                <label for="training-followed"><?=$this->__('training-followed');?>:</label>
+                <input type="radio" name="training-followed" id="training-followed-yes" value="yes" <?=($this->getPostValue('training-followed') == 'yes' ? 'checked="checked"' : '');?> />
+                <span>
+                    <label for="training-followed-yes"><?=$this->__('Yes');?></label>
+                </span>
+                <input type="radio" name="training-followed" id="training-followed-no" value="no" <?=($this->getPostValue('training-followed') == 'no' ? 'checked="checked"' : 'checked="checked"');?> />
+                <span>
+                    <label for="training-followed-no"><?=$this->__('No');?></label>
+                </span>
+            </p>
+            <div class="content">
+                <p>
+                    <label for="vacancy-training-1" class="first"><?=$this->__('training-1');?>:</label>
+                    <input type="text" name="training-1" class="input-text <?=$this->hasErrorsClass('training-1');?>" id="vacancy-training-1" value="<?=$this->getPostValue('training-1');?>" />
+                </p>
+                <p class="newline small">
+                    <label for="vacancy-training-1-start"><?=$this->__('from');?>:</label>
+                    <input type="text" name="training-1-start" class="input-text <?=$this->hasErrorsClass('training-1-start');?>" id="vacancy-training-1-start" value="<?=$this->getPostValue('training-1-start');?>" />
+                </p>
+                <p class="small second">
+                    <label for="vacancy-training-1-end"><?=$this->__('to');?>:</label>
+                    <input type="text" name="training-1-end" class="input-text <?=$this->hasErrorsClass('training-1-end');?>" id="vacancy-training-1-end" value="<?=$this->getPostValue('training-1-end');?>" />
+                </p>
+                <p class="newline radio">
+                    <label for="training-1-completed-yes"><?=$this->__('training-completed');?>:</label>
+                    <input type="radio" name="training-1-completed" id="training-1-completed-yes" value="yes" <?=($this->getPostValue('training-1-completed') == 'yes' ? 'checked="checked"' : '');?> />
+                    <span>
+                        <label for="training-1-completed-yes"><?=$this->__('Yes');?></label>
+                    </span>
+                    <input type="radio" name="training-1-completed" id="training-1-completed-no" value="no" <?=($this->getPostValue('training-1-completed') == 'no' ? 'checked="checked"' : 'checked="checked"');?> />
+                    <span>
+                        <label for="training-1-completed-no"><?=$this->__('No');?></label>
+                    </span>
+                </p>
+                <p class="newline">
+                    <label for="vacancy-training-2" class="first"><?=$this->__('training-2');?>:</label>
+                    <input type="text" name="training-2" class="input-text <?=$this->hasErrorsClass('training-2');?>" id="vacancy-training-1" value="<?=$this->getPostValue('training-2');?>" />
+                </p>
+                <p class="newline small">
+                    <label for="vacancy-training-2-start"><?=$this->__('from');?>:</label>
+                    <input type="text" name="training-2-start" class="input-text <?=$this->hasErrorsClass('training-2-start');?>" id="vacancy-training-2-start" value="<?=$this->getPostValue('training-2-start');?>" />
+                </p>
+                <p class="small second">
+                    <label for="vacancy-training-2-end"><?=$this->__('to');?>:</label>
+                    <input type="text" name="training-2-end" class="input-text <?=$this->hasErrorsClass('training-2-end');?>" id="vacancy-training-2-end" value="<?=$this->getPostValue('training-2-end');?>" />
+                </p>
+                <p class="newline radio">
+                    <label for="training-2-completed"><?=$this->__('training-completed');?>:</label>
+                    <input type="radio" name="training-2-completed" id="training-2-completed-yes" value="yes" <?=($this->getPostValue('training-2-completed') == 'yes' ? 'checked="checked"' : '');?> />
+                    <span>
+                        <label for="training-2-completed-yes"><?=$this->__('Yes');?></label>
+                    </span>
+        
+                    <input type="radio" name="training-2-completed" id="training-2-completed-no" value="no" <?=($this->getPostValue('training-2-completed') == 'no' ? 'checked="checked"' : 'checked="checked"');?> />
+                    <span>
+                        <label for="training-2-completed-no"><?=$this->__('No');?></label>
+                    </span>
+                </p>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <h3><?=$this->__('Work experience');?></h3>
+            <p class="newline radio">
+                <label for="worked-earlier"><?=$this->__('worked-earlier');?>:</label>
+                <input type="radio" name="worked-earlier" id="worked-earlier-yes" value="yes" <?=($this->getPostValue('worked-earlier') == 'yes' ? 'checked="checked"' : '');?> />
+                <span>
+                    <label for="worked-earlier-yes"><?=$this->__('Yes');?></label>
+                </span>
+                <input type="radio" name="worked-earlier" id="worked-earlier-no" value="no" <?=($this->getPostValue('worked-earlier') == 'no' ? 'checked="checked"' : 'checked="checked"');?> />
+                <span>
+                    <label for="worked-earlier-no"><?=$this->__('No');?></label>
+                </span>
+            </p>
+            <div class="content">
+                <p>
+                    <label for="vacancy-experience-1-company" class="first"><?=$this->__('experience-1-company');?>:</label>
+                    <input type="text" name="experience-1-company" class="input-text <?=$this->hasErrorsClass('experience-1-company');?>" id="vacancy-experience-1-company" value="<?=$this->getPostValue('experience-1-company');?>" />
+                </p>
+                <p class="newline small">
+                    <label for="vacancy-experience-1-start"><?=$this->__('from');?>:</label>
+                    <input type="text" name="experience-1-start" class="input-text <?=$this->hasErrorsClass('experience-1-start');?>" id="vacancy-experience-1-start" value="<?=$this->getPostValue('experience-1-start');?>" />
+                </p>
+                <p class="small second">
+                    <label for="vacancy-experience-1-end"><?=$this->__('to');?>:</label>
+                    <input type="text" name="experience-1-end" class="input-text <?=$this->hasErrorsClass('experience-1-end');?>" id="vacancy-experience-1-end" value="<?=$this->getPostValue('experience-1-end');?>" />
+                </p>
+                <p class="newline">
+                    <label for="vacancy-experience-1-function" class="first"><?=$this->__('experience-1-function');?>:</label>
+                    <input type="text" name="experience-1-function" class="input-text <?=$this->hasErrorsClass('experience-1-function');?>" id="vacancy-experience-1-function" value="<?=$this->getPostValue('experience-1-function');?>" />
+                </p>
+                <p class="newline">
+                    <label for="vacancy-experience-2-company" class="first"><?=$this->__('experience-2-company');?>:</label>
+                    <input type="text" name="experience-2-company" class="input-text <?=$this->hasErrorsClass('experience-2-company');?>" id="vacancy-experience-2-company" value="<?=$this->getPostValue('experience-2-company');?>" />
+                </p>
+                <p class="newline small">
+                    <label for="vacancy-experience-2-start"><?=$this->__('from');?>:</label>
+                    <input type="text" name="experience-2-start" class="input-text <?=$this->hasErrorsClass('experience-2-start');?>" id="vacancy-experience-2-start" value="<?=$this->getPostValue('experience-2-start');?>" />
+                </p>
+                <p class="small second">
+                    <label for="vacancy-experience-2-end"><?=$this->__('to');?>:</label>
+                    <input type="text" name="experience-2-end" class="input-text <?=$this->hasErrorsClass('experience-2-end');?>" id="vacancy-experience-2-end" value="<?=$this->getPostValue('experience-2-end');?>" />
+                </p>
+                <p class="newline">
+                    <label for="vacancy-experience-2-function" class="first"><?=$this->__('experience-2-function');?>:</label>
+                    <input type="text" name="experience-2-function" class="input-text <?=$this->hasErrorsClass('experience-2-function');?>" id="vacancy-experience-2-function" value="<?=$this->getPostValue('experience-2-function');?>" />
+                </p>
+            </div>
+        </fieldset>
+        
+        <fieldset class="clearfix">
+            <p class="newline">
+                <label class="above"><?php echo $this->__('Motivation'); ?> *</label>
+                <textarea name="motivation" class="motivation <?=$this->hasErrorsClass('motivation');?> required-entry"></textarea>
+            </p>
+            <p id="vacancy-cv-upload">
+                <label for="cv-upload" class="first"><?=$this->__('Upload CV (Max 2Mb)');?>:</label>
+                <input type="file" name="cv-upload" id="cv-upload" />
+            </p>
+            <p id="vacancy-photo-upload">
+                <label for="photo-upload" class="first"><?=$this->__('Upload photo');?>:</label>
+                <input type="file" name="photo-upload" id="photo-upload" />
+            </p>
+        </fieldset>
+        <p class="footer newline apply">
+            <button type="submit" id="vacancy-apply-submit">
+                <span class="custom-nav custom-nav-alt"><span><?=$this->__('Submit');?></span></span>
+            </button>
+        </p>
+    </form>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var newsletterForm = new VarienForm('vacancy-apply-form');
+    //]]>
+</script>

@@ -1,0 +1,9 @@
+.wrapper { position: relative; }
+.admincolors-message { position: absolute; left: 280px; top: 18px; font-weight: bold; font-size: 1.2em; color: #fff; }
+
+/* Live styling */
+.status-live .header { background-image: url(images/kega_admincolors/header_top_bg_magenta.gif); }
+.status-live .header-top { border-color: #f09; }
+
+/* Staging styling */
+.status-staging .header { background-image: url(images/kega_admincolors/header_top_bg_green.gif); }

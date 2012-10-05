@@ -1,0 +1,32 @@
+<?php $form = Mage::helper('kega_customer')->getCustomerFormData($this); ?>
+<?php $street = is_array($form->getStreet()) ? $form->getStreet() : explode("\n", $form->getStreet()); ?>
+<fieldset class="customer-address content-block">
+	<input type="hidden" name="create_address" value="1" />
+	<h2 class="legend"><?php echo $this->__('Address Information') ?></h2>
+	<?php for ($_i=1, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+		<p<?=$_i == 2 ? ' class="right"' : '';?>>
+			<label class="required" for="street_<?php echo $_i?>"><em>*</em><?php echo $this->__('Street Address ' . $_i); ?></label>
+			<input type="text" name="street[]" value="<?php echo $this->htmlEscape($street[$_i-1]) ?>" title="<?php echo $this->__('Street Address '.$_i) ?>" id="street_<?php echo $_i?>" class="input-text required-entry" />
+		</p>
+	<?php endfor ?>
+	<p>
+		<label for="zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+		<input type="text" name="postcode" value="<?php echo $this->htmlEscape($form->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international required-entry" />
+	</p>
+	<p class="right">
+		<label for="city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+		<input type="text" name="city" value="<?php echo $this->htmlEscape($form->getCity()) ?>" title="<?php echo $this->__('City') ?>" class="input-text required-entry" id="city" />
+	</p>
+	<p>
+		<label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+		<input type="text" name="telephone" id="telephone" value="<?php echo $this->htmlEscape($form->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry" />
+	</p>
+	<input type="hidden" name="country_id" value="NL" />
+	<?php $addressAttributes = $this->getChild('customer_form_address_user_attributes');?>
+	<?php if ($addressAttributes): ?>
+		<?php $addressAttributes->setEntity($this->getAddress());?>
+		<?php $addressAttributes->setFieldIdFormat('address:%1$s')->setFieldNameFormat('address[%1$s]');?>
+		<?php $this->restoreSessionData($addressAttributes->getForm(), 'address');?>
+		<?php echo $addressAttributes->setShowContainer(false)->toHtml()?>
+	<?php endif;?>
+</fieldset>

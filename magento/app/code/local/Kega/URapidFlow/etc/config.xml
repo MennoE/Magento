@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+	<description><![CDATA[This module is used to generate the txt files used by the URapidFlow module (import)
+	from the files recieved from client]]></description>
+	<modules>
+		<Kega_URapidFlow>
+			<version>0.1.0</version>
+		</Kega_URapidFlow>
+	</modules>
+	<global>
+		<blocks>
+			<kega_urapidflow>
+				<class>Kega_URapidFlow_Block</class>
+			</kega_urapidflow>
+		</blocks>
+		<models>
+			<kega_urapidflow>
+				<class>Kega_URapidFlow_Model</class>
+			</kega_urapidflow>
+		</models>
+		<helpers>
+            <kega_urapidflow>
+                <class>Kega_URapidFlow_Helper</class>
+            </kega_urapidflow>
+        </helpers>
+        <events>
+			<!--
+			Removes last_updated and created_by_urapidflow fields
+			so they are not updated (these fields should only be updated by the urapidflow import).
+			-->
+			<controller_action_predispatch_adminhtml_catalog_product_save>
+		        <observers>
+		            <kega_adminhtml>
+		                <type>singleton</type>
+		                <class>kega_urapidflow/observer</class>
+		                <method>removeUrapidflowFields</method>
+		            </kega_adminhtml>
+		        </observers>
+			</controller_action_predispatch_adminhtml_catalog_product_save>
+
+			<!--
+			When importing products find all newly created products and save them to a logfile.
+			We only do this for profiles that have the import action option set to only 'create' new records.
+			-->
+			<urapidflow_product_import_after_diff>
+		        <observers>
+		            <kega_urapidflow_logNewProducts>
+		                <type>singleton</type>
+		                <class>kega_urapidflow/observer</class>
+		                <method>logNewProducts</method>
+		            </kega_urapidflow_logNewProducts>
+		        </observers>
+			</urapidflow_product_import_after_diff>
+        </events>
+	</global>
+	<crontab>
+		<jobs>
+			<urapidflow_product_import>
+				<schedule><cron_expr>0 5 * * *</cron_expr></schedule>
+				<run><model>kega_urapidflow/product_observer::runImport</model></run>
+			</urapidflow_product_import>
+			<urapidflow_stock_import>
+				<schedule><cron_expr>0 6 * * *</cron_expr></schedule>
+				<run><model>kega_urapidflow/stock_observer::runImport</model></run>
+			</urapidflow_stock_import>
+
+			<urapidflow_directory_cleanup>
+				<schedule><cron_expr>0 14 * * *</cron_expr></schedule>
+				<run><model>kega_urapidflow/observer::runDirectoryCleanup</model></run>
+			</urapidflow_directory_cleanup>
+		</jobs>
+	</crontab>
+
+	<default>
+		<urapidflow>
+			<import>
+				<confirmation_email>projecten@kega.nl</confirmation_email>
+			</import>
+		</urapidflow>
+	</default>
+</config>

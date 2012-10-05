@@ -1,0 +1,43 @@
+<config>
+    <sections>
+        <kega_reviewexport translate="label" module="kega_reviewexport">
+            <label>Review Export</label>
+            <tab>customer</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>600</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <import translate="label" module="kega_reviewexport">
+                    <label>Import Options</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <rating_mapping translate="label" module="kega_reviewexport">
+                            <label>Rating mapping</label>
+                            <comment>Old to new rating IDs: old=new. Example: 3=1,1=2</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rating_mapping>
+                       	<debug_mode translate="label">
+                        	<label>Enable debug mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Prints review data and exception message when failed to import review</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debug_mode>
+                    </fields>
+                </import>
+            </groups>
+        </kega_reviewexport>
+    </sections>
+</config>

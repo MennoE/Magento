@@ -1,0 +1,17 @@
+<?php 
+$wizardHelper = Mage::helper('wizard');
+?>
+
+<?php if(!$wizardHelper->isLoggedInWizard()): ?>
+<fieldset class="customer-login content-block">
+	<h2 class="legend"><?php echo $this->__('Login Information') ?></h2>
+	<p>
+		<label for="password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
+		<input type="password" name="password" id="password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" autocomplete="off" />
+	</p>
+	<p class="right">
+		<label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm Password') ?></label>
+		<input type="password" name="confirmation" title="<?php echo $this->__('Confirm Password') ?>" id="confirmation" class="input-text required-entry validate-cpassword" autocomplete="off" />
+	</p>
+</fieldset>
+<?php endif; ?>

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kega_AutoShipping>
+			<version>0.2.0</version>
+		</Kega_AutoShipping>
+	</modules>
+
+	<global>
+		<models>
+			<autoshipping>
+				<class>Kega_AutoShipping_Model</class>
+			</autoshipping>
+		</models>
+        <helpers>
+            <autoshipping>
+                <class>Kega_AutoShipping_Helper</class>
+            </autoshipping>
+        </helpers>
+		<cache>
+			<types>
+				<checkout_quote><label>Shopping Cart data</label></checkout_quote>
+			</types>
+		</cache>
+        <blocks>
+			<autoshipping>
+				<rewrite>
+					<adminhtml_shipping_methods>Kega_AutoShipping_Block_Adminhtml_Shipping_Methods</adminhtml_shipping_methods>
+				</rewrite>
+			</autoshipping>
+		</blocks>
+	</global>
+
+	<frontend>
+		<events>
+			<controller_action_postdispatch_checkout_cart_add>
+				<observers>
+					<kega_autoshipping_observer>
+						<type>singleton</type>
+						<class>autoshipping/observer</class>
+						<method>add_default_shipping</method>
+					</kega_autoshipping_observer>
+				</observers>
+			</controller_action_postdispatch_checkout_cart_add>
+			<checkout_cart_product_add_after>
+				<observers>
+					<kega_autoshipping_observer>
+						<type>singleton</type>
+						<class>autoshipping/observer</class>
+						<method>add_default_shipping</method>
+					</kega_autoshipping_observer>
+				</observers>
+			</checkout_cart_product_add_after>
+
+			<controller_action_postdispatch_checkout_cart_updatePost>
+				<observers>
+					<kega_autoshipping_observer>
+						<type>singleton</type>
+						<class>autoshipping/observer</class>
+						<method>add_default_shipping</method>
+					</kega_autoshipping_observer>
+				</observers>
+			</controller_action_postdispatch_checkout_cart_updatePost>
+
+			<controller_action_predispatch_checkout_cart_index>
+				<observers>
+					<kega_autoshipping_observer>
+						<type>singleton</type>
+						<class>autoshipping/observer</class>
+						<method>add_default_shipping</method>
+					</kega_autoshipping_observer>
+				</observers>
+			</controller_action_predispatch_checkout_cart_index>
+		</events>
+	</frontend>
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<Kega_Autoshipping>
+					<files>
+						<default>Kega_Autoshipping.csv</default>
+					</files>
+				</Kega_Autoshipping>
+			</modules>
+		</translate>
+	</adminhtml>
+
+	<default>
+		<autoshipping>
+			<settings>
+				<enabled>1</enabled>
+				<country_id>nl</country_id>
+				<method>flatrate_flatrate</method>
+			</settings>
+		</autoshipping>
+	</default>
+</config>

@@ -1,0 +1,68 @@
+<layout version="0.1.0">
+
+	<!-- Default updates for all FAQ pages -->
+	<kega_faq_default translate="label">
+		<label>Faq General</label>
+		<reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+            <action method="addBodyClass"><class>bg-main-illustration</class></action>
+			<action method="addBodyClass"><class>faq-pages</class></action>
+        </reference>
+		<reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>Home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="catalog/navigation" name="catalog.leftnav" template="catalog/navigation/left.phtml">
+				<action method="setParentCategory"><parent_category>9</parent_category></action>
+			</block>
+        </reference>
+        <reference name="right">
+            <action method="unsetChildren"></action>
+			<block type="kega_faq/faq" name="faq.sidebar" as="faq_sidebar" template="faq/sidebar.phtml" />
+		</reference>
+	</kega_faq_default>
+
+	<!-- Index/search page -->
+    <kega_faq_index_index translate="label">
+		<label>Faq category overview</label>
+        <update handle="kega_faq_default" />
+		
+		<reference name="breadcrumbs">
+			<action method="addCrumb">
+				<crumbName>faq</crumbName>
+				<crumbInfo><label>Faq</label><title>Faq</title></crumbInfo>
+			</action>
+		</reference>
+		<reference name="content">
+			<block type="kega_faq/faq" name="faq.index" as="faq_index" template="faq/index.phtml" >
+				<block type="kega_faq/faq" name="faq.list" as="faq_list" template="faq/list.phtml">
+					<action method="setCategoryMode"><value>0</value></action>
+					<action method="setQuestionLimit"><value>5</value></action>
+				</block>
+			</block>
+		</reference>
+    </kega_faq_index_index>
+
+    <!-- Category list page -->
+    <kega_faq_list_category translate="label">
+		<label>Faq category detail</label>
+        <update handle="kega_faq_default" />
+		
+		<reference name="breadcrumbs">
+			<action method="addCrumb">
+				<crumbName>faq</crumbName>
+				<crumbInfo><label>Faq</label><title>Faq</title><link>/faq</link></crumbInfo>
+			</action>
+		</reference>
+		<reference name="content">
+			<block type="kega_faq/faq" name="faq.category" as="faq_category" template="faq/category.phtml" >
+				<block type="kega_faq/faq" name="faq.list" as="faq_list" template="faq/list.phtml">
+					<action method="setCategoryMode"><value>1</value></action>
+				</block>
+			</block>
+		</reference>
+    </kega_faq_list_category>
+</layout>

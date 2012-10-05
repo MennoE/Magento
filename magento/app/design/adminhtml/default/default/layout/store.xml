@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <store_adminhtml_store_index>
+        <reference name="content">
+            <block type="store/adminhtml_store" name="store" />
+        </reference>
+    </store_adminhtml_store_index>
+    <store_adminhtml_store_edit>
+<!--        <reference name="content">
+            <block type="store/adminhtml_store_edit" name="product_edit"></block>
+        </reference>-->
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-" template="store/switcher.phtml"></block>
+        </reference><!--
+        <reference name="js">
+            <block type="adminhtml/template" template="catalog/product/js.phtml" name="catalog_product_js"></block>
+        </reference>-->
+    </store_adminhtml_store_edit>
+</layout>

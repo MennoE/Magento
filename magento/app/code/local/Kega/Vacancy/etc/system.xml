@@ -1,0 +1,63 @@
+<config>
+    <tabs>
+        <vacancy translate="label" module="vacancy">
+            <label>Vacancy</label>
+            <sort_order>360</sort_order>
+        </vacancy>
+    </tabs>
+	<sections>
+		<vacancy translate="label" module="vacancy">
+			<label>Vacancy</label>
+			<tab>vacancy</tab>           
+			<sort_order>350</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<vacancy_ftp translate="label">
+					<label>Vacature FTP</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+					<fields>
+						<vacancy_ftp_usage translate="label">
+							<label>Use FTP for vacancy-uploads</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+                            <comment>Make sure Vacancy/etc/ftp.php is configured when enabling this feature</comment>
+						</vacancy_ftp_usage>						
+					</fields>
+				</vacancy_ftp>
+			</groups>
+		</vacancy>
+		<customer>
+			<groups>
+				<vacancy_settings translate="label">
+					<label>Vacatures mail opties</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>90</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<email_template translate="label">
+                            <label>Vacature Mailtemplate</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template>
+					</fields>
+				</vacancy_settings>
+			</groups>
+		</customer>
+	</sections>
+</config>

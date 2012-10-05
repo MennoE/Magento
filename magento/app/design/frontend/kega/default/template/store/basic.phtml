@@ -1,0 +1,20 @@
+<? $store = $this->getStore(); ?>
+<? $var = $this->getVariable(); ?>
+
+<li class="<?= $var['class']?>" >
+	<a href="#" class="expand">
+		<span><?=$store->getCity();?>,</span>
+		<?php echo $store->getAddress(); ?>
+	</a>
+
+	<div class="address">
+		<address>
+			<span><?php echo $store->getAddress(); ?>&nbsp;<?=$store->getNumber();?><?=$store->getNumberExt();?></span>
+			<span><?php echo $store->getZipcode(); ?> <?php echo $store->getCity(); ?></span>
+			<span><?php echo $this->__('Tel'); ?>. <?php echo $store->getPhone(); ?></span>
+		</address>
+		<p><a class="next-page" href="<?= $this->getUrl('winkel').$store->getCustomUrl();?>"><?php echo $this->__('Show opening times and route'); ?></a></p>
+	</div>
+
+</li>
+

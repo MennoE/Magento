@@ -1,0 +1,27 @@
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<instore>
+										<title>Instore payments configurations</title>
+									</instore>
+                                    <wizard_settings>
+                                        <title>Wizard configuration</title>
+                                    </wizard_settings>
+									<webservices>
+										<title>WebServices configurations</title>
+									</webservices>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

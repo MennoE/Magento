@@ -1,0 +1,13 @@
+<div id="vacancy-regions">
+	<p>
+		<a href="<?php echo $this->getUrl('vacatures'); ?>"><?=$this->__('Back to overview');?></a>
+	</p>
+
+	<h2><?=$this->__('Per region');?></h2>
+	<ul>
+		<li><a href="<?php echo $this->getUrl('vacatures'); ?>?view=all"<?=($this->getRequest()->getParam('view') == 'all' ? ' class="current"' : '');?>><?=$this->__('All regions');?></a></li>
+		<?php foreach($this->getRegions() as $r):?>
+		<li><a href="<?php echo $this->getUrl('vacatures'); ?>?region=<?=$r['vacancyregion_id']?>" <?=($this->getActiveRegion() == $r['vacancyregion_id'] ? ' class="current"' : '');?>><?=$r['title']?></a></li>
+		<?php endforeach;?>
+	</ul>
+</div>

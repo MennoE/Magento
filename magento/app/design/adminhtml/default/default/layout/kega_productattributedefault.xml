@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_productattributedefault_index>
+	<reference name="head">
+	    <action method="addCss"><name>kega_productattributedefault/css/main.css</name></action>
+	</reference>
+    </adminhtml_productattributedefault_index>
+
+    <adminhtml_productattributedefault_edit>
+	<update handle="editor"/>
+	<reference name="head">
+	    <action method="addCss"><name>kega_productattributedefault/main.css</name></action>
+	    <!-- <action method="addItem"><type>skin_js</type><name>kega_productattributedefault/main.js</name></action> -->
+	</reference>
+    </adminhtml_productattributedefault_edit>
+</layout>

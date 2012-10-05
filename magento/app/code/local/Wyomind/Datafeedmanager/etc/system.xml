@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+        <WYOMIND translate="label">
+            <label>WYOMIND</label>
+            <sort_order>1000000</sort_order>
+        </WYOMIND>
+    </tabs>
+  <sections>
+    <datafeedmanager translate="label">
+      <label>Data feed Manager</label>
+      <tab>WYOMIND</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>1010</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <license translate="label">
+          <label>License activation</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>100</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+			<version translate="label comment">
+			  <label>Extension version</label>
+              <frontend_type>Link</frontend_type>
+			  <sort_order>0</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+			</version>
+            <activation_key translate="label comment">
+              <label>Activation key</label>
+              <comment>
+               <![CDATA[<span class="notice">1- Fill this field with your activation key.</span>]]>
+              </comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </activation_key>
+            <get_online_license translate="label comment">
+               <label>Remote activation :</label>
+              <comment>
+               <![CDATA[<span class="notice">2- Choose your activation method.<br>[yes = automatic activation]<br>[no = manual activation]</span>]]>
+              </comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </get_online_license>
+			<activation_code translate="label comment">
+              <label>License code</label>
+              <comment>
+                 <![CDATA[<span class="notice">3 - Go to Catalog > Data Feed Manager.<br>Then fill this field with the license code you get.</span>]]>
+              </comment>
+			   <depends><get_online_license>0</get_online_license></depends>
+              <frontend_type>text</frontend_type>
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+           </activation_code>
+          </fields>
+        </license>
+        <feed_categories>
+				<label>Feed Category Settings</label>
+				<frontend_type>text</frontend_type>
+				<sort_order>200</sort_order>
+				<show_in_default>1</show_in_default>
+				<show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+				<fields>
+					<toplevel_categories>
+						<label>Allowed Top-level Categories IDs</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>Enter one or more category ids here, seperated by semicolumn, e.g. "5; 6; 7;". 
+								 This setting is used for the following attributes in the Datafeed Manager module: 
+								 {kega_category}, {kega_category_path} and {kega_category_url}. For these attributes 
+								 we only look at the entered categories (and all underlying categories), 
+								 all other categories are ignored.
+						</comment>
+					</toplevel_categories>
+					<root_category>
+						<label>Top level root category (top container category)</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>Top level container category (normal category id 2). Enter ID here
+						</comment>
+					</root_category>
+					<ignore_categories>
+						<label>Ignore these categories (blacklist)</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>Enter one or more category ids here, seperated by semicolumn, e.g. "5; 6; 7;". 
+						         Use this if you want to ignore categories underneath allowed root categories.
+						</comment>
+					</ignore_categories>
+					<force_anchor>
+						<label>Treat categories as anchor</label>
+						<frontend_type>select</frontend_type>
+						<source_model>adminhtml/system_config_source_yesno</source_model>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>Use this option if the is anchor option isn't used in the categories. This is slower, but
+								 prevents incorrect results when the is anchor option isn't used. If the is anchor option
+								 isn't used in the categories the parent categories of a category isn't added to the collection
+								 of categories linked to a product. We manually need to add the parent categories to the
+								 collection to correctly define subcategory and rootcategory.
+						</comment>
+					</force_anchor>
+				</fields>
+		</feed_categories>
+        <feed_freeshipping>
+				<label>Free shipping price point</label>
+				<frontend_type>text</frontend_type>
+				<sort_order>300</sort_order>
+				<show_in_default>1</show_in_default>
+				<show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+				<fields>
+					<freeshipping>
+						<label>Free shipping from this price</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>
+						Free shipping if price is equal or higher than the amount filled in here. e.g. "29.95" (only used in feed generation)						</comment>
+					</freeshipping>
+					<shippingcost>
+						<label>Shipment costs</label>
+						<frontend_type>text</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>
+						Shipment fees (only used in feed generation).
+						</comment>
+					</shippingcost>
+				</fields>
+		</feed_freeshipping>
+        <feed_rename_categories>
+				<label>Renaming Category Names</label>
+				<frontend_type>text</frontend_type>
+				<sort_order>400</sort_order>
+				<show_in_default>1</show_in_default>
+				<show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+				<fields>
+					<rename_categories>
+						<label>Category renaming</label>
+						<frontend_type>textarea</frontend_type>
+						<sort_order>0</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>
+						Fill in like this: [oldname],[newname], e.g:
+						Dames,Damesschoenen. Seperate multiple lines by a  break (shift + enter)
+						</comment>
+					</rename_categories>
+				</fields>
+		</feed_rename_categories>
+      </groups>
+    </datafeedmanager>
+  </sections>
+</config>
+
+
+
+

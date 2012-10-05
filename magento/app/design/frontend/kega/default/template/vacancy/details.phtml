@@ -1,0 +1,21 @@
+<div id="vacancy-detail">
+	<?php $vacancy = $this->getVacancy();?>
+
+	<div id="vacancies-main">
+		<h1><?=$this->__('Vacancy');?> <?=$vacancy['title'];?></h1>
+		<? if (isset($vacancy['number'])): ?>
+		<p class="vacancy-number"><?=$this->__('Vacature nummer'); ?>: <?=$vacancy['number'];?></p>
+		<? endif; ?>
+		<div class="content">
+			<?=$vacancy['text'];?>
+		</div>
+		<ul class="vacancy-related">
+			<li><a href="<?php echo $this->getUrl('vacatures'); ?>?view=all"><?=$this->__('More vacancies for %s', $vacancy['title'])?></a></li>
+			<?php if($vacancy['region_id'] != 0):?>
+			<li><a href="<?php echo $this->getUrl('vacatures'); ?>?region=<?=$vacancy['region_id']?>"><?=$this->__('More vacancies in the region %s', $vacancy['region'])?></a></li>
+			<?php endif;?>
+			<li><a href="<?php echo $this->getUrl('vacatures'); ?>?view=all"><?=$this->__('More vacancies')?></a></li>
+		</ul>
+	</div>
+</div>
+

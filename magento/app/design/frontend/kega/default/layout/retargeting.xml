@@ -1,0 +1,7 @@
+<layout version="0.1.0">
+	<default>
+		<reference name="after_body_start">
+			<block type="core/template" name="after.body.starts" as="after_body_starts" template="retargeting/after_body_starts.phtml" />
+		</reference>
+	</default>
+</layout>

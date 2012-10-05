@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Wyomind_Datafeedmanager>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Wyomind_Datafeedmanager>
+    </modules>
+</config> 

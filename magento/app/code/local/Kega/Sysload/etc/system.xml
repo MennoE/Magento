@@ -1,0 +1,57 @@
+<config>
+	<sections>
+		<system translate="label" module="core">
+            <groups>
+				<kega_sysload translate="label">
+					<label>Sysload</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<load_redirect_new translate="label">
+							<backend_model>kega_sysload/backend_load</backend_model>
+							<label>Redirect new</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>If server load rises above this value, new visitors will be redirected</comment>
+						</load_redirect_new>
+						<load_redirect_noncheckout translate="label">
+							<backend_model>kega_sysload/backend_load</backend_model>
+							<label>Redirect noncheckout</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>If server load rises above this value, all visitors which are not in checkout will be redirected</comment>
+						</load_redirect_noncheckout>
+						<load_redirect_all translate="label">
+							<backend_model>kega_sysload/backend_load</backend_model>
+							<label>Redirect all</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>If server load rises above this value, all requests will be redirected</comment>
+						</load_redirect_all>
+						<redirect_url translate="label">
+							<label>Redirect URL</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Visitors will be redirected to this url when load is high</comment>
+						</redirect_url>
+					</fields>
+				</kega_sysload>
+			</groups>
+		</system>
+    </sections>
+</config>

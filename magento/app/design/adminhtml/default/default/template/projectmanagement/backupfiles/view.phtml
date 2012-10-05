@@ -1,0 +1,11 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo $this->getHeaderText() ?></h3></td>
+            <td class="form-buttons">
+                <?php echo $this->getBackButtonHtml() ?>
+            </td>
+        </tr>
+    </table>
+</div>
+<?php echo str_replace("\n", '<br />', Mage::helper('core')->htmlEscape($this->getFileContentHtml())); ?>

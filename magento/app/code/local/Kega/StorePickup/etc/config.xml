@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<!-- Warning! : this module need to use if Kega_Store module is active and be sure that addDistance methos exists in collection resource-->
+		<Kega_StorePickup>
+			<version>0.1.1</version>
+		</Kega_StorePickup>
+	</modules>
+
+	<global>
+		<blocks>
+			<storepickup>
+				<class>Kega_StorePickup_Block</class>
+			</storepickup>
+		</blocks>
+		<models>
+			<sales>
+				<rewrite>
+                    <order>Kega_StorePickup_Model_Order</order>
+				</rewrite>
+			</sales>
+			<storepickup>
+				<class>Kega_StorePickup_Model</class>
+			</storepickup>
+		</models>
+		<helpers>
+            <storepickup>
+                <class>Kega_StorePickup_Helper</class>
+            </storepickup>
+        </helpers>
+		<resources>
+			<storepickup_setup>
+				<setup>
+					<module>Kega_StorePickup</module>
+					<class>Kega_StorePickup_Model_Resource_Eav_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</storepickup_setup>
+			<storepickup_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</storepickup_write>
+			<storepickup_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</storepickup_read>
+		</resources>
+		<events>
+            <sales_order_load_after>
+                <observers>
+                    <storepickup>
+                        <type>singleton</type>
+                        <class>storepickup/observer</class>
+                        <method>addStorePickupDataToShipping</method>
+                    </storepickup>
+                </observers>
+            </sales_order_load_after>
+            <sales_order_save_before>
+                <observers>
+                    <storepickup>
+                        <type>singleton</type>
+                        <class>storepickup/observer</class>
+                        <method>removeStorePickupDataToShipping</method>
+                    </storepickup>
+                </observers>
+            </sales_order_save_before>
+            <sales_order_save_after>
+		        <observers>
+		            <storepickup>
+		                <class>storepickup/observer</class>
+		                <method>notifyStore</method>
+		            </storepickup>
+		        </observers>
+	    	</sales_order_save_after>
+        </events>
+		<customer>
+			<address>
+				<formats>
+					<html translate="title" module="customer">
+						<title>HTML</title>
+						<htmlEscape>true</htmlEscape>
+						<defaultFormat><![CDATA[
+{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+{{depend company}}{{var company}}<br />{{/depend}}
+{{var street1}} {{depend street2}}{{var street2}}{{/depend}}<br />
+{{depend street3}}{{var street3}}<br />{{/depend}}
+{{depend street4}}{{var street4}}<br />{{/depend}}
+{{depend city}}{{var city}},  {{/depend}}{{depend region}}{{var region}}, {{/depend}}{{var postcode}}<br/>
+{{var country}}<br/>
+{{depend telephone}}T: {{var telephone}}{{/depend}}
+{{depend fax}}<br/>F: {{var fax}}{{/depend}}
+{{depend pickup_store_id}}<br/>Pickup Store Id: {{var pickup_store_id}}{{/depend}}
+{{depend pickup_store_name}}<br/>Pickup Store Name: {{var pickup_store_name}}{{/depend}}
+						]]></defaultFormat>
+					</html>
+				</formats>
+			</address>
+		</customer>
+
+		<fieldsets>
+			<sales_convert_quote_address>
+				<pickup_store_id><to_order_address>*</to_order_address></pickup_store_id>
+				<pickup_store_name><to_order_address>*</to_order_address></pickup_store_name>
+			</sales_convert_quote_address>
+		</fieldsets>
+		<template>
+            <email>
+                <store_pickup_email_notify translate="label" module="storepickup">
+                    <label>Store pickup email notification</label>
+                    <file>store_pickup_email_notify.phtml</file>
+                    <type>html</type>
+                </store_pickup_email_notify>
+            </email>
+        </template>
+	</global>
+
+	<frontend>
+		<routers>
+			<checkout>
+				<args>
+					<modules>
+						<Kega_StorePickup before="Mage_Checkout">Kega_StorePickup_Checkout</Kega_StorePickup>
+					</modules>
+				</args>
+			</checkout>
+			<storepickup>
+				<use>standard</use>
+				<args>
+					<module>Kega_StorePickup</module>
+					<frontName>storepickup</frontName>
+				</args>
+			</storepickup>
+		</routers>
+<!--		<translate>
+			<modules>
+				<Kega_StorePickup>
+					<files>
+						<default>Kega_StorePickup.csv</default>
+					</files>
+				</Kega_StorePickup>
+			</modules>
+		</translate>-->
+		<layout>
+			<updates>
+				<storepickup>
+					<file>storepickup.xml</file>
+				</storepickup>
+			</updates>
+		</layout>
+	</frontend>
+	<default>
+		<carriers>
+			<storepickup>
+				<model>Kega_StorePickup_Model_Carrier_ShippingMethod</model>
+			</storepickup>
+		</carriers>	
+        <store_notification_email>               
+            <email_template>store_pickup_email_notify</email_template>
+            <email_identity>general</email_identity>
+        </store_notification_email>
+	</default>
+</config>

@@ -1,0 +1,15 @@
+<?php
+$_product = $this->getProduct();
+$colors = Mage::helper('init/product')->getColorRelatedProducts($_product->getSku());
+?>
+
+<?php if(count($colors)):?>
+<p class="choose-color"><strong><?php echo $this->__('Select your color:'); ?> </strong><?=$_product->getAttributeText('color');?></p>
+    <div class="color-options clearfix">
+    <ul class="clearfix">
+            <? foreach($colors as $color): ?>
+            <li><a href="<?php echo $color->getProductUrl() ?>"><img src="<? echo Mage::helper('catalog/image')->init($color, 'xsmall_image')?>" alt="<?=$this->htmlEscape($color->getName());?>" /></a></li>
+            <? endforeach; ?>
+    </ul>
+    </div>
+<?php endif;?>

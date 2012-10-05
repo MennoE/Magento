@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_OrderCleanup>
+            <version>0.0.1</version>
+        </Kega_OrderCleanup>
+    </modules>
+    <frontend>
+    </frontend>
+    <global>
+		<models>
+            <kega_ordercleanup>
+                <class>Kega_OrderCleanup_Model</class>
+            </kega_ordercleanup>
+        </models>
+    </global>
+	   <crontab>
+        <jobs>
+            <kega_order_cleanup>
+                <schedule><cron_expr>*/30 * * * *</cron_expr></schedule>
+                <run><model>kega_ordercleanup/observer::cleanup</model></run>
+            </kega_order_cleanup>
+        </jobs>
+    </crontab>
+</config>

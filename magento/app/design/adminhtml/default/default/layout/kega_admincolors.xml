@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+    	<reference name="head">
+			<action method="addItem"><type>skin_css</type><name>kega_admincolors.css</name><params>media="screen, projection"</params></action>
+		</reference>
+		
+		<reference name="header">
+			<action method="setTemplate"><template>kega_admincolors/header.phtml</template></action>
+		</reference>
+		
+		<reference name="before_body_end">
+			<block type="core/template" name="banaan" as="banaan" template="kega_admincolors/message.phtml"/>	
+		</reference>
+    </default>
+</layout>

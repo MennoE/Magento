@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kega_Store>
+            <version>0.1.6</version>
+        </Kega_Store>
+    </modules>
+    <frontend>
+        <routers>
+            <store>
+                <use>standard</use>
+                <args>
+                    <module>Kega_Store</module>
+                    <frontName>winkels</frontName>
+                </args>
+            </store>
+        </routers>
+        <layout>
+            <updates>
+                <store>
+                    <file>store.xml</file>
+                </store>
+            </updates>
+        </layout>
+      <translate>
+			<modules>
+				<Kega_Store>
+					<files>
+						<default>Kega_Store.csv</default>
+					</files>
+				</Kega_Store>
+			</modules>
+		</translate>
+    </frontend>
+    <admin>
+        <routers>
+            <store>
+                <use>admin</use>
+                <args>
+                    <module>Kega_Store</module>
+                    <frontName>store</frontName>
+                </args>
+            </store>
+        </routers>
+    </admin>
+    <adminhtml>
+		<layout>
+			<updates>
+				<store>
+					<file>store.xml</file>
+				</store>
+			</updates>
+		</layout>
+    </adminhtml>
+    <global>
+    	<rewrite>
+          <!-- This is an identifier for your rewrite that should be unique -->
+		  <kega_store_id>
+				<from><![CDATA[#^/winkel/([^?]+)#]]></from>
+				<to>/winkels/details/index/view/$1/</to>
+          </kega_store_id>
+          <!--<kega_store_cu>
+              <from><![CDATA[#^/store/cu/([_a-zA-Z]+)/#]]></from>
+              <to>/store/index/index/custom_url/$1/</to>
+          </kega_store_cu>
+		        <kega_store_search>
+              <from><![CDATA[#^/store/(search)|(storeselector){1}/#]]></from>
+              <to>/store/index/index/$1/</to>
+          </kega_store_search>-->
+        </rewrite>
+        <models>
+            <store>
+                <class>Kega_Store_Model</class>
+<!--                <resourceModel>store_entity</resourceModel>-->
+                <resourceModel>store_resource_eav_mysql4</resourceModel>
+            </store>
+            <store_resource_eav_mysql4>
+            	<class>Kega_Store_Model_Resource_Eav_Mysql4</class>
+                <entities>
+                    <store>
+                        <table>store</table>
+                    </store>
+                    <storeview>
+                        <table>store_storeview</table>
+                    </storeview>
+                    <entity>
+                        <table>store_entity</table>
+                    </entity>
+                    <store_opening>
+                        <table>store_opening</table>
+                    </store_opening>
+                    <extraopening_store>
+                        <table>extraopening_store</table>
+                    </extraopening_store>
+                    <store_routes>
+                        <table>store_routes</table>
+                    </store_routes>
+                </entities>
+            </store_resource_eav_mysql4>
+        </models>
+        <resources>
+            <store_setup>
+                <setup>
+                    <module>Kega_Store</module>
+                    <class>Kega_Store_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </store_setup>
+            <store_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </store_write>
+            <store_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </store_read>
+        </resources>
+        <sales>
+            <order>
+                <statuses>
+                    <in_store_ordered translate="label"><label>Ordered in store</label></in_store_ordered>
+                    <in_store_accepted translate="label"><label>Accepted in store</label></in_store_accepted>
+                    <in_store_collected translate="label"><label>Collected in store</label></in_store_collected>
+                </statuses>
+                <states>
+                    <in_store_ordered translate="label">
+                        <label>Ordered in store</label>
+                        <statuses>
+                            <in_store_ordered default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_ordered>
+                    <in_store_accepted translate="label">
+                        <label>Accepted in store</label>
+                        <statuses>
+                            <in_store_accepted default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_accepted>
+                    <in_store_collected translate="label">
+                        <label>Collected in store</label>
+                        <statuses>
+                            <in_store_collected default="1"/>
+                        </statuses>
+                        <visible_on_front/>
+                    </in_store_collected>
+                </states>
+            </order>
+        </sales>
+        <blocks>
+            <store>
+                <class>Kega_Store_Block</class>
+            </store>
+        </blocks>
+        <helpers>
+            <store>
+                <class>Kega_Store_Helper</class>
+            </store>
+        </helpers>
+    </global>
+    <default>
+        <store>
+    		<google_map>
+    			<google_map_key>ABQIAAAA1vhia2B_Fo8V0iCj_DSomBSWP5c_zbGD3mDQNJwwiAnSenkqGhRtm1ew2AGKRqia6xy2D-Rj3EP3yQ</google_map_key>
+    			<language>ru</language>
+    			<store_search_radius>15</store_search_radius>
+    			<store_count>5</store_count>
+    		</google_map>
+        </store>
+    </default>
+<!--
+	<crontab>
+		<jobs>
+			<store_import>
+			    <schedule><cron_expr>0 7 * * *</cron_expr></schedule>
+				<run><model>store/observer::runStoreImport</model></run>
+			</store_import>
+	   </jobs>
+	</crontab>
+-->
+</config>

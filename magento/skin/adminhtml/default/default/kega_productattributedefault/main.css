@@ -1,0 +1,114 @@
+div.action-panel {
+    margin-bottom: 15px;
+}
+
+div.collapseable a.action-collapse {
+    display: block;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+div.form-list {
+    font-size: 11px;
+    margin: 15px;
+    color: #666;
+}
+
+.form-list td.note {
+    padding-left: 18px !important;
+    font-size: 11px;
+    color: #666;
+}
+
+div.footer-note ul {
+    list-style-type: disc;
+    margin-left: 15px;
+}
+
+span.note {
+    font-size: 11px;
+    margin: 0;
+    padding: 0 0 0 13px;
+    color: #666666;
+    clear:both;
+    display: block;
+}
+
+.form-list p.note {
+    clear: both;
+}
+
+.entry-edit .fieldset ul.rule-param-children,
+.entry-edit .fieldset ul.rule-param-children-demo {
+    clear: both;
+}
+
+.entry-edit .fieldset ul.rule-param-children li,
+.entry-edit .fieldset ul.rule-param-children-demo li {
+    display: block;
+    margin-right: 15px;
+    float: left;
+    max-width: 500px;
+}
+
+.entry-edit .fieldset ul.rule-param-children .validation-advice {
+    max-width: 200px;
+}
+
+.entry-edit .fieldset ul.rule-param-children li .el {
+    float: left;
+    margin-right: 5px;
+}
+
+.entry-edit .fieldset ul.rule-param-children .rule-param-remove {
+    margin-left: 10px;
+}
+
+.entry-edit .fieldset ul.rule-param-children .rule-param-apply {
+    margin-left: 10px;
+}
+
+.entry-edit .fieldset ul.rule-param-children li .rule-param {
+	float: left;
+}
+
+.rule-param .x-tree-root-node input, .rule-param .x-tree-root-node select {
+    min-width: 15px;
+    width: auto !important;
+}
+
+.entry-edit .fieldset .x-tree-root-node {
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+
+.entry-edit .fieldset ul.rule-param-children ul.x-tree-lines li,
+.entry-edit .fieldset ul.rule-param-children-demo ul.x-tree-lines li {	
+	float: none;	
+}
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}

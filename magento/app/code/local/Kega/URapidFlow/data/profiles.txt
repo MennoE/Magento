@@ -1,0 +1,41 @@
+// This file contains information about the profiles used in URapidFlow.
+// The json data can be used to simply create the profiles.
+
+// Product Export
+// product_export.csv
+{"columns":[{"field":"sku","alias":"sku"},{"field":"name","alias":"name"},{"field":"price","alias":"price","format":"%.4f"},{"field":"special_price","alias":"special_price","format":"%.4f"},{"field":"special_from_date","alias":"special_from_date","format":"d-m-y H:i"},{"field":"special_to_date","alias":"special_to_date","format":"d-m-y H:i"},{"field":"size","alias":"size"},{"field":"status","alias":"status"},{"field":"tax_class_id","alias":"tax_class_id"},{"field":"visibility","alias":"visibility"},{"field":"price_view","alias":"price_view"},{"field":"product.attribute_set","alias":"product.attribute_set"},{"field":"product.type","alias":"product.type"},{"field":"stock.qty","alias":"stock.qty","format":"%.4f"},{"field":"product.websites","alias":"product.websites","default_multiselect":"1","separator":";"}],"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"UTF-8","to":"","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"export":{"image_files":"0","image_https":"0","invalid_values":"0","internal_values":"0","configurable_qty_as_sum":"0","add_tax":"0","markup":"","skip_out_of_stock":"0","skip_configurable_simples":"0"}},"conditions":{"type":"urapidflow\/rule_condition_combine","attribute":null,"operator":null,"value":"0","is_value_processed":null,"aggregator":"all"}}
+
+// Product Import
+// product.txt
+{"columns":[{"field":"product.websites","alias":"product.websites","default_multiselect":"1","default":"1,2","separator":";"}],"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"actions":"create","dryrun":"0","change_typeset":"0","select_ids":"1","not_applicable":"0","store_value_same_as_default":"default","stock_zero_out":"0","reindex_type":"full","image_files":"0","image_files_remote":"0","image_remote_subfolder_level":"","image_missing_file":"warning_save","create_options":"0","create_categories":"0","create_categories_active":"0","create_categories_anchor":"0","create_categories_display":"PRODUCTS","create_categories_menu":"0","delete_old_category_products":"0","create_attributesets":"0","create_attributeset_template":"4","insert_attr_chunk_size":""},"dir":{"images":""}}}
+
+// Product Stock Import
+// stock.txt
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"actions":"any","dryrun":"0","change_typeset":"0","select_ids":"1","not_applicable":"0","store_value_same_as_default":"default","stock_zero_out":"0","reindex_type":"full","image_files":"0","image_files_remote":"0","image_remote_subfolder_level":"","image_missing_file":"warning_save","create_options":"0","create_categories":"0","create_categories_active":"0","create_categories_anchor":"0","create_categories_display":"PRODUCTS","create_categories_menu":"0","delete_old_category_products":"0","create_attributesets":"0","create_attributeset_template":"4","insert_attr_chunk_size":""},"dir":{"images":""}}}
+
+// Product Links
+// combine.txt
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"reindex_type":"full","image_files":"0","image_files_remote":"0","image_missing_file":"warning_save"},"dir":{"images":""}}}
+
+// Product Attribute Options Import
+// product_attribute_option.txt
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"reindex_type":"full"}}}
+
+// Product Import Update
+// product_update.txt
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"actions":"update","dryrun":"0","change_typeset":"0","select_ids":"1","not_applicable":"0","store_value_same_as_default":"default","stock_zero_out":"0","reindex_type":"full","image_files":"0","image_files_remote":"0","image_remote_subfolder_level":"","image_missing_file":"warning_save","create_options":"0","create_categories":"0","create_categories_active":"0","create_categories_anchor":"0","create_categories_display":"PRODUCTS","create_categories_menu":"0","delete_old_category_products":"0","create_attributesets":"0","create_attributeset_template":"4","insert_attr_chunk_size":""},"dir":{"images":""}}}
+
+// Product Prices
+// prices.txt
+{"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"","to":"UTF-8","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"import":{"actions":"any","dryrun":"0","change_typeset":"0","select_ids":"1","not_applicable":"0","store_value_same_as_default":"duplicate","stock_zero_out":"0","reindex_type":"full","image_files":"0","image_files_remote":"0","image_remote_subfolder_level":"","image_missing_file":"warning_save","create_options":"0","create_categories":"0","create_categories_active":"0","create_categories_anchor":"0","create_categories_display":"PRODUCTS","create_categories_menu":"0","delete_old_category_products":"0","create_attributesets":"0","create_attributeset_template":"4","insert_attr_chunk_size":""},"dir":{"images":""}}}
+
+// Used by: Kega_URapidFlow_Model_Stock_Rebuild::setConfigurableProductIsInStockStatus
+// Product Stock Export (totals)
+// stock-totals.txt
+{"columns":[{"field":"sku","alias":"sku"},{"field":"stock.qty","alias":"stock.qty","format":"%.4f"},{"field":"stock.is_in_stock","alias":"stock.is_in_stock"}],"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"UTF-8","to":"","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"export":{"image_files":"0","image_https":"0","invalid_values":"0","internal_values":"1","configurable_qty_as_sum":"1","add_tax":"0","markup":"","skip_out_of_stock":"0","skip_configurable_simples":"0"}},"conditions":{"type":"urapidflow\/rule_condition_combine","attribute":null,"operator":null,"value":"1","is_value_processed":null,"aggregator":"all","conditions":[{"type":"urapidflow\/rule_condition_product","attribute":"type_id","operator":"==","value":["configurable"],"is_value_processed":false}]}}
+
+
+// Used by: Kega_URapidFlow_Model_Stock_Parse_Pfa
+// Product barcode2sku Export
+// product_barcode2sku_export.txt
+{"columns":[{"field":"barcode","alias":"barcode"},{"field":"sku","alias":"sku"},{"field":"product.entity_id","alias":"product.entity_id"}],"options":{"csv":{"delimiter":",","enclosure":"\"","escape":"\\","multivalue_separator":";"},"encoding":{"from":"UTF-8","to":"","illegal_char":""},"log":{"min_level":"SUCCESS"},"remote":{"type":"","host":"","port":"","username":"","password":"","path":""},"export":{"image_files":"0","image_https":"0","invalid_values":"0","internal_values":"0","configurable_qty_as_sum":"0","add_tax":"0","markup":"","skip_out_of_stock":"0","skip_configurable_simples":"0"}},"conditions":{"type":"urapidflow\/rule_condition_combine","attribute":null,"operator":null,"value":"1","is_value_processed":null,"aggregator":"all","conditions":[{"type":"urapidflow\/rule_condition_product","attribute":"type_id","operator":"==","value":["simple"],"is_value_processed":false}]}}

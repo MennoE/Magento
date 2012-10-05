@@ -1,0 +1,15 @@
+# Main magento ignores
+
+app/etc/local.xml
+
+var/cache
+var/session
+var/locks
+var/report
+
+media/catalog
+
+errors/local.xml
+
+# PhpStorm project files
+.idea/

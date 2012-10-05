@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config>
+	<api>
+		<resources>
+			<retail translate="title" module="store">
+				<model>store/api</model>
+				<title>Retail</title>
+				<acl>retail</acl>
+				<methods>
+					<hello translate="title" module="store">
+						<title>Hello World</title>
+						<method>hello</method>
+					</hello>
+				</methods>
+			</retail>
+			<retail_store translate="title" module="logistics">
+				<model>store/store_api</model>
+				<title>Stores</title>
+				<acl>retail/store</acl>
+				<methods>
+					<info translate="title" module="store">
+						<title>Retreive info about a store (using the store number as key)</title>
+						<method>info</method>
+					</info>
+					<nearest translate="title" module="store">
+						<title>Find nearest stores</title>
+						<method>nearest</method>
+					</nearest>
+				</methods>
+			</retail_store>
+			<retail_store_order translate="title" module="logistics">
+				<model>store/store_order_api</model>
+				<title>Store orders</title>
+				<acl>retail/store_order</acl>
+				<methods>
+					<setInStore translate="title" module="store">
+						<title>After order creation in a store, set instore number</title>
+						<method>setInStore</method>
+					</setInStore>
+					<setPickUpStore translate="title" module="store">
+						<title>After order creation in a store, set pickup store number</title>
+						<method>setPickUpStore</method>
+					</setPickUpStore>
+				</methods>
+			</retail_store_order>
+		</resources>
+		<v2>
+			<resources_function_prefix>
+				<retail>retail</retail>
+				<retail_store>retailStore</retail_store>
+				<retail_store_order>retailStoreOrder</retail_store_order>
+			</resources_function_prefix>
+		</v2>
+		<acl>
+			<resources>
+				<retail translate="title" module="store">
+					<title>Store</title>
+					<sort_order>5</sort_order>
+					<store translate="title" module="store">
+						<title>Stores</title>
+					</store>
+					<store_order translate="title" module="store">
+						<title>Store orders</title>
+					</store_order>
+				</retail>
+			</resources>
+		</acl>
+	</api>
+</config>
